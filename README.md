@@ -1,4 +1,4 @@
-# DayTea
+# DayFruit
 
 ```bash
 npm install

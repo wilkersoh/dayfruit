@@ -2,8 +2,8 @@ import Head from "next/head";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 
-import User from "../components/Users";
-import { withApollo } from "../apollo/client";
+import User from "@/components/Users";
+import { withApollo } from "@/apollo/client";
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/core";
 
 // const REGISTER_USER = gql`

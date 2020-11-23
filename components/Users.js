@@ -17,7 +17,6 @@ const User = () => {
 
   if (loading) return "loading users...";
   if (error) return `error while loading users ${error.message}`;
-  console.log(data);
 
   return (
     <div>
@@ -27,7 +26,14 @@ const User = () => {
             <th>First Name</th>
           </tr>
         </thead>
-        {/* <tbody>{data ? <div>Got data</div> : <div>Not data</div>}</tbody> */}
+        <tbody>
+          {data && data.user && (
+            <tr>
+              <td>{data.user.username}</td>
+              <td>{data.user.token}</td>
+            </tr>
+          )}
+        </tbody>
       </table>
     </div>
   );

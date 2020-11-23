@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/apollo/*": ["apollo/*"],
+      "@/styles/*": ["styles/*"],
+      "@/utils/*": ["utils/*"],
+    }
+  }
+}
