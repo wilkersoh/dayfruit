@@ -104,8 +104,10 @@ Last. Auth0
 
 
 ## Face Error Graphql
-Terminal 有 print出來 要的data 但是 在 front end data有return回來 但是value 是 null
+1. Terminal 有 print出來 要的data 但是 在 front end data有return回來 但是value 是 null
 - 那是因為 typeDefs 裡 返回的 type 和 output出來的 type 不一樣， 如果它是 array 那樣放 []
+2. Error: GraphQL error: Assignment to constant variable
+- const variable, after i change the value of const.
 
 lib -  库文件，library的缩写
 utils - 工具代码

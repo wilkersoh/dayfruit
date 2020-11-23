@@ -1,3 +1,5 @@
+import UserResolver from "./resolvers/user";
+
 export const resolvers = {
   Query: {
     user: async (_parent, _args, _context, _info) => {
@@ -7,8 +9,11 @@ export const resolvers = {
         .then((data) => {
           return data;
         });
-      console.log(result);
       return result;
     },
+  },
+
+  Mutation: {
+    ...UserResolver.Mutation,
   },
 };

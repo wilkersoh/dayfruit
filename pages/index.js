@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Head from "next/head";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
@@ -6,48 +7,46 @@ import User from "@/components/Users";
 import { withApollo } from "@/apollo/client";
 import { Button, FormControl, FormLabel, Input } from "@chakra-ui/core";
 
-// const REGISTER_USER = gql`
-//   mutation registerUser(
-//     $username: String!
-//     $password: String!
-//     $confirmPassword: String!
-//     $mobile: String
-//     $address: String
-//     $email: String
-//   ) {
-//     register(
-//       registerUser: {
-//         username: $username
-//         password: $password
-//         confirmPassword: $confirmPassword
-//         mobile: $mobile
-//         address: $address
-//         email: $email
-//       }
-//     ) {
-//       username
-//       mobile
-//       address
-//       email
-//       token
-//     }
-//   }
-// `;
+const REGISTER_USER = gql`
+  mutation registerUser(
+    $username: String!
+    $password: String!
+    $confirmPassword: String! # $mobile: String # $address: String # $email: String
+  ) {
+    registerUser(
+      registerInput: {
+        username: $username
+        password: $password
+        confirmPassword: $confirmPassword
+        # mobile: $mobile
+        # address: $address
+        # email: $email
+      }
+    ) {
+      id
+      username
+      token
+    }
+  }
+`;
 
 const Index = () => {
-  // const { register, handleSubmit, watch, errors } = useForm();
-  // const [addUser, { loading }] = useMutation(REGISTER_USER, {
-  //   update(cache, args) {
-  //     console.log(args);
-  //     console.log("updated!!");
-  //     debugger;
-  //   },
-  //   variables: {
-  //     username: "yee",
-  //     password: "123",
-  //     confirmPassword: "123",
-  //   },
-  // });
+  const [user, setUser] = useState({});
+  const { register, handleSubmit, watch, errors } = useForm();
+
+  const [addUser, { loading }] = useMutation(REGISTER_USER, {
+    update(cache, args) {
+      console.log(args);
+      console.log("updated!!");
+    },
+    variables: user,
+  });
+
+  const onSubmit = (data) => {
+    console.log(data);
+    setUser(data);
+    addUser();
+  };
 
   return (
     <div>
@@ -58,7 +57,7 @@ const Index = () => {
       <main>
         <User />
       </main>
-      {/* <FormControl as='form'>
+      <FormControl as='form' onSubmit={handleSubmit(onSubmit)}>
         <FormLabel htmlFor='username'>Username</FormLabel>
         <Input
           ref={register({
@@ -66,7 +65,7 @@ const Index = () => {
           })}
           id='username'
           type='type'
-          name='name'
+          name='username'
         />
         <FormLabel htmlFor='password'>Password</FormLabel>
         <Input
@@ -86,8 +85,14 @@ const Index = () => {
           id='confirmPassword'
           name='confirmPassword'
         />
+        {/* <FormLabel htmlFor='mobile'>Mobile</FormLabel>
+        <Input type='text' id='mobile' name='mobile' />
+        <FormLabel htmlFor='address'>Address</FormLabel>
+        <Input type='text' id='address' name='address' />
+        <FormLabel htmlFor='email'>Email</FormLabel>
+        <Input type='email' id='email' name='email' /> */}
         <Button type='submit'>Create</Button>
-      </FormControl> */}
+      </FormControl>
     </div>
   );
 };
