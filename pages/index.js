@@ -11,16 +11,19 @@ const REGISTER_USER = gql`
   mutation registerUser(
     $username: String!
     $password: String!
-    $confirmPassword: String! # $mobile: String # $address: String # $email: String
+    $confirmPassword: String!
+    $mobile: String
+    $address: String
+    $email: String
   ) {
     registerUser(
       registerInput: {
         username: $username
         password: $password
         confirmPassword: $confirmPassword
-        # mobile: $mobile
-        # address: $address
-        # email: $email
+        mobile: $mobile
+        address: $address
+        email: $email
       }
     ) {
       id
@@ -31,7 +34,7 @@ const REGISTER_USER = gql`
 `;
 
 const Index = () => {
-  const [user, setUser] = useState({});
+  const [newUser, setNewUser] = useState({});
   const { register, handleSubmit, watch, errors } = useForm();
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
@@ -39,12 +42,12 @@ const Index = () => {
       console.log(args);
       console.log("updated!!");
     },
-    variables: user,
+    variables: newUser,
   });
 
   const onSubmit = (data) => {
     console.log(data);
-    setUser(data);
+    setNewUser(data);
     addUser();
   };
 
@@ -85,12 +88,12 @@ const Index = () => {
           id='confirmPassword'
           name='confirmPassword'
         />
-        {/* <FormLabel htmlFor='mobile'>Mobile</FormLabel>
-        <Input type='text' id='mobile' name='mobile' />
+        <FormLabel htmlFor='mobile'>Mobile</FormLabel>
+        <Input ref={register} type='text' id='mobile' name='mobile' />
         <FormLabel htmlFor='address'>Address</FormLabel>
-        <Input type='text' id='address' name='address' />
+        <Input ref={register} type='text' id='address' name='address' />
         <FormLabel htmlFor='email'>Email</FormLabel>
-        <Input type='email' id='email' name='email' /> */}
+        <Input ref={register} type='email' id='email' name='email' />
         <Button type='submit'>Create</Button>
       </FormControl>
     </div>

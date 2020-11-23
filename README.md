@@ -68,8 +68,8 @@ yarn install
 - Product/[SingleProduct] (With Add To Cart Button)
 
 # CMS Route
-- CMS/index
-- CMS/Products
+- CMS/Auth
+- CMS/index (Productions)
 
 # Database Structure Information
 - Admin (username!, password!, mobile!, address!, avatar!, description)
@@ -80,7 +80,7 @@ yarn install
 # UI Look (Mobile)
 - Header [Content] Footer
 - (Home) (Header) Logo/Text, Sign In / Find Deals (Go To Product List)
-- (Home) [SG] - Shop Details - Map - Go To Shop[Button]
+- (Home) Shop Details - Category -  Go To Shop[Button] - Map (SSG)
 - (Find Deals Header) -> Logo/Text, Cart / Menu
 - (Find Deals Menu) -> Sign In, Map, Filter (CheckBox), FeedbackToDeveloper
 - (Find Deals Before Content) -> Category List (Fruit), x-axis scrollable
@@ -108,6 +108,9 @@ Last. Auth0
 - 那是因為 typeDefs 裡 返回的 type 和 output出來的 type 不一樣， 如果它是 array 那樣放 []
 2. Error: GraphQL error: Assignment to constant variable
 - const variable, after i change the value of const.
+3. GraphQL error: Cannot return null for non-nullable field User.token.
+-  它的database裡面 沒有 token 這個key 但是又在 client side 要求 要 return token
+
 
 lib -  库文件，library的缩写
 utils - 工具代码

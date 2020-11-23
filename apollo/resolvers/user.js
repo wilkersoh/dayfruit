@@ -2,6 +2,18 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const user = {
+  Query: {
+    user: async (_parent, _args, _context, _info) => {
+      const result = await _context.db
+        .collection("users")
+        .findOne()
+        .then((data) => {
+          return data;
+        });
+
+      return result;
+    },
+  },
   Mutation: {
     registerUser: async (
       parent,

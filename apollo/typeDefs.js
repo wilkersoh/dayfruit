@@ -5,14 +5,10 @@ export const typeDefs = gql`
     id: ID
     username: String!
     token: String! #jwt token
-    # mobile: String
-    # address: String
-    # email: String
+    mobile: String
+    address: String
+    email: String
     createdAt: String!
-  }
-
-  type Query {
-    user: User!
   }
 
   type Product {
@@ -30,9 +26,13 @@ export const typeDefs = gql`
     username: String!
     password: String!
     confirmPassword: String!
-    # mobile: String
-    # address: String
-    # email: String
+    mobile: String
+    address: String
+    email: String
+  }
+
+  type Query {
+    user: User!
   }
 
   type Mutation {
