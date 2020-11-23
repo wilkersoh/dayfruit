@@ -1,65 +1,95 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import { gql, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
 
-export default function Home() {
+import User from "../components/Users";
+import { withApollo } from "../apollo/client";
+import { Button, FormControl, FormLabel, Input } from "@chakra-ui/core";
+
+// const REGISTER_USER = gql`
+//   mutation registerUser(
+//     $username: String!
+//     $password: String!
+//     $confirmPassword: String!
+//     $mobile: String
+//     $address: String
+//     $email: String
+//   ) {
+//     register(
+//       registerUser: {
+//         username: $username
+//         password: $password
+//         confirmPassword: $confirmPassword
+//         mobile: $mobile
+//         address: $address
+//         email: $email
+//       }
+//     ) {
+//       username
+//       mobile
+//       address
+//       email
+//       token
+//     }
+//   }
+// `;
+
+const Index = () => {
+  // const { register, handleSubmit, watch, errors } = useForm();
+  // const [addUser, { loading }] = useMutation(REGISTER_USER, {
+  //   update(cache, args) {
+  //     console.log(args);
+  //     console.log("updated!!");
+  //     debugger;
+  //   },
+  //   variables: {
+  //     username: "yee",
+  //     password: "123",
+  //     confirmPassword: "123",
+  //   },
+  // });
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+      <main>
+        <User />
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      {/* <FormControl as='form'>
+        <FormLabel htmlFor='username'>Username</FormLabel>
+        <Input
+          ref={register({
+            required: "Please tell us your name",
+          })}
+          id='username'
+          type='type'
+          name='name'
+        />
+        <FormLabel htmlFor='password'>Password</FormLabel>
+        <Input
+          ref={register({
+            required: "Please fill your password",
+          })}
+          id='password'
+          type='password'
+          name='password'
+        />
+        <FormLabel htmlFor='confirmPassword'>Password Confirm</FormLabel>
+        <Input
+          ref={register({
+            required: "Please fill your password",
+          })}
+          type='password'
+          id='confirmPassword'
+          name='confirmPassword'
+        />
+        <Button type='submit'>Create</Button>
+      </FormControl> */}
     </div>
-  )
-}
+  );
+};
+
+export default withApollo(Index);
