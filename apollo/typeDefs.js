@@ -4,11 +4,12 @@ export const typeDefs = gql`
   type User {
     id: ID
     username: String!
-    token: String! #jwt token
+    accessToken: String #jwt token
     mobile: String
     address: String
     email: String
     createdAt: String!
+    # isAdmin: Boolean!
   }
 
   type Product {
@@ -25,7 +26,7 @@ export const typeDefs = gql`
   input RegisterInput {
     username: String!
     password: String!
-    confirmPassword: String!
+    # confirmPassword: String
     mobile: String
     address: String
     email: String
@@ -37,5 +38,6 @@ export const typeDefs = gql`
 
   type Mutation {
     registerUser(registerInput: RegisterInput): User
+    login(username: String!, password: String!): User
   }
 `;

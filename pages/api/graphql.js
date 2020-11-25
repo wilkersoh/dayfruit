@@ -1,13 +1,12 @@
 import { ApolloServer } from "apollo-server-micro";
 import { MongoClient } from "mongodb";
-// import { schema } from "@/apollo/schema";
-import { schema } from "../../apollo/schema";
+import { schema } from "@/apollo/schema";
 
 let db;
 
 const apolloServer = new ApolloServer({
   schema,
-  context: async () => {
+  context: async ({ res }) => {
     if (!db) {
       try {
         const dbClient = new MongoClient(process.env.MONGO_URI, {
@@ -18,13 +17,10 @@ const apolloServer = new ApolloServer({
         if (!dbClient.isConnected()) await dbClient.connect();
         db = dbClient.db("dayfruit");
       } catch (error) {
-        console.log(
-          `------error while connecting with graphql context (db)`,
-          error
-        );
+        console.log(`error while connecting with graphql context (db)`, error);
       }
     }
-    return { db };
+    return { db, res };
   },
 });
 

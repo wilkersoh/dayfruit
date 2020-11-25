@@ -12,11 +12,16 @@ export const useAuth = () => {
 };
 
 const useProvideAuth = () => {
-  const [user, setUser] = useState(null);
-  // Custom Auth (username / password)
+  const [user, setUser] = useState({});
+
+  const signinWithCustom = (rawUser) => {
+    console.log("inside handleUser");
+    setUser(rawUser);
+  };
 
   return {
-    // user,
+    user,
+    signinWithCustom,
     // signout,
   };
 };

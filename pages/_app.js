@@ -1,5 +1,5 @@
 import Head from "next/head";
-// import { AuthProvider } from "@/utils/auth";
+import { AuthProvider } from "@/utils/auth";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import theme from "../styles/theme";
 import "../styles/globals.css";
@@ -18,8 +18,10 @@ const GlobalStyle = () => {
 function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Component {...pageProps} />
+      <AuthProvider>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -7,7 +7,6 @@ const UserQuery = gql`
     user {
       id
       username
-      token
     }
   }
 `;
@@ -30,7 +29,6 @@ const User = () => {
           {data && data.user && (
             <tr>
               <td>{data.user.username}</td>
-              <td>{data.user.token}</td>
             </tr>
           )}
         </tbody>
