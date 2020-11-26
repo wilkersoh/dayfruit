@@ -1,22 +1,29 @@
 import Router from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/utils/auth";
 import { gql, useMutation } from "@apollo/client";
+import styled from "@emotion/styled";
+
+const Test = styled.div`
+  border: 4px solid red;
+  @media (max-width: 768px) {
+    border: 4px solid blue;
+  }
+`;
+
+import { SignInForm, RegisterForm } from "@/components/AuthForm";
 
 import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
+  Box,
+  PseudoBox,
 } from "@chakra-ui/core";
 
 const REGISTER_USER = gql`
@@ -46,10 +53,16 @@ const REGISTER_USER = gql`
 `;
 
 const AuthModal = ({ children }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const [newUser, setNewUser] = useState({});
-  const { register, handleSubmit, watch, errors } = useForm();
+  const [isSignIn, setIsSignIn] = useState(true);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  useEffect(() => {
+    // if isSignIn === true > height 300px : 620
+  }, [isSignIn, setIsSignIn]);
+
   const auth = useAuth();
+  const { register, handleSubmit, watch, errors } = useForm();
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(cache, { data }) {
@@ -64,10 +77,16 @@ const AuthModal = ({ children }) => {
     variables: newUser,
   });
 
-  const onSubmit = (data) => {
+  const onSignInSubmit = (data) => {
+    // setNewUser(data);
+    // addUser();
+  };
+
+  const onRegisterSubmit = (data) => {
     setNewUser(data);
     addUser();
   };
+  console.log("render hook");
   return (
     <>
       <Button
@@ -81,79 +100,66 @@ const AuthModal = ({ children }) => {
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+        <ModalContent
+          className='animateEffect'
+          bg='rgb(45, 55, 72)'
+          top='50%'
+          transform='translateY(-50%)'
+          my={0}>
+          <PseudoBox
+            d='flex'
+            justifyContent='center'
+            className={isSignIn ? "signIn" : "register"}>
+            <Box
+              onClick={() => setIsSignIn(true)}
+              px={6}
+              py={4}
+              cursor='pointer'>
+              Sign In
+            </Box>
+            <Box
+              onClick={() => setIsSignIn(false)}
+              px={6}
+              py={4}
+              cursor='pointer'>
+              Register
+            </Box>
+          </PseudoBox>
           <ModalCloseButton />
           <ModalBody>
-            <FormControl as='form' onSubmit={handleSubmit(onSubmit)}>
-              <FormLabel htmlFor='username'>Username</FormLabel>
-              <Input
-                ref={register({
-                  required: "Please tell us your name",
-                })}
-                id='username'
-                type='type'
-                name='username'
-                // focusBorderColor='pink.400'
-                isInvalid={errors.username && true}
-                errorBorderColor='red.300'
-                placeholder={
-                  errors.username
-                    ? "username is required"
-                    : "Please Fill in username"
-                }
-              />
-              <FormLabel htmlFor='password'>Password</FormLabel>
-              <Input
-                ref={register({
-                  required: "Please fill your password",
-                })}
-                id='password'
-                type='password'
-                name='password'
-              />
-              <FormLabel htmlFor='confirmPassword'>Password Confirm</FormLabel>
-              <Input
-                ref={register({
-                  validate: (value) =>
-                    value === watch("password") || "Passwords don't match.",
-                })}
-                type='password'
-                id='confirmPassword'
-                name='confirmPassword'
-                isInvalid={errors.confirmPassword && true}
-                errorBorderColor='red.300'
-                placeholder={
-                  errors.confirmPassword
-                    ? "Passwords don't match."
-                    : "Please fill in password"
-                }
-              />
-              <FormLabel htmlFor='mobile'>Mobile</FormLabel>
-              <Input ref={register} type='text' id='mobile' name='mobile' />
-              <FormLabel htmlFor='address'>Address</FormLabel>
-              <Input ref={register} type='text' id='address' name='address' />
-              <FormLabel htmlFor='email'>Email</FormLabel>
-              <Input
-                ref={register({
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  },
-                })}
-                isInvalid={errors.email && true}
-                errorBorderColor='red.300'
-                type='email'
-                id='email'
-                name='email'
-                placeholder={errors.email ? "Invalid email address" : "Emails"}
-              />
-              <Button type='submit'>Create</Button>
-            </FormControl>
+            {isSignIn ? (
+              <SignInForm
+                handleSubmit={handleSubmit}
+                register={register}
+                onSubmit={onSignInSubmit}
+                errors={errors}>
+                <Button
+                  type='submit'
+                  mt={8}
+                  mb={6}
+                  variantColor='teal'
+                  w='full'>
+                  Sign In
+                </Button>
+              </SignInForm>
+            ) : (
+              <RegisterForm
+                handleSubmit={handleSubmit}
+                register={register}
+                watch={watch}
+                onSubmit={onRegisterSubmit}
+                errors={errors}>
+                <Button
+                  type='submit'
+                  mt={8}
+                  mb={6}
+                  variantColor='teal'
+                  w='full'>
+                  Register Account
+                </Button>
+              </RegisterForm>
+            )}
           </ModalBody>
-
-          <ModalFooter>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start"
   },
+  "resolutions": {
+    "body-scroll-lock": "3.0.3"
+  },
   "dependencies": {
     "@apollo/react-hooks": "^4.0.0",
     "@apollo/react-ssr": "^4.0.0",
@@ -34,7 +37,8 @@
     "next": "10.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "react-hook-form": "^6.11.5"
+    "react-hook-form": "^6.11.5",
+    "react-transition-group": "^4.4.1"
   },
   "devDependencies": {}
 }

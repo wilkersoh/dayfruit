@@ -27,6 +27,10 @@ const GlobalStyle = () => {
             font-weight: 900;
             font-size: 1.8rem;
           }
+
+          input {
+            color: black !important;
+          }
         `}
       />
     </>
