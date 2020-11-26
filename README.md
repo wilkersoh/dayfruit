@@ -16,6 +16,19 @@ yarn install
 - Client can read it, but cannot modify it.
 - only work in same origin
 
+Cookie work in other subdomain
+```javascript
+res.setHeader(
+  "Set-Cookie",
+  cookie.serialize("jid", token, {
+    httpOnly: true,
+    path: ".example.com",
+    // www.example.com
+    // tea.example.com
+  })
+);
+```
+
 ## Build With Modern tech
 - Nextjs framework
 - mongodb (native driver)

@@ -1,15 +1,32 @@
 import { theme as chakraTheme } from "@chakra-ui/core";
 
+// width={[
+//   "100%", // base
+//   "50%", // 480px upwards
+//   "25%", // 768px upwards
+//   "15%", // 992px upwards
+// ]}
+
+const breakpoints = ["320px", "480px", "768px", "992px"];
+breakpoints.sm = breakpoints[0];
+breakpoints.md = breakpoints[1];
+breakpoints.lg = breakpoints[2];
+breakpoints.xl = breakpoints[3];
+
 const theme = {
   ...chakraTheme,
+  breakpoints,
   fonts: {
     ...chakraTheme.fonts,
-    body: `Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"`,
+    body: `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
   },
   fontWeights: {
     normal: 400,
     medium: 600,
     bold: 700,
+  },
+  colors: {
+    ...chakraTheme.colors,
   },
   icons: {
     ...chakraTheme.icons,
