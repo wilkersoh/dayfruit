@@ -6,7 +6,7 @@ let db;
 
 const apolloServer = new ApolloServer({
   schema,
-  context: async ({ res }) => {
+  context: async ({ res, req }) => {
     if (!db) {
       try {
         const dbClient = new MongoClient(process.env.MONGO_URI, {
@@ -20,7 +20,7 @@ const apolloServer = new ApolloServer({
         console.log(`error while connecting with graphql context (db)`, error);
       }
     }
-    return { db, res };
+    return { db, res, req };
   },
 });
 
