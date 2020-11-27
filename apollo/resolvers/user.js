@@ -2,7 +2,7 @@ import { UserInputError, AuthenticationError } from "apollo-server-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
-import { validateRegister } from "@/utils/validator";
+import { createAccessToken } from "@/utils/createAccessToken";
 
 const setUserAuthCookie = (username, _id, res) => {
   // JWT
@@ -21,7 +21,7 @@ const setUserAuthCookie = (username, _id, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV !== "development",
       sameSite: "strict",
-      maxAge: 3600, // 1hour
+      maxAge: 3600, // 3600 = 1hour
       path: "/",
     })
   );
@@ -29,44 +29,34 @@ const setUserAuthCookie = (username, _id, res) => {
 
 const user = {
   Query: {
-    user: async (_parent, _args, _context, _info) => {
-      const result = await _context.db
-        .collection("users")
-        .findOne()
-        .then((data) => {
-          return data;
-        });
+    me: async (_parent, _args, { db, req }) => {
+      const userCookie = cookie.parse(req.headers.cookie);
+      const decoded = jwt.verify(userCookie["auth_u"], process.env.JWT_SECRET);
 
-      return result;
+      const me = await db
+        .collection("users")
+        .findOne({ _id: "5fbfacf9bb4a32a648cf8146" });
+
+      // console.log(me); cannot get the id.. check it later
+      return { username: "me" };
     },
   },
   Mutation: {
     login: async (parent, args, { db, res }) => {
       const { username, password } = args;
-      db.collection;
-      // match username and hashPassword with database
-      const me = db.collection("users").findOne({ username });
 
-      const valid = await bcrypt.compare(password, user.password);
+      // match username and hashPassword with database
+      const me = await db.collection("users").findOne({ username });
+      const valid = await bcrypt.compare(password, me.password);
 
       if (!valid) throw new UserInputError();
 
-      // refreshing token
-      // res.cookie(
-      //   "jid",
-      //   jwt.sign({ userId: user.id }, "OtherSecretKey", {
-      //     expiresIn: "7d",
-      //   }),
-      //   {
-      //     httpOnly: true,
-      //   }
-      // );
+      const token = { id: me._id, username };
+      const { accessToken } = createAccessToken(res, token);
 
-      // setUserAuthCookie(name, _id, res);
-
-      // access token
       return {
-        accessToken: "token",
+        username,
+        email: me.email,
       };
     },
     registerUser: async (
@@ -93,8 +83,8 @@ const user = {
             username: "This username is taken",
           },
         });
-      if (hasEmail)
-        throw new UserInputError("Username is taken", {
+      if (hasEmail && email !== undefined)
+        throw new UserInputError("Email is taken", {
           errors: {
             email: "This email is taken",
           },

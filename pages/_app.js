@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { AuthProvider } from "@/utils/auth";
+import { ApolloProvider } from "@apollo/react-hooks";
+import { withApollo } from "@/apollo/client";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { Global, css } from "@emotion/core";
 import theme from "../styles/theme";
@@ -37,15 +39,17 @@ const GlobalStyle = () => {
   );
 };
 
-function App({ Component, pageProps }) {
+function MyApp({ Component, pageProps, apolloClient }) {
   return (
     <ThemeProvider theme={theme}>
-      <AuthProvider>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </AuthProvider>
+      <ApolloProvider client={apolloClient}>
+        <AuthProvider>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </AuthProvider>
+      </ApolloProvider>
     </ThemeProvider>
   );
 }
 
-export default App;
+export default withApollo(MyApp);

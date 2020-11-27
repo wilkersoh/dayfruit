@@ -26,14 +26,13 @@ export const typeDefs = gql`
   input RegisterInput {
     username: String!
     password: String!
-    # confirmPassword: String
     mobile: String
     address: String
     email: String
   }
 
   type Query {
-    user: User!
+    me: User!
   }
 
   type Mutation {

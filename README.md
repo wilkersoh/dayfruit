@@ -8,28 +8,7 @@ or
 yarn install
 ```
 
-# Avoid XSS Attack / CSRF Attack
-- JWT Token store in httpOnly
-
-# Benefit of httpOnly cookie
-- this kind of cookie cannot generate from client side, it only generate in server
-- Client can read it, but cannot modify it.
-- only work in same origin
-
-Cookie work in other subdomain
-```javascript
-res.setHeader(
-  "Set-Cookie",
-  cookie.serialize("jid", token, {
-    httpOnly: true,
-    path: ".example.com",
-    // www.example.com
-    // tea.example.com
-  })
-);
-```
-
-## Build With Modern tech
+# Build With Modern tech
 - Nextjs framework
 - mongodb (native driver)
 - apollo-server-micro (query server)
@@ -39,8 +18,22 @@ res.setHeader(
 - chakra-ui (styled-component)
 - JWT
 - date-fns (Date Formatter)
-- react-transition-group
+- react-transition-group ( UI/UX )
 - Authentication With Social Media (next-auth)
+
+# Avoid XSS Attack / CSRF Attack
+- JWT Token store in httpOnly
+
+# Benefit of httpOnly cookie
+- this kind of cookie cannot generate from client side, it only generate in server
+- Client can read it, but cannot modify it.
+- only work in same origin
+
+# JWT (RefreshToken / AccessToken / Ban List)
+1. RefreshToken (Done)
+2. AccessToken (Done)
+3. Ban List (SignOut / Change Password)
+>> secretKey + hashPassword = refreshToken
 
 # Features (Premium)
 - Authentication (Google, Facebook) (SSR)
@@ -53,6 +46,7 @@ res.setHeader(
 
 # Features (Basic)
 - Authentication Login (Username && Password) (SSR)
+- SignOut
 - Forget Password
 - Filter (Quick Respond)
 - Mailing (Pending)
@@ -66,31 +60,6 @@ res.setHeader(
 1. Refresh Page
 2. Trigger useEffect and Called RefreshTokenApi (getStaticProps handle it, it will call in server time)
 3.  Step > Browser Refresh > NextJs Server > GraphQL Server > NextJs Server (return accessToken to Browser) > Browser
-
-```javascript
-const { AppTree, req, res } = ctx;
-
-let serverAccessToken = "";
-if (isServer()) {
-  const cookie = cookie.parse(req.headers.cookie)
-  if(cookie.cookieName) {
-    const response = await fetch('refreshTokenApi', {
-      method: 'POST',
-      credentials: "include",
-      headers: {
-        cookie: "cookieName=" + cookie.id
-      }
-    });
-    const data = await data.json();
-    serverAccessToken = data.accessToken;
-  }
-}
-const apolloClient = (ctx.apolloClient = initApolloClient({}. serverAccessToken));
-```
-
-
-# API
-- CRUD (Done) with mongoose
 
 ## index.js
 - Listing Product Category

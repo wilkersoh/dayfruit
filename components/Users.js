@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 const UserQuery = gql`
   query User {
-    user {
+    me {
       id
       username
     }
