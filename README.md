@@ -39,6 +39,7 @@ res.setHeader(
 - chakra-ui (styled-component)
 - JWT
 - date-fns (Date Formatter)
+- react-transition-group
 - Authentication With Social Media (next-auth)
 
 # Features (Premium)
@@ -164,6 +165,86 @@ Last. Auth0
 -  它的database裡面 沒有 token 這個key 但是又在 client side 要求 要 return token
 4. Cannot query field \"token\" on type \"User\"."
 -  mutation return data name "token" but, it already chanage to accessToken
+
+# Flow Transition Animation SignInRegister Form
+1. SignIn Button Bg, moving right and overflow hidden
+2. Register Bg side in after
+
+
+# CSSTransition
+
+in={Boolean} 告訴它 是 show 還是 hide
+timeout={transitionTime}
+timeout={{ exit: 1000, appear: 2000 }}
+className={'PrefixClassNameUseInCSS'}
+unmountOnExit={true}  解釋animation unmount當前Component
+appear={true}
+onExited={() => callbackAfterAnimationDone()}
+mountOnEnter={} // 當 in 變成 true 才顯示，default 是已經 render了
+它會有3種classNamePrefix
+1. appear (component eventually show up when app is loaded) （initital, nextPage)
+2. enter (component mounted) (on hide then trigger to show )
+3. exit  (component unmounted)
+```react
+<CSSTransition
+  in={this.state.titleScreen}
+  timeout={1000}
+  className={'title-screen-'}
+  unmountOnExit={true}
+  onExited={() => this.setState({ gameBoard: true })}
+>
+  <TitleScreen />
+</CSSTransition>
+
+{this.state.gameBoard && <GameBoard />}
+function TitleScreen(props) {
+  return (
+    <!-- 上面的 className 會加進來  -->
+    <div className="title-screen title-screen--exit title-screen--exit-active title-screen--done"></div>
+  )
+}
+```
+# Flow of animation
+timeout={1000} || className
+1. -enter (第一看見就read 這個css) happend in 0 timeout
+2. -enter-active (1。結束馬上近來這個)  happend in 0 timeout
+3. -enter-done (第二個 transition 1秒 它結束後就來到這裡)
+
+1. opacity: 0
+2. opacity: 1, transition opacity 1s
+3. 它會拿掉 1. 2. 的 className 然後 + 3.className
+
+# SwitchTransition Inside has CssTransition
+key={"anyUpdate"} listen the activePlayer
+timeout={1000}
+className={'play__icon'}
+```react
+<SwitchTransition>
+  <CSSTransition
+    key={this.state.activePlayer}
+    timeout={1000}
+    className={'play__icon-'}
+  >
+  <PlayIcon icon={this.state.activePlayer} />
+</SwitchTransition>
+```
+1. exit
+2. enter
+
+# TransitionGroup
+component={'div'} by Default it will created a div component. Can set it to null.
+**classNames**
+```react
+<TransitionGroup component={null}>
+  <CSSTransition
+    key={`user-${index}`}
+    timeout{{ enter: 800, exit: 500}}
+    classNames={`user-transition`}
+  >
+    <User index={index} userName={userName} />
+  </CSSTransition>
+</TransitionGroup>
+```
 
 lib -  库文件，library的缩写
 utils - 工具代码
