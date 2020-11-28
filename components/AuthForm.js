@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Input, Box, Button } from "@chakra-ui/core";
+import { FormControl, FormLabel, Input, Box, Text } from "@chakra-ui/core";
 
 export const SignInForm = ({
   handleSubmit,
@@ -8,25 +8,39 @@ export const SignInForm = ({
   children,
 }) => {
   return (
-    <FormControl as='form' onSubmit={handleSubmit(onSubmit)}>
-      <FormLabel htmlFor='username'>Username</FormLabel>
-      <Input
-        ref={register({
-          required: "Please fill in your username",
-        })}
-        id='username'
-        type='text'
-        name='username'
-      />
-      <FormLabel htmlFor='password'>Password</FormLabel>
-      <Input
-        ref={register({
-          required: "Enter your password",
-        })}
-        id='password'
-        type='password'
-        name='password'
-      />
+    <FormControl
+      as='form'
+      d='flex'
+      flexDir='column'
+      height='full'
+      onSubmit={handleSubmit(onSubmit)}>
+      <Box d='flex' m='auto' flexDir='column' w='full'>
+        <Text as='h1' textAlign='center' mb='auto'>
+          DAYFRUIT
+        </Text>
+        <FormLabel mt={2} htmlFor='username'>
+          Username
+        </FormLabel>
+        <Input
+          ref={register({
+            required: "Please fill in your username",
+          })}
+          id='username'
+          type='text'
+          name='username'
+        />
+        <FormLabel mt={2} htmlFor='password'>
+          Password
+        </FormLabel>
+        <Input
+          ref={register({
+            required: "Enter your password",
+          })}
+          id='password'
+          type='password'
+          name='password'
+        />
+      </Box>
       {children}
     </FormControl>
   );

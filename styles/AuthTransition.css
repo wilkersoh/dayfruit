@@ -1,0 +1,59 @@
+/*
+  Flow:
+  1. In Sign in  310px
+  2. Switch to Register 600px
+  @if(text === sign) {
+    .auth-switch-exit-active { height: 600px }
+
+    .auth-switch-enter { height: 600 } (0s)
+    .auth-switch-enter-active {  }
+  }
+  ---
+  1. In Register 600px
+  2. Switch to Sign in 310px
+  problem faced
+  1. show current form input during transition
+
+  @if(text == register) {
+    .auth-switch-exit-active { height: 310px }
+  }
+
+  MAYBE CAN DO ANIMATION FADE OUT LEFT OR RIGHT
+  WHEN USER SWITCH THE FORM
+  MAYBE WE NEED SAME HEIGHT OF COMPONENT
+*/
+
+.auth-switch-enter section {
+  opacity: 0.15;
+  left: -40px;
+}
+.auth-switch-enter-active section {
+  opacity: 1;
+  left: 0;
+  transition: left 350ms cubic-bezier(0.45, 0, 0.55, 1),
+    opacity 350ms cubic-bezier(0.45, 0, 0.55, 1);
+}
+.signIn.auth-switch-enter-done section {
+}
+
+.auth-switch-exit section {
+  opacity: 1;
+  position: relative;
+  left: 0;
+}
+.auth-switch-exit-active section {
+  opacity: 0.15;
+  left: -40px;
+  transition: left 450ms cubic-bezier(0, 0.55, 0.45, 1),
+    opacity 450ms cubic-bezier(0, 0.55, 0.45, 1);
+}
+.auth-switch-exit-done section {
+  opacity: 0.15;
+}
+
+.signIn div:first-child {
+  background-color: #ffffff14;
+}
+.register div:last-child {
+  background-color: #ffffff14;
+}

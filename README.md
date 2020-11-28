@@ -151,7 +151,7 @@ appear={true}
 onExited={() => callbackAfterAnimationDone()}
 mountOnEnter={} // 當 in 變成 true 才顯示，default 是已經 render了
 它會有3種classNamePrefix
-1. appear (component eventually show up when app is loaded) （initital, nextPage)
+1. appear (component eventually show up when app is loaded) （initital, nextPage) 可以set在CSSTransition裡
 2. enter (component mounted) (on hide then trigger to show )
 3. exit  (component unmounted)
 ```react

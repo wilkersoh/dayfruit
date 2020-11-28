@@ -1,3 +1,6 @@
+@import "./TitleTransition.css";
+@import "./AuthTransition.css";
+
 html,
 body {
   padding: 0;
@@ -17,11 +20,4 @@ a {
 
 .blue {
   border: 2px solid blue;
-}
-
-.signIn div:first-child {
-  background-color: #ffffff14;
-}
-.register div:last-child {
-  background-color: #ffffff14;
 }
