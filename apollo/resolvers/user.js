@@ -4,29 +4,6 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import { createAccessToken } from "@/utils/createAccessToken";
 
-const setUserAuthCookie = (username, _id, res) => {
-  // JWT
-  const token = jwt.sign(
-    {
-      id: _id,
-      username,
-    },
-    process.env.JWT_SECRET,
-    { expiresIn: "15m" }
-  );
-
-  res.setHeader(
-    "Set-Cookie",
-    cookie.serialize("auth_u", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== "development",
-      sameSite: "strict",
-      maxAge: 3600, // 3600 = 1hour
-      path: "/",
-    })
-  );
-};
-
 const user = {
   Query: {
     me: async (_parent, _args, { db, req }) => {
@@ -44,12 +21,25 @@ const user = {
   Mutation: {
     login: async (parent, args, { db, res }) => {
       const { username, password } = args;
+      let valid;
+      try {
+        const me = await db.collection("users").findOne({ username });
+        valid = await bcrypt.compare(password, me.password);
+      } catch (error) {
+        throw new UserInputError("Credential failed", {
+          errors: {
+            username: "Username dont match",
+            password: "Password dont match",
+          },
+        });
+      }
 
-      // match username and hashPassword with database
-      const me = await db.collection("users").findOne({ username });
-      const valid = await bcrypt.compare(password, me.password);
-
-      if (!valid) throw new UserInputError();
+      if (!valid)
+        throw new UserInputError("Password invalid", {
+          errors: {
+            password: "Password dont match.",
+          },
+        });
 
       const token = { id: me._id, username };
       const { accessToken } = createAccessToken(res, token);
@@ -107,7 +97,9 @@ const user = {
 
       const { _id } = result.ops[0];
 
-      setUserAuthCookie(username, _id, res);
+      const token = { id: _id, username };
+      const { accessToken } = createAccessToken(res, token);
+
       return {
         id: _id,
         username,

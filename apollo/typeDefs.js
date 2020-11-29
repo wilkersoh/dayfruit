@@ -5,7 +5,7 @@ export const typeDefs = gql`
     id: ID
     username: String!
     accessToken: String #jwt token
-    mobile: Int
+    mobile: String
     address: String
     email: String
     createdAt: String!
@@ -27,7 +27,7 @@ export const typeDefs = gql`
     username: String!
     password: String!
     email: String!
-    mobile: Int
+    mobile: String
     address: String
   }
 

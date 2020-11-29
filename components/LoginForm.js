@@ -1,3 +1,4 @@
+import { Router } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
@@ -13,29 +14,37 @@ import {
 
 const LOGIN = gql`
   mutation login($username: String!, $password: String!) {
-    username
+    login(username: $username, password: $password) {
+      username
+    }
   }
 `;
 
-export const LoginForm = ({ children }) => {
-  const auth = useAuth();
+export const LoginForm = ({ onClose, children }) => {
+  const { signinWithCustom } = useAuth();
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
   const [loginVariables, setLoginVariables] = useState({});
+  const [validateError, setValidateError] = useState({});
 
   const [loginUser] = useMutation(LOGIN, {
-    update() {
-      //
-      console.log("update login");
+    update(cache, { data }) {
+      signinWithCustom(data);
+      onClose();
+      Router.push("/");
+    },
+    onError({ networkError, graphQLErrors }) {
+      const { username, password } = graphQLErrors[0].extensions.errors;
+      setValidateError({ username, password });
     },
     variables: loginVariables,
   });
 
   const onSubmit = (data) => {
     setLoginVariables(data);
-    // loginUser();
+    loginUser();
   };
-  console.log(errors);
+
   return (
     <FormControl
       as='form'
@@ -58,9 +67,16 @@ export const LoginForm = ({ children }) => {
           id='username'
           type='text'
           name='username'
-          isInvalid={errors.username && true}
+          isInvalid={
+            (errors.username && true) || (validateError.username && true)
+          }
           errorBorderColor='red.300'
-          placeholder={errors.username ? errors.username.message : "Username"}
+          placeholder={
+            (errors.username && errors.username.message) ||
+            validateError.username
+              ? validateError.username
+              : "Username"
+          }
         />
         <FormLabel mt={2} htmlFor='password'>
           Password
@@ -72,9 +88,16 @@ export const LoginForm = ({ children }) => {
           id='password'
           type='password'
           name='password'
-          isInvalid={errors.password && true}
+          isInvalid={
+            (errors.password && true) || (validateError.password && true)
+          }
           errorBorderColor='red.300'
-          placeholder={errors.password ? errors.password.message : "Password"}
+          placeholder={
+            (errors.password && errors.password.message) ||
+            validateError.password
+              ? validateError.password
+              : "Password"
+          }
         />
       </Box>
       <Button

@@ -1,7 +1,6 @@
 import Head from "next/head";
 import NextLink from "next/link";
-import { withApollo } from "@/apollo/client";
-
+import { CSSTransition } from "react-transition-group";
 import { Box, Text, Button, Link } from "@chakra-ui/core";
 import Container from "@/components/Container";
 import Header from "@/components/Header";

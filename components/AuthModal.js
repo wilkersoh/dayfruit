@@ -82,7 +82,7 @@ const AuthModal = ({ children }) => {
                 <ModalCloseButton />
                 <ModalBody height='540px'>
                   {isSignInForm ? (
-                    <LoginForm>
+                    <LoginForm onClose={onClose}>
                       <Button
                         type='submit'
                         mt={8}
@@ -93,7 +93,7 @@ const AuthModal = ({ children }) => {
                       </Button>
                     </LoginForm>
                   ) : (
-                    <RegisterForm>
+                    <RegisterForm onClose={onClose}>
                       <Button
                         type='submit'
                         mt={8}

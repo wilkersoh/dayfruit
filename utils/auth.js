@@ -12,10 +12,12 @@ export const useAuth = () => {
 };
 
 const useProvideAuth = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   const signinWithCustom = (rawUser) => {
     setUser(rawUser);
+
+    return user;
   };
 
   return {

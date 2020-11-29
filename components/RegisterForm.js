@@ -10,7 +10,7 @@ const REGISTER_USER = gql`
     $username: String!
     $password: String! # $mobile: String # $address: String # $email: String
     $email: String!
-    $mobile: Int
+    $mobile: String
     $address: String
   ) {
     registerUser(
@@ -29,7 +29,7 @@ const REGISTER_USER = gql`
   }
 `;
 
-export const RegisterForm = ({ children }) => {
+export const RegisterForm = ({ onClose, children }) => {
   const { signinWithCustom } = useAuth();
   const [newUser, setNewUser] = useState({});
   const [validateError, setValidateError] = useState({});
@@ -38,6 +38,7 @@ export const RegisterForm = ({ children }) => {
   const [addUser] = useMutation(REGISTER_USER, {
     update(cache, { data }) {
       signinWithCustom(data);
+      onClose();
       Router.push("/home");
     },
     onError({ networkError, graphQLErrors }) {
@@ -47,13 +48,14 @@ export const RegisterForm = ({ children }) => {
     variables: newUser,
   });
 
-  const onRegisterSubmit = (data) => {
+  const onSubmit = (data) => {
+    console.log(data);
     setNewUser(data);
     addUser();
   };
 
   return (
-    <FormControl as='form' onSubmit={handleSubmit(onRegisterSubmit)}>
+    <FormControl as='form' onSubmit={handleSubmit(onSubmit)}>
       <FormLabel mt={1} htmlFor='username'>
         Username
         <Box as='span' color='red.500' ml={1}>
