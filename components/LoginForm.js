@@ -1,4 +1,4 @@
-import { Router } from "next/router";
+import Router from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
@@ -34,8 +34,9 @@ export const LoginForm = ({ onClose, children }) => {
       Router.push("/");
     },
     onError({ networkError, graphQLErrors }) {
-      const { username, password } = graphQLErrors[0].extensions.errors;
-      setValidateError({ username, password });
+      console.log(graphQLErrors);
+      // const { username, password } = graphQLErrors[0].extensions.errors;
+      // setValidateError({ username, password });
     },
     variables: loginVariables,
   });
