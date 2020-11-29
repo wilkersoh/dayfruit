@@ -5,7 +5,7 @@ export const typeDefs = gql`
     id: ID
     username: String!
     accessToken: String #jwt token
-    mobile: String
+    mobile: Int
     address: String
     email: String
     createdAt: String!
@@ -26,9 +26,9 @@ export const typeDefs = gql`
   input RegisterInput {
     username: String!
     password: String!
-    mobile: String
+    email: String!
+    mobile: Int
     address: String
-    email: String
   }
 
   type Query {

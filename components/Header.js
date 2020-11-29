@@ -1,8 +1,11 @@
 import NextLink from "next/link";
+import { useAuth } from "@/utils/auth";
 import AuthModal from "@/components/AuthModal";
-import { Box, PseudoBox, Link } from "@chakra-ui/core";
+import { Box, PseudoBox, Link, Text } from "@chakra-ui/core";
 
 export default function Header() {
+  const { user } = useAuth();
+  console.log(user);
   return (
     <Box
       as='header'
@@ -11,14 +14,18 @@ export default function Header() {
       justifyContent='space-between'
       mt={1}
       py={2}>
-      <Box alignSelf='center'>DAYFRUIT</Box>
+      <NextLink href='/'>
+        <Link alignSelf='center'>
+          <Text>DAYFRUIT</Text>
+        </Link>
+      </NextLink>
       <Box d='flex'>
         <AuthModal>
           <PseudoBox p={2} cursor='pointer' _hover={{ color: "#c0c0c0" }}>
             Sign In
           </PseudoBox>
         </AuthModal>
-        <NextLink href='/home' passHref>
+        <NextLink href='/home'>
           <Link>
             <PseudoBox
               py={2}

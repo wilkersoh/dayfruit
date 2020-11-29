@@ -69,7 +69,7 @@ const user = {
       const hasUser = await db.collection("users").findOne({ username });
       const hasEmail = await db.collection("users").findOne({ email });
 
-      if (hasUser && hasEmail)
+      if (hasUser && hasEmail.email?.length > 0)
         throw new UserInputError("Username and Email is taken", {
           errors: {
             username: "This username is taken",
@@ -91,16 +91,6 @@ const user = {
         });
 
       password = await bcrypt.hash(password, 12);
-      // const authorization = ctx.req.headers["authorization"];
-
-      // if (!authorization) throw new Error("Not authorization");
-
-      // try {
-      //   const token = authorization.split(" ")[1];
-      //   const payload = verify(token, process.env.JWT_SECRET);
-      // } catch (error) {
-      //   throw new Error("Not Authorizated", error);
-      // }
 
       try {
         result = await db.collection("users").insertOne({

@@ -1,19 +1,10 @@
-import Router from "next/router";
+import React from "react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useAuth } from "@/utils/auth";
-import { gql, useMutation } from "@apollo/client";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import styled from "@emotion/styled";
 
-const Test = styled.div`
-  border: 4px solid red;
-  @media (max-width: 768px) {
-    border: 4px solid blue;
-  }
-`;
-
-import { SignInForm, RegisterForm } from "@/components/AuthForm";
+import { LoginForm } from "@/components/LoginForm";
+import { RegisterForm } from "@/components/RegisterForm";
 
 import {
   Modal,
@@ -27,62 +18,16 @@ import {
   PseudoBox,
 } from "@chakra-ui/core";
 
-const REGISTER_USER = gql`
-  mutation registerUser(
-    $username: String!
-    $password: String!
-    $mobile: String
-    $address: String
-    $email: String
-  ) {
-    registerUser(
-      registerInput: {
-        username: $username
-        password: $password
-        mobile: $mobile
-        address: $address
-        email: $email
-      }
-    ) {
-      id
-      username
-      mobile
-      address
-      email
-    }
+const Test = styled.div`
+  border: 4px solid red;
+  @media (max-width: 768px) {
+    border: 4px solid blue;
   }
 `;
 
 const AuthModal = ({ children }) => {
-  const [newUser, setNewUser] = useState({});
-  const [isSignIn, setIsSignIn] = useState(true);
+  const [isSignInForm, setSignInForm] = useState(true);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const auth = useAuth();
-  const { register, handleSubmit, watch, errors } = useForm();
-
-  const [addUser, { loading }] = useMutation(REGISTER_USER, {
-    update(cache, { data }) {
-      auth.signinWithCustom(data);
-      Router.push("/product");
-    },
-    onError({ networkError, graphQLErrors }) {
-      console.log(graphQLErrors[0].extensions);
-      const { username } = graphQLErrors[0].extensions;
-      // setErrors({ username });
-    },
-    variables: newUser,
-  });
-
-  const onSignInSubmit = (data) => {
-    // setNewUser(data);
-    // addUser();
-  };
-
-  const onRegisterSubmit = (data) => {
-    setNewUser(data);
-    addUser();
-  };
 
   return (
     <>
@@ -99,7 +44,7 @@ const AuthModal = ({ children }) => {
         <ModalOverlay />
         <SwitchTransition>
           <CSSTransition
-            key={isSignIn}
+            key={isSignInForm}
             timeout={{ exit: 450, enter: 350 }}
             classNames={"auth-switch"}>
             <ModalContent
@@ -114,9 +59,9 @@ const AuthModal = ({ children }) => {
                 <PseudoBox
                   d='flex'
                   justifyContent='center'
-                  className={isSignIn ? "signIn" : "register"}>
+                  className={isSignInForm ? "signIn" : "register"}>
                   <Box
-                    onClick={() => setIsSignIn(true)}
+                    onClick={() => setSignInForm(true)}
                     px={6}
                     py={4}
                     borderBottomLeftRadius={6}
@@ -125,7 +70,7 @@ const AuthModal = ({ children }) => {
                     Sign In
                   </Box>
                   <Box
-                    onClick={() => setIsSignIn(false)}
+                    onClick={() => setSignInForm(false)}
                     px={6}
                     py={4}
                     borderBottomLeftRadius={6}
@@ -136,12 +81,8 @@ const AuthModal = ({ children }) => {
                 </PseudoBox>
                 <ModalCloseButton />
                 <ModalBody height='540px'>
-                  {isSignIn ? (
-                    <SignInForm
-                      handleSubmit={handleSubmit}
-                      register={register}
-                      onSubmit={onSignInSubmit}
-                      errors={errors}>
+                  {isSignInForm ? (
+                    <LoginForm>
                       <Button
                         type='submit'
                         mt={8}
@@ -150,14 +91,9 @@ const AuthModal = ({ children }) => {
                         w='full'>
                         Sign In
                       </Button>
-                    </SignInForm>
+                    </LoginForm>
                   ) : (
-                    <RegisterForm
-                      handleSubmit={handleSubmit}
-                      register={register}
-                      watch={watch}
-                      onSubmit={onRegisterSubmit}
-                      errors={errors}>
+                    <RegisterForm>
                       <Button
                         type='submit'
                         mt={8}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
+import React, { useState, useContext, createContext } from "react";
 
 const authContext = createContext();
 
@@ -15,7 +15,6 @@ const useProvideAuth = () => {
   const [user, setUser] = useState({});
 
   const signinWithCustom = (rawUser) => {
-    console.log("inside handleUser");
     setUser(rawUser);
   };
 
