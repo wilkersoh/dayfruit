@@ -11,6 +11,7 @@ import {
   Text,
   Button,
   Icon,
+  useToast,
 } from "@chakra-ui/core";
 
 const LOGIN = gql`
@@ -21,9 +22,30 @@ const LOGIN = gql`
   }
 `;
 
+const toastModal = (toast, status, data) => {
+  let title, description;
+  if (status === "success") {
+    title = `Welcome back, ${data.login.username}`;
+    description = `Enjoy our site!`;
+  } else {
+    title = `Authentication failed.`;
+    description = `${data.username} \n ${data.password}`;
+  }
+
+  return toast({
+    title,
+    description,
+    status,
+    duration: 5000,
+    isClosable: true,
+  });
+};
+
 export const LoginForm = ({ onClose, children }) => {
   const { signinWithCustom } = useAuth();
   const router = useRouter();
+  const toast = useToast();
+
   const { register, handleSubmit, errors } = useForm();
   const [loginVariables, setLoginVariables] = useState({});
   const [validateError, setValidateError] = useState({});
@@ -31,6 +53,7 @@ export const LoginForm = ({ onClose, children }) => {
   const [loginUser] = useMutation(LOGIN, {
     update(cache, { data }) {
       signinWithCustom(data);
+      toastModal(toast, "success", data);
       onClose();
       const currentPath = router.pathname;
       if (currentPath === "/") router.push("home");
@@ -38,6 +61,7 @@ export const LoginForm = ({ onClose, children }) => {
     },
     onError({ networkError, graphQLErrors }) {
       const { username, password } = graphQLErrors[0].extensions.errors;
+      toastModal(toast, "error", { username, password });
       setValidateError({ username, password });
     },
     variables: loginVariables,
