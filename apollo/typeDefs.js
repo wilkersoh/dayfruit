@@ -15,12 +15,14 @@ export const typeDefs = gql`
   type Product {
     name: String!
     # category: Category!
-    price: Int!
-    quantity: Int!
-    image: String!
-    from: String
-    view: Int
-    description: String
+    # price: Int!
+    # quantity: Int!
+    # image: String
+    # view: Int
+    benefit: String
+    country: String
+    vitamins: [String]
+    createdAt: String!
   }
 
   input RegisterInput {
@@ -38,5 +40,11 @@ export const typeDefs = gql`
   type Mutation {
     registerUser(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
+    add_fruit(
+      name: String!
+      benefit: String
+      country: String
+      vitamins: [String]
+    ): Product
   }
 `;

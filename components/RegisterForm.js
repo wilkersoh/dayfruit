@@ -1,4 +1,4 @@
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,7 @@ const REGISTER_USER = gql`
 `;
 
 export const RegisterForm = ({ onClose, children }) => {
+  const router = useRouter();
   const { signinWithCustom } = useAuth();
   const [newUser, setNewUser] = useState({});
   const [validateError, setValidateError] = useState({});
@@ -39,7 +40,9 @@ export const RegisterForm = ({ onClose, children }) => {
     update(cache, { data }) {
       signinWithCustom(data);
       onClose();
-      Router.push("/home");
+      const currentPath = router.pathname;
+      if (currentPath === "/") router.push("home");
+      else router.push(currentPath);
     },
     onError({ networkError, graphQLErrors }) {
       const { username, email } = graphQLErrors[0].extensions.errors;
@@ -49,7 +52,6 @@ export const RegisterForm = ({ onClose, children }) => {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     setNewUser(data);
     addUser();
   };

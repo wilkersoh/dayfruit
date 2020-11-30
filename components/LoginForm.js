@@ -1,4 +1,4 @@
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
@@ -10,6 +10,7 @@ import {
   Box,
   Text,
   Button,
+  Icon,
 } from "@chakra-ui/core";
 
 const LOGIN = gql`
@@ -22,7 +23,7 @@ const LOGIN = gql`
 
 export const LoginForm = ({ onClose, children }) => {
   const { signinWithCustom } = useAuth();
-
+  const router = useRouter();
   const { register, handleSubmit, errors } = useForm();
   const [loginVariables, setLoginVariables] = useState({});
   const [validateError, setValidateError] = useState({});
@@ -31,12 +32,13 @@ export const LoginForm = ({ onClose, children }) => {
     update(cache, { data }) {
       signinWithCustom(data);
       onClose();
-      Router.push("/");
+      const currentPath = router.pathname;
+      if (currentPath === "/") router.push("home");
+      else router.push(currentPath);
     },
     onError({ networkError, graphQLErrors }) {
-      console.log(graphQLErrors);
-      // const { username, password } = graphQLErrors[0].extensions.errors;
-      // setValidateError({ username, password });
+      const { username, password } = graphQLErrors[0].extensions.errors;
+      setValidateError({ username, password });
     },
     variables: loginVariables,
   });
@@ -54,9 +56,12 @@ export const LoginForm = ({ onClose, children }) => {
       height='full'
       onSubmit={handleSubmit(onSubmit)}>
       <Box d='flex' m='auto' flexDir='column' w='full'>
-        <Text as='h1' textAlign='center' mb='auto'>
-          DAYFRUIT
-        </Text>
+        <Box d='flex' justifyContent='center' alignItems='center'>
+          <Text as='h1' textAlign='center' mb='auto'>
+            DAYFRUIT
+          </Text>
+          <Icon name='logo' size='38px' ml={2} />
+        </Box>
         <FormLabel mt={2} htmlFor='username'>
           Username
         </FormLabel>
@@ -104,13 +109,13 @@ export const LoginForm = ({ onClose, children }) => {
       <Button
         // onClick={(e) => auth.signinWithGithub()}
         mb={4}
-        leftIcon='github'
-        backgroundColor='gray.900'
+        leftIcon='facebook'
+        backgroundColor='blue.800'
         color='white'
         fontWeigh='medium'
-        _hover={{ bg: "gray.700" }}
-        _active={{ bg: "gray.800", transform: "scale(0.95" }}>
-        Sign in with Github
+        _hover={{ bg: "blue.700" }}
+        _active={{ bg: "blue.800", transform: "scale(0.95" }}>
+        Sign in with Facebook
       </Button>
       <Button
         // onClick={(e) => auth.signinWithGoogle()}
