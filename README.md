@@ -61,14 +61,20 @@ yarn install
 2. Trigger useEffect and Called RefreshTokenApi (getStaticProps handle it, it will call in server time)
 3.  Step > Browser Refresh > NextJs Server > GraphQL Server > NextJs Server (return accessToken to Browser) > Browser
 
-## index.js
+# index.js
 - Listing Product Category
 
-## about
+# about
 - Client Details, Contact, Email, Google Map
 
-## [category] index.js
+# home index.js
 - Show category items
+- props: (component Category)
+  - vitamins, fruitsName, imageSrc, fruitId
+
+# Search Features
+- Vitamins
+- Fruit
 
 # Design Mobile First
 # Components
@@ -93,7 +99,7 @@ yarn install
 # Database Structure Information
 - Admin (username!, password!, mobile!, address!, avatar!, description)
 - User (username!, password!, mobile, address, email, isAdmin)
-- Product (name!, category!, price!, quantity!, image!, from!, view, description )
+- Product (name!, image!, from!, view, description )
 - Point ()
 
 # Create Account (unique value)

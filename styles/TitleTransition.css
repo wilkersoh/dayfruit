@@ -1,0 +1,7 @@
+.title-transition-appear {
+  transform: translateY(-20px);
+}
+.title-transition-appear-active {
+  transform: translateY(-75px);
+  transition: transform 0.75s cubic-bezier(0, 0.85, 1, 0.08);
+}
