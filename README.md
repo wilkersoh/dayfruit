@@ -105,6 +105,12 @@ yarn install
 # Create Account (unique value)
 - Username, email
 
+# Create Fruit (unique value)
+- name
+
+# Notes
+1. .sort({ createdAt: -1 }) desc 最新到舊
+
 # UI Look (Mobile)
 - Header [Content] Footer
 - (Home) (Header) Logo/Text, Sign In / Find Deals (Go To Product List)
@@ -140,6 +146,10 @@ Last. Auth0
 -  它的database裡面 沒有 token 這個key 但是又在 client side 要求 要 return token
 4. Cannot query field \"token\" on type \"User\"."
 -  mutation return data name "token" but, it already chanage to accessToken
+5. Expected Iterable, but did not find one for field (in playground)
+-  the return data from database is not array type
+6. Didn't Update UI after mutation writeQuery (cached updated but ui not)
+- it must included all data attribute it needed, like _id, createdAt, etg
 
 # Flow Transition Animation SignInRegister Form
 1. SignIn Button Bg, moving right and overflow hidden

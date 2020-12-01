@@ -17,7 +17,10 @@ const apolloServer = new ApolloServer({
         if (!dbClient.isConnected()) await dbClient.connect();
         db = dbClient.db("dayfruit");
       } catch (error) {
-        console.log(`error while connecting with graphql context (db)`, error);
+        console.log(
+          `error while connecting with graphql context (db): `,
+          error
+        );
       }
     }
     return { db, res, req };

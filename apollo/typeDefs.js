@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 
 export const typeDefs = gql`
   type User {
-    id: ID
+    id: ID!
     username: String!
     accessToken: String #jwt token
     mobile: String
@@ -13,6 +13,7 @@ export const typeDefs = gql`
   }
 
   type Product {
+    _id: ID!
     name: String!
     # category: Category!
     # price: Int!
@@ -35,16 +36,25 @@ export const typeDefs = gql`
 
   type Query {
     me: User!
+    getFruits: [Product]
+    getFruit(fruitId: ID!): Product
   }
 
   type Mutation {
     registerUser(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
-    add_fruit(
+    create_fruit(
       name: String!
       benefit: String
       country: String
       vitamins: [String]
     ): Product
+    update_fruit(
+      name: String!
+      benefit: String
+      country: String
+      vitamns: [String]
+    ): Product
+    delete_fruit(id: ID!): Product
   }
 `;

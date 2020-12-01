@@ -2,8 +2,8 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-import { FormControl, FormLabel, Input, Box } from "@chakra-ui/core";
 import { useAuth } from "@/utils/auth";
+import { FormControl, FormLabel, Input, Box } from "@chakra-ui/core";
 
 const REGISTER_USER = gql`
   mutation registerUser(
@@ -31,6 +31,7 @@ const REGISTER_USER = gql`
 
 export const RegisterForm = ({ onClose, children }) => {
   const router = useRouter();
+
   const { signinWithCustom } = useAuth();
   const [newUser, setNewUser] = useState({});
   const [validateError, setValidateError] = useState({});
