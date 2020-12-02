@@ -1,68 +1,58 @@
 import NextLink from "next/link";
 import { useState } from "react";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { fruitValidate } from "@/utils/validator";
-import { GET_FRUTIS_QUERY } from "@/apollo/queries";
+// import { GET_FRUTIS_QUERY } from "@/apollo/queries";
 
 import {
   Box,
   FormControl,
   FormLabel,
   Input,
-  CheckboxGroup,
-  Checkbox,
   Textarea,
   Button,
   useToast,
-  Link,
+  Select,
 } from "@chakra-ui/core";
 
-const vitamins = {
-  Vitamin_A: "Vitamin A",
-  Vitamin_B1: "Vitamin B1",
-  Vitamin_B6: "Vitamin B6",
-  Vitamin_C: "Vitamin C",
-  Vitamin_E: "Vitamin E",
-  Vitamin_C2: "Vitamin C2",
-};
-
 const ADD_FRUIT_MUTATION = gql`
-  mutation createFruit(
-    $name: String!
-    $benefit: String
-    $country: String
-    $vitamins: [String]
-  ) {
-    create_fruit(
-      name: $name
-      benefit: $benefit
-      country: $country
-      vitamins: $vitamins
-    ) {
+  mutation createFruit($name: String!, $benefit: String, $country: String) {
+    createFruit(name: $name, benefit: $benefit, country: $country) {
       name
       benefit
       country
-      vitamins
     }
   }
 `;
+
+// const GET_CATEGORY_QUERY = gql`
+//   query getCategories {
+//     getCategories {
+//       _id
+//       name
+//     }
+//   }
+// `;
 
 export default function AddFruitForm({ onClose }) {
   const [fruitVariable, setFruitVariable] = useState({});
   const [formError, setFormError] = useState({});
   const toast = useToast();
-
+  // const { loading, error, data: categoryOptions } = useQuery(
+  //   GET_CATEGORY_QUERY
+  // );
+  // console.log(categoryOptions);
   const [addFruit] = useMutation(ADD_FRUIT_MUTATION, {
-    update(cache, result) {
+    update(getCategoriescache, result) {
       const cachedData = cache.readQuery({
         query: GET_FRUTIS_QUERY,
       });
 
       cachedData.getFruits = [
         {
-          ...result.data.create_fruit,
+          ...result.data.createFruit,
           createdAt: new Date().toISOString(),
-          _id: result.data.create_fruit.name, // this only temporary and must unique.
+          _id: result.data.createFruit.name, // this only temporary and must unique.
         },
         ...cachedData.getFruits,
       ];
@@ -84,7 +74,14 @@ export default function AddFruitForm({ onClose }) {
     },
     onError({ networkError, graphQLErrors }) {
       const errors = graphQLErrors[0].extensions.errors;
-      setFruitVariable(errors);
+      toast({
+        title: graphQLErrors[0].message,
+        description: errors.name,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+      setFormError(errors);
     },
     variables: fruitVariable,
   });
@@ -94,6 +91,10 @@ export default function AddFruitForm({ onClose }) {
     setFruitVariable({ ...fruitVariable, [e.target.name]: e.target.value });
   };
 
+  const handleSelectOption = (e) => {
+    setFruitVariable({ ...fruitVariable, ["categories"]: e.target.value });
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     const { valid, errors } = fruitValidate(fruitVariable);
@@ -101,10 +102,6 @@ export default function AddFruitForm({ onClose }) {
     if (!valid) return setFormError(errors);
 
     addFruit();
-  };
-
-  const handleCheckBox = (data) => {
-    setFruitVariable({ ...fruitVariable, ["vitamins"]: data });
   };
 
   return (
@@ -126,8 +123,6 @@ export default function AddFruitForm({ onClose }) {
           placeholder={formError.name ? formError.name : "Fruit name"}
           onChange={onChange}
         />
-        {/* <FormLabel htmlFor='image'>Image:</FormLabel>
-      <Input type='file' name='image' /> */}
         <FormLabel htmlFor='benefit' mt={1}>
           Benefit
         </FormLabel>
@@ -137,6 +132,17 @@ export default function AddFruitForm({ onClose }) {
           size='sm'
           onChange={onChange}
         />
+        <FormLabel htmlFor='category' mt={1}>
+          Category
+        </FormLabel>
+        <Select
+          onChange={handleSelectOption}
+          placeholder='Select fruit category'>
+          {/* {categoryOptions &&
+            categoryOptions.getCategories.map(({ _id, name }) => (
+              <option key={_id}>{name}</option>
+            ))} */}
+        </Select>
         <FormLabel htmlFor='country' mt={1}>
           Country
         </FormLabel>
@@ -147,24 +153,8 @@ export default function AddFruitForm({ onClose }) {
           aria-describedby='country'
           onChange={onChange}
         />
-
-        <Box d='flex' maxH='155px'>
-          <FormLabel htmlFor='vitamins' mt={1}>
-            Vitamins:
-          </FormLabel>
-          <CheckboxGroup
-            d='flex'
-            flexWrap='wrap'
-            variantColor='green'
-            onChange={handleCheckBox}>
-            {Object.entries(vitamins).map(([key, value]) => (
-              <Checkbox key={key} mr={1} value={key}>
-                {value}
-              </Checkbox>
-            ))}
-          </CheckboxGroup>
-        </Box>
-
+        {/* <FormLabel htmlFor='image'>Image:</FormLabel>
+        <Input type='file' name='image' /> */}
         <Button type='submit' variantColor='blue' align='right'>
           Submit
         </Button>

@@ -96,6 +96,11 @@ yarn install
 - CMS/Auth
 - CMS/index (Productions)
 
+# CMS Page
+- Index
+- Category (One to Many)
+- Product
+
 # Database Structure Information
 - Admin (username!, password!, mobile!, address!, avatar!, description)
 - User (username!, password!, mobile, address, email, isAdmin)
@@ -150,6 +155,8 @@ Last. Auth0
 -  the return data from database is not array type
 6. Didn't Update UI after mutation writeQuery (cached updated but ui not)
 - it must included all data attribute it needed, like _id, createdAt, etg
+7. GraphQLError [Object]: Syntax Error: Expected Name, found "(".
+- createCategory:(name: String!): Category，多一個冒號
 
 # Flow Transition Animation SignInRegister Form
 1. SignIn Button Bg, moving right and overflow hidden
@@ -233,3 +240,10 @@ component={'div'} by Default it will created a div component. Can set it to null
 
 lib -  库文件，library的缩写
 utils - 工具代码
+
+
+# IMPROVEMENT
+> /pages/cms/products
+- 可以一次 request 拿 全部 需要的data (包括 create fruit 裡的 options)
+> /apollo/client
+- make auth more better

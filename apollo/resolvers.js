@@ -1,14 +1,17 @@
 import UserResolver from "./resolvers/user";
-import ProductResolver from "./resolvers/product";
+import FruitResolver from "./resolvers/fruit";
+import CategoryResolver from "./resolvers/category";
 
 export const resolvers = {
   Query: {
     ...UserResolver.Query,
-    ...ProductResolver.Query,
+    ...FruitResolver.Query,
+    ...CategoryResolver.Query,
   },
 
   Mutation: {
     ...UserResolver.Mutation,
-    ...ProductResolver.Mutation,
+    ...FruitResolver.Mutation,
+    ...CategoryResolver.Mutation,
   },
 };

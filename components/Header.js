@@ -1,28 +1,52 @@
 import NextLink from "next/link";
 import { useAuth } from "@/utils/auth";
 import AuthModal from "@/components/AuthModal";
-import { Box, PseudoBox, Link, Text } from "@chakra-ui/core";
+import Container from "@/components/Container";
+import Hamburger from "@/icons/Hamburger";
+import {
+  Box,
+  PseudoBox,
+  Link,
+  Text,
+  IconButton,
+  useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from "@chakra-ui/core";
 
-export default function Header() {
+const Header = (props) => {
   const { user } = useAuth();
-  console.log(user);
+
   return (
     <Box
       as='header'
       d='flex'
       alignContent='center'
       justifyContent='space-between'
-      mt={1}
-      py={2}>
+      p={3}>
       <NextLink href='/'>
         <Link alignSelf='center'>
           <Text>DAYFRUIT</Text>
         </Link>
       </NextLink>
       <Box d='flex'>
+        {/* <>
+            <PseudoBox
+              as='div'
+              p={2}
+              cursor='pointer'
+              _hover={{ color: "#c0c0c0" }}>
+              {"Logout"}
+            </PseudoBox>
+          </> */}
         <AuthModal>
           <PseudoBox p={2} cursor='pointer' _hover={{ color: "#c0c0c0" }}>
-            Sign In
+            {"Sign In"}
           </PseudoBox>
         </AuthModal>
         <NextLink href='/home'>
@@ -43,4 +67,6 @@ export default function Header() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Header;

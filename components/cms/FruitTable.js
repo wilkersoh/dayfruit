@@ -17,7 +17,7 @@ const FruitTable = ({ fruits }) => {
           <Th>Benefit</Th>
           <Th>Vitamins</Th>
           <Th>Country</Th>
-          <Th>{""}</Th>
+          <Th w='100px'>{""}</Th>
         </Tr>
       </thead>
       <tbody>

@@ -8,7 +8,6 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
-  Box,
 } from "@chakra-ui/core";
 
 function AddFruitModal({ children }) {

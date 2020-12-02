@@ -18,11 +18,7 @@ const product = {
     },
   },
   Mutation: {
-    create_fruit: async (
-      parent,
-      { name, benefit, country, vitamins },
-      { db }
-    ) => {
+    createFruit: async (parent, { name, benefit, country }, { db }) => {
       let fruitsCursor;
       if (!name || name.trim() === "")
         throw new UserInputError("Name is required", {
@@ -45,7 +41,6 @@ const product = {
           name,
           benefit,
           country,
-          vitamins,
           createdAt: new Date().toISOString(),
         });
       } catch (error) {
@@ -59,7 +54,7 @@ const product = {
         ...rest,
       };
     },
-    update_fruit: async (_, { name, benefit, country, vitamins }, { db }) => {
+    updateFruit: async (_, { name, benefit, country, vitamins }, { db }) => {
       try {
         // updateOne return number 1 or 0; findOneAndUpdate can return updated docs
         await db.collection("fruits").updateOne(

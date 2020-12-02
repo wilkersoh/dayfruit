@@ -1,8 +1,8 @@
 import NextLink from "next/link";
 import Head from "next/head";
 import { useQuery } from "@apollo/react-hooks";
+
 import Container from "@/components/cms/Container";
-import AddFruitForm from "@/components/cms/AddFruitForm";
 import ProductTableSkeleton from "@/components/cms/ProductTableSkeleton";
 import FruitTable from "@/components/cms/FruitTable";
 import AddFruitModal from "@/components/cms/AddFruitModal";
@@ -17,7 +17,7 @@ const HeaderCreate = (props) => (
   </Box>
 );
 
-export default function products() {
+function Products() {
   // const { loading, error, data, fetchMore } = useQuery(GET_FRUTIS_QUERY, {
   //   variables: { after: null },
   // });
@@ -72,3 +72,5 @@ export default function products() {
     </Container>
   );
 }
+
+export default Products;
