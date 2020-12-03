@@ -8,7 +8,7 @@ const badgeColors = {
   GRAPE: "purple",
 };
 
-export default function Category({}) {
+export default function Category() {
   return (
     <Box
       d='flex'

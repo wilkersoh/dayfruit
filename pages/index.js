@@ -1,9 +1,57 @@
 import Head from "next/head";
 import NextLink from "next/link";
 import { CSSTransition } from "react-transition-group";
-import { Box, Text, Button, Link } from "@chakra-ui/core";
+import { Box, Text, Button, Link, PseudoBox } from "@chakra-ui/core";
+import AuthModal from "@/components/AuthModal";
 import Container from "@/components/Container";
-import Header from "@/components/Header";
+
+const Header = (props) => {
+  return (
+    <Box
+      as='header'
+      d='flex'
+      alignContent='center'
+      justifyContent='space-between'
+      p={3}>
+      <NextLink href='/'>
+        <Link alignSelf='center'>
+          <Text>DAYFRUIT</Text>
+        </Link>
+      </NextLink>
+      <Box d='flex'>
+        {/* <>
+            <PseudoBox
+              as='div'
+              p={2}
+              cursor='pointer'
+              _hover={{ color: "#c0c0c0" }}>
+              {"Logout"}
+            </PseudoBox>
+          </> */}
+        <AuthModal>
+          <PseudoBox p={2} cursor='pointer' _hover={{ color: "#c0c0c0" }}>
+            {"Sign In"}
+          </PseudoBox>
+        </AuthModal>
+        <NextLink href='/categories'>
+          <Link>
+            <PseudoBox
+              py={2}
+              px={4}
+              ml={2}
+              borderRadius={6}
+              transition={"ease-in-out 350ms"}
+              cursor='pointer'
+              bg={"#ffffff14"}
+              _hover={{ bg: "#ffffff29" }}>
+              Find Fruits
+            </PseudoBox>
+          </Link>
+        </NextLink>
+      </Box>
+    </Box>
+  );
+};
 
 const Index = () => {
   return (
@@ -14,8 +62,8 @@ const Index = () => {
       </Head>
       <Box minH='100vh' d='flex' flexDir='column'>
         <Header />
-        <Container d='flex' mt={20}>
-          <Box px={2} d='flex' flexDir='column' flex={1}>
+        <Container d='flex' m='auto'>
+          <Box px={2} d='flex' flexDir='column' flex={1} mb={16}>
             <Box m='auto' textAlign='center'>
               <Box mb={8}>
                 <Text as='h1'>

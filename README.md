@@ -115,6 +115,26 @@ yarn install
 
 # Notes
 1. .sort({ createdAt: -1 }) desc 最新到舊
+2. aria-current=page 来描述navlink中当前显示的页面
+
+3. passing condition in component props
+- If isActive is truthy the object literal with bg and rounded properties is spread into the passed props to SideNavLink. isActive itself is not passed as a props
+
+```react
+...{bg: "teal.200", rounded: "sm",}
+
+<NavLink href={href}>
+  {(isActive) => (
+    <SideNavLink
+      {...(isActive && {
+        bg: "teal.200",
+        rounded: "sm",
+      })}
+      {...props}
+    />
+  )}
+</NavLink>
+```
 
 # UI Look (Mobile)
 - Header [Content] Footer
@@ -247,3 +267,4 @@ utils - 工具代码
 - 可以一次 request 拿 全部 需要的data (包括 create fruit 裡的 options)
 > /apollo/client
 - make auth more better
+- /components/NavLink ComponentLink/SideNavLink ref （看需不需要）

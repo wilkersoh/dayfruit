@@ -18,6 +18,11 @@ a {
   box-sizing: border-box;
 }
 
+.sidebar-type-checkbox {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .blue {
   border: 2px solid blue;
 }
