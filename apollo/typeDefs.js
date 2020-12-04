@@ -18,7 +18,6 @@ export const typeDefs = gql`
     # quantity: Int!
     # view: Int
     # image: String
-    benefit: String
     country: String
     vitamins: [String]
     category: String
@@ -28,6 +27,7 @@ export const typeDefs = gql`
   type Category {
     _id: ID!
     name: String!
+    benefit: String
     vitamins: [String]
     createdAt: String!
   }
@@ -50,14 +50,9 @@ export const typeDefs = gql`
   type Mutation {
     registerUser(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
-    createFruit(
-      name: String!
-      benefit: String
-      country: String
-      category: String!
-    ): Fruit
-    updateFruit(name: String!, benefit: String, country: String): Fruit
+    createFruit(name: String!, country: String, category: String!): Fruit
+    updateFruit(name: String!, country: String): Fruit
     deleteFruit(id: ID!): Fruit
-    createCategory(name: String!, vitamins: [String]): Category
+    createCategory(name: String!, benefit: String, vitamins: [String]): Category
   }
 `;

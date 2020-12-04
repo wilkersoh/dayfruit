@@ -18,11 +18,7 @@ const product = {
     },
   },
   Mutation: {
-    createFruit: async (
-      parent,
-      { name, benefit, country, category },
-      { db }
-    ) => {
+    createFruit: async (parent, { name, country, category }, { db }) => {
       let fruitsCursor;
       if (!name || name.trim() === "")
         throw new UserInputError("Name is required", {
@@ -31,19 +27,22 @@ const product = {
           },
         });
 
-      const hasName = await db.collection("fruits").findOne({ name });
+      const uppercaseName = name.toUpperCase();
+
+      const hasName = await db
+        .collection("fruits")
+        .findOne({ name: uppercaseName });
 
       if (hasName)
         throw new UserInputError("Not accepted duplicate name value", {
           errors: {
-            name: 'Not accepted duplicate "name" value',
+            name: `${uppercaseName} already exist in database`,
           },
         });
 
       try {
         fruitsCursor = await db.collection("fruits").insertOne({
-          name,
-          benefit,
+          name: uppercaseName,
           country,
           category,
           createdAt: new Date().toISOString(),
@@ -59,14 +58,14 @@ const product = {
         ...rest,
       };
     },
-    updateFruit: async (_, { name, benefit, country, vitamins }, { db }) => {
+    updateFruit: async (_, { name, country, vitamins }, { db }) => {
       try {
         // updateOne return number 1 or 0; findOneAndUpdate can return updated docs
         await db.collection("fruits").updateOne(
           {
             _id: new ObjectId("5fc52b2d69dda4254dc9ef51"),
           },
-          { $set: { name, benefit, country } }
+          { $set: { name, country } }
         );
       } catch (error) {
         console.log(error);

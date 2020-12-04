@@ -16,6 +16,7 @@ import {
   Box,
   CheckboxGroup,
   Checkbox,
+  Textarea,
 } from "@chakra-ui/core";
 
 import { GET_CATEGORY_QUERY } from "@/apollo/queries";
@@ -69,6 +70,7 @@ function AddCategoryModal({ children }) {
       onClose();
     },
     onError({ networkError, graphQLErrors }) {
+      console.log(graphQLErrors);
       const errors = graphQLErrors[0].extensions.errors;
       toast({
         title: graphQLErrors[0].message,
@@ -141,12 +143,24 @@ function AddCategoryModal({ children }) {
                   onChange={onChange}
                 />
               </FormControl>
+              <FormControl as='fieldset'>
+                <FormLabel htmlFor='benefit' mt={1}>
+                  Benefit
+                </FormLabel>
+                <Textarea
+                  name='benefit'
+                  placeholder='What benefits this fruit bring? '
+                  size='sm'
+                  onChange={onChange}
+                />
+              </FormControl>
               <FormControl as='fieldset' d='flex' maxH='155px' mt={2}>
                 <FormLabel htmlFor='vitamins' mt={1}>
                   Vitamins:
                 </FormLabel>
                 <CheckboxGroup
                   variantColor='green'
+                  name='vitamins'
                   className='category-form-vitamin'
                   onChange={handleCheckBox}>
                   {Object.entries(vitamins).map(([key, value]) => (

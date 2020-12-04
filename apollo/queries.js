@@ -5,7 +5,6 @@ export const GET_FRUTIS_QUERY = gql`
     getFruits {
       _id
       name
-      benefit
       createdAt
     }
   }
@@ -16,6 +15,7 @@ export const GET_CATEGORY_QUERY = gql`
     getCategories {
       _id
       name
+      benefit
     }
   }
 `;

@@ -10,7 +10,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Button,
   useToast,
   Select,
@@ -46,7 +45,7 @@ export default function AddFruitForm({ onClose }) {
 
       toast({
         title: "Fruit created",
-        description: "Already added into database",
+        description: `${result.data.createFruit.name} added into database`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -74,7 +73,6 @@ export default function AddFruitForm({ onClose }) {
   };
 
   const handleSelectOption = (e) => {
-    console.log(e);
     setFruitVariable({ ...fruitVariable, [e.target.name]: e.target.value });
   };
 
@@ -86,7 +84,7 @@ export default function AddFruitForm({ onClose }) {
 
     addFruit();
   };
-  console.log(fruitVariable);
+
   return (
     <>
       <FormControl as='form' onSubmit={onSubmit}>
@@ -132,7 +130,7 @@ export default function AddFruitForm({ onClose }) {
             onChange={onChange}
           />
         </FormControl>
-        <FormControl as='fieldset'>
+        {/* <FormControl as='fieldset'>
           <FormLabel htmlFor='benefit' mt={1}>
             Benefit
           </FormLabel>
@@ -142,7 +140,7 @@ export default function AddFruitForm({ onClose }) {
             size='sm'
             onChange={onChange}
           />
-        </FormControl>
+        </FormControl> */}
         <FormControl as='fieldset'>
           <FormLabel htmlFor='country' mt={1}>
             Country

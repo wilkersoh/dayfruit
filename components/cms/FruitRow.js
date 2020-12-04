@@ -18,11 +18,11 @@ const VitaminLabel = ({ vitamin }) => {
   );
 };
 
-const FruitRow = ({ name, id, benefit, country, vitamins }) => {
+const FruitRow = ({ name, id, country, vitamins }) => {
   return (
     <Box key={id} as='tr'>
       <Td fontWeight='medium'>{name}</Td>
-      <Td>{benefit}</Td>
+      <Td>removeBenefit</Td>
       <Td>
         remove vitamins
         {/* {vitamins.map((vitamin) => (

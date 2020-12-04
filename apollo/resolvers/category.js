@@ -13,19 +13,24 @@ const category = {
     },
   },
   Mutation: {
-    createCategory: async (parent, { name, vitamins }, { db }) => {
+    createCategory: async (parent, { name, benefit, vitamins }, { db }) => {
       let categoryCursor;
+      const uppercaseName = name.toUpperCase();
 
-      const hasName = await db.collection("categories").findOne({ name });
+      const hasName = await db
+        .collection("categories")
+        .findOne({ name: uppercaseName });
+
       if (hasName)
         throw new UserInputError("Duplicate name value in database", {
           errors: {
-            name: '"name" already exist in database. ',
+            name: `${name} category already exist in database. `,
           },
         });
       try {
         categoryCursor = await db.collection("categories").insertOne({
-          name,
+          name: uppercaseName,
+          benefit,
           vitamins,
           createdAt: new Date().toISOString(),
         });
