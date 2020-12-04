@@ -2,7 +2,7 @@ import Head from "next/head";
 import { AuthProvider } from "@/utils/auth";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { withApollo } from "@/apollo/client";
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { ThemeProvider, CSSReset, ColorModeProvider } from "@chakra-ui/core";
 import { Global, css } from "@emotion/core";
 import theme from "../styles/theme";
 import "../styles/globals.css";

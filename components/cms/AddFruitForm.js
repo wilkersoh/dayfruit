@@ -2,7 +2,8 @@ import NextLink from "next/link";
 import { useState } from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { fruitValidate } from "@/utils/validator";
-// import { GET_FRUTIS_QUERY } from "@/apollo/queries";
+import { GET_FRUTIS_QUERY, GET_CATEGORY_QUERY } from "@/apollo/queries";
+import { ADD_FRUIT_MUTATION } from "@/apollo/mutations";
 
 import {
   Box,
@@ -13,37 +14,18 @@ import {
   Button,
   useToast,
   Select,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/core";
-
-const ADD_FRUIT_MUTATION = gql`
-  mutation createFruit($name: String!, $benefit: String, $country: String) {
-    createFruit(name: $name, benefit: $benefit, country: $country) {
-      name
-      benefit
-      country
-    }
-  }
-`;
-
-// const GET_CATEGORY_QUERY = gql`
-//   query getCategories {
-//     getCategories {
-//       _id
-//       name
-//     }
-//   }
-// `;
 
 export default function AddFruitForm({ onClose }) {
   const [fruitVariable, setFruitVariable] = useState({});
   const [formError, setFormError] = useState({});
   const toast = useToast();
-  // const { loading, error, data: categoryOptions } = useQuery(
-  //   GET_CATEGORY_QUERY
-  // );
-  // console.log(categoryOptions);
+  const { loading, error, data: categoryLists } = useQuery(GET_CATEGORY_QUERY);
+
   const [addFruit] = useMutation(ADD_FRUIT_MUTATION, {
-    update(getCategoriescache, result) {
+    update(cache, result) {
       const cachedData = cache.readQuery({
         query: GET_FRUTIS_QUERY,
       });
@@ -92,7 +74,8 @@ export default function AddFruitForm({ onClose }) {
   };
 
   const handleSelectOption = (e) => {
-    setFruitVariable({ ...fruitVariable, ["categories"]: e.target.value });
+    console.log(e);
+    setFruitVariable({ ...fruitVariable, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
@@ -103,61 +86,81 @@ export default function AddFruitForm({ onClose }) {
 
     addFruit();
   };
-
+  console.log(fruitVariable);
   return (
     <>
       <FormControl as='form' onSubmit={onSubmit}>
-        <FormLabel htmlFor='name'>
-          Name:
-          <Box as='span' ml={1} color='red.300'>
-            *
-          </Box>
-        </FormLabel>
-        <Input
-          type='type'
-          id='name'
-          name='name'
-          aria-describedby='fruit name'
-          isInvalid={formError.name && true}
-          errorBorderColor='red.300'
-          placeholder={formError.name ? formError.name : "Fruit name"}
-          onChange={onChange}
-        />
-        <FormLabel htmlFor='benefit' mt={1}>
-          Benefit
-        </FormLabel>
-        <Textarea
-          name='benefit'
-          placeholder='What benefits this fruit brings? '
-          size='sm'
-          onChange={onChange}
-        />
-        <FormLabel htmlFor='category' mt={1}>
-          Category
-        </FormLabel>
-        <Select
-          onChange={handleSelectOption}
-          placeholder='Select fruit category'>
-          {/* {categoryOptions &&
-            categoryOptions.getCategories.map(({ _id, name }) => (
-              <option key={_id}>{name}</option>
-            ))} */}
-        </Select>
-        <FormLabel htmlFor='country' mt={1}>
-          Country
-        </FormLabel>
-        <Input
-          type='type'
-          name='country'
-          id='country'
-          aria-describedby='country'
-          onChange={onChange}
-        />
+        <FormControl as='fieldset'>
+          <FormLabel htmlFor='category'>
+            Category Type
+            <Box as='span' ml={1} color='red.300'>
+              *
+            </Box>
+          </FormLabel>
+          <RadioGroup
+            className='form-category-radio'
+            defaultValue='Apple'
+            name='category'
+            onChange={handleSelectOption}
+            spacing={2}>
+            {categoryLists &&
+              categoryLists.getCategories.map((category) => (
+                <Radio
+                  variantColor='green'
+                  key={category._id}
+                  value={category.name}>
+                  {category.name}
+                </Radio>
+              ))}
+          </RadioGroup>
+        </FormControl>
+        <FormControl as='fieldset'>
+          <FormLabel htmlFor='name'>
+            Name:
+            <Box as='span' ml={1} color='red.300'>
+              *
+            </Box>
+          </FormLabel>
+          <Input
+            type='type'
+            id='name'
+            name='name'
+            aria-describedby='fruit name'
+            isInvalid={formError.name && true}
+            errorBorderColor='red.300'
+            placeholder={formError.name ? formError.name : "Fruit name"}
+            onChange={onChange}
+          />
+        </FormControl>
+        <FormControl as='fieldset'>
+          <FormLabel htmlFor='benefit' mt={1}>
+            Benefit
+          </FormLabel>
+          <Textarea
+            name='benefit'
+            placeholder='What benefits this fruit brings? '
+            size='sm'
+            onChange={onChange}
+          />
+        </FormControl>
+        <FormControl as='fieldset'>
+          <FormLabel htmlFor='country' mt={1}>
+            Country
+          </FormLabel>
+          <Select
+            name='country'
+            onChange={handleSelectOption}
+            placeholder='Choose One Furits Country'>
+            <option value='dummyCountry'>Dummy country</option>
+          </Select>
+        </FormControl>
         {/* <FormLabel htmlFor='image'>Image:</FormLabel>
         <Input type='file' name='image' /> */}
-        <Button type='submit' variantColor='blue' align='right'>
-          Submit
-        </Button>
+        <Box textAlign='right' mt={4} mb={2}>
+          <Button type='submit' variantColor='teal' align='right'>
+            Submit
+          </Button>
+        </Box>
       </FormControl>
     </>
   );

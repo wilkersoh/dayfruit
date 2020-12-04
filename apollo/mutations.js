@@ -8,3 +8,24 @@ export const CREATE_CATEGORY_MUTATION = gql`
     }
   }
 `;
+
+export const ADD_FRUIT_MUTATION = gql`
+  mutation createFruit(
+    $name: String!
+    $benefit: String
+    $country: String
+    $category: String!
+  ) {
+    createFruit(
+      name: $name
+      benefit: $benefit
+      country: $country
+      category: $category
+    ) {
+      name
+      benefit
+      country
+      category
+    }
+  }
+`;

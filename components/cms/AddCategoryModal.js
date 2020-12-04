@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import {
   Modal,
   ModalOverlay,
@@ -18,6 +18,7 @@ import {
   Checkbox,
 } from "@chakra-ui/core";
 
+import { GET_CATEGORY_QUERY } from "@/apollo/queries";
 import { CREATE_CATEGORY_MUTATION } from "@/apollo/mutations";
 import { categoryValidate } from "@/utils/validator";
 
@@ -36,11 +37,31 @@ function AddCategoryModal({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
 
+  const { data: _ } = useQuery(GET_CATEGORY_QUERY);
+
   const [createCategory] = useMutation(CREATE_CATEGORY_MUTATION, {
-    update(cache, { data }) {
+    update(cache, result) {
+      const cachedData = cache.readQuery({
+        query: GET_CATEGORY_QUERY,
+      });
+
+      cachedData.getCategories = [
+        {
+          ...result.data.createCategory,
+          createdAt: new Date().toISOString(),
+          _id: result.data.createCategory.name, // this only temporary and must unique.
+        },
+        ...cachedData.getCategories,
+      ];
+
+      cache.writeQuery({
+        query: GET_CATEGORY_QUERY,
+        data: { ...cachedData },
+      });
+
       toast({
         title: "Category created.",
-        description: `${data.createCategory.name} category was created.`,
+        description: `${result.data.createCategory.name} category was created.`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -67,6 +88,7 @@ function AddCategoryModal({ children }) {
 
   const onChange = (e) => {
     e.preventDefault();
+
     setCategoryVariable({
       ...categoryVariable,
       [e.target.name]: e.target.value,
@@ -99,34 +121,33 @@ function AddCategoryModal({ children }) {
           <ModalCloseButton />
           <ModalBody>
             <FormControl as='form' onSubmit={onSubmit}>
-              <FormLabel htmlFor='category'>
-                Category
-                <Box ml={1} as='span' color='red.300'>
-                  *
-                </Box>
-              </FormLabel>
-              <Input
-                type='text'
-                placeholder={
-                  categoryErrors.name
-                    ? categoryErrors.name
-                    : "create new category"
-                }
-                autoFocus
-                id='name'
-                name='name'
-                isInvalid={categoryErrors.name && true}
-                errorBorderColor='red.300'
-                onChange={onChange}
-              />
-              <Box d='flex' maxH='155px'>
+              <FormControl as='fieldset'>
+                <FormLabel htmlFor='title'>
+                  Category
+                  <Box ml={1} as='span' color='red.300'>
+                    *
+                  </Box>
+                </FormLabel>
+                <Input
+                  type='text'
+                  placeholder={
+                    categoryErrors.name ? categoryErrors.name : "Category name"
+                  }
+                  autoFocus
+                  id='name'
+                  name='name'
+                  isInvalid={categoryErrors.name && true}
+                  errorBorderColor='red.300'
+                  onChange={onChange}
+                />
+              </FormControl>
+              <FormControl as='fieldset' d='flex' maxH='155px' mt={2}>
                 <FormLabel htmlFor='vitamins' mt={1}>
                   Vitamins:
                 </FormLabel>
                 <CheckboxGroup
-                  d='flex'
-                  flexWrap='wrap'
                   variantColor='green'
+                  className='category-form-vitamin'
                   onChange={handleCheckBox}>
                   {Object.entries(vitamins).map(([key, value]) => (
                     <Checkbox key={key} mr={1} value={key}>
@@ -134,10 +155,12 @@ function AddCategoryModal({ children }) {
                     </Checkbox>
                   ))}
                 </CheckboxGroup>
+              </FormControl>
+              <Box textAlign='right'>
+                <Button type='submit' variantColor='green' mt={4} mb={2}>
+                  Create
+                </Button>
               </Box>
-              <Button type='submit' variantColor='green'>
-                Create
-              </Button>
             </FormControl>
           </ModalBody>
         </ModalContent>

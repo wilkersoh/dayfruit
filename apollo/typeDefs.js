@@ -11,7 +11,7 @@ export const typeDefs = gql`
     # isAdmin: Boolean!
   }
 
-  type Product {
+  type Fruit {
     _id: ID!
     name: String!
     # price: Int!
@@ -21,7 +21,7 @@ export const typeDefs = gql`
     benefit: String
     country: String
     vitamins: [String]
-    categories: [Category]
+    category: String
     createdAt: String!
   }
 
@@ -42,17 +42,22 @@ export const typeDefs = gql`
 
   type Query {
     me: User!
-    getFruits: [Product]
-    getFruit(fruitId: ID!): Product
-    getCategories: [Category]
+    getFruits: [Fruit]
+    getFruit(fruitId: ID!): Fruit
+    getCategories: [Category]!
   }
 
   type Mutation {
     registerUser(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
-    createFruit(name: String!, benefit: String, country: String): Product
-    updateFruit(name: String!, benefit: String, country: String): Product
-    deleteFruit(id: ID!): Product
+    createFruit(
+      name: String!
+      benefit: String
+      country: String
+      category: String!
+    ): Fruit
+    updateFruit(name: String!, benefit: String, country: String): Fruit
+    deleteFruit(id: ID!): Fruit
     createCategory(name: String!, vitamins: [String]): Category
   }
 `;

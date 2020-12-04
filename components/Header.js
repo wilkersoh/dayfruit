@@ -9,6 +9,7 @@ import {
   InputLeftElement,
   Input,
   Icon,
+  PseudoBox,
 } from "@chakra-ui/core";
 
 import MobileNav from "./MobileNav";
@@ -95,14 +96,26 @@ const Header = (props) => {
           </InputGroup>
 
           <Flex align='center' color='gray.500'>
-            <IconButton
-              aria-label={`Switch to ${"dark"} mode`}
-              variant='ghost'
-              color='current'
-              ml='2'
-              fontSize='20px'
-              icon={"moon"}
-            />
+            <Box position='relative'>
+              <IconButton
+                aria-label={`Switch to ${"dark"} mode`}
+                variant='ghost'
+                color='current'
+                ml='2'
+                fontSize='20px'
+                icon={"moon"}
+              />
+              <PseudoBox
+                bg='red.500'
+                position='absolute'
+                top='-10px'
+                right='-10px'
+                px={2}
+                py={1}
+                color='white'>
+                New!
+              </PseudoBox>
+            </Box>
             <MobileNav />
           </Flex>
         </Flex>

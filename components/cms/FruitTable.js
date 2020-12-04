@@ -8,9 +8,9 @@ const EmptyRow = () => (
   </Tr>
 );
 
-const FruitTable = ({ fruits }) => {
+const FruitTable = ({ fruits, ...props }) => {
   return (
-    <Table minW='650px'>
+    <Table {...props}>
       <thead>
         <Tr>
           <Th>Name</Th>

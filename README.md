@@ -97,8 +97,10 @@ yarn install
 - CMS/index (Productions)
 
 # CMS Page
-- Index
-- Category (One to Many)
+- Index (Categories, Vitamins, Products)
+- Categories (show list, and add button)
+- Vitamins (show list, and add button)
+- Products (show list, and add button)
 - Product
 
 # Database Structure Information
@@ -165,7 +167,7 @@ Last. Auth0
 ## Face Error Graphql
 1. Terminal 有 print出來 要的data 但是 在 front end data有return回來 但是value 是 null
 - 那是因為 typeDefs 裡 返回的 type 和 output出來的 type 不一樣， 如果它是 array 那樣放 []
-2. Error: GraphQL error: Assignment to constant variable
+2. Error: GraphQL error: Assignment to constant variable, 第二次遇到 他也是在typeDefs是 []但是 放回一样没有data 在 terminal就有， 不只改了什么 感觉没改任何东西 它又work了，useQuery return 出来的 data 是 object Array {[]} 也可以work
 - const variable, after i change the value of const.
 3. GraphQL error: Cannot return null for non-nullable field User.token.
 -  它的database裡面 沒有 token 這個key 但是又在 client side 要求 要 return token
@@ -177,6 +179,8 @@ Last. Auth0
 - it must included all data attribute it needed, like _id, createdAt, etg
 7. GraphQLError [Object]: Syntax Error: Expected Name, found "(".
 - createCategory:(name: String!): Category，多一個冒號
+8. POST http://localhost:3000/api/graphql 400 (Bad Request)
+- 这个是 说 收到的资料 和 update的不符合 直接娶不到 server，检查 typedefs和它return的对象也要有, and mutation 里面收的variable
 
 # Flow Transition Animation SignInRegister Form
 1. SignIn Button Bg, moving right and overflow hidden
@@ -261,10 +265,88 @@ component={'div'} by Default it will created a div component. Can set it to null
 lib -  库文件，library的缩写
 utils - 工具代码
 
+# Mongodb
+
+```bash
+db.posts.update({title: "Post One"},
+  {
+    $set: {
+      body: "Only updated Post One Body document"
+    }
+  }
+)
+
+db.posts.update({title: "Post One"},
+  {
+    $set: {
+      comments: [
+        { user: "Wilker", body: "This will added new field if there is not this comments, "}
+      ]
+    }
+  }
+)
+
+db.posts.update({title: "Post One"},
+  {
+    $inc: {
+      views: 1, // this will increament views + 1
+    }
+  }
+)
+
+db.posts.update({title: "Post One"},
+  {
+    $rename: {
+      views: "likes", // this will rename views to likes
+    }
+  }
+)
+
+Find all posts inside comments name is Mary Williams
+Raw data
+{
+  _id: ObjectId(‘5d1231231’)
+  title:  “Post One”,
+comments: [
+    {user: “Mary Williams”},
+    {user: “Wilker”}
+  ]
+}
+
+db.posts.find({
+  commnets: {
+    $elemMatch: {
+      user: ‘Mary Williams’
+    }
+  }
+})
+
+db.posts.remove({title: "Post One"})
+
+db.posts.aggregate([
+  { $match: { "title": "Post One" } }
+]) // return array of poststhat are title "Post One"
+
+```
 
 # IMPROVEMENT
 > /pages/cms/products
-- 可以一次 request 拿 全部 需要的data (包括 create fruit 裡的 options)
+- 可以一次 request 拿 全部 需要的data (包括 create fruit 裡的 category, 过后用 readQuery拿)
 > /apollo/client
 - make auth more better
 - /components/NavLink ComponentLink/SideNavLink ref （看需不需要）
+- cms/category name 可以考虑 transform 去 uppercase 避免user duplicated当是一样的内容
+- All TYPE, value set to UPPPERCASE (vitamins, category)
+
+
+# Mind PlayGround
+- How to get category and able select one of them in form fruit
+1. create category and store in database category collection
+2. retrieve data category from collection in fruit create form
+3. Craete Fruit form able to choose one of them and store the value of the category name instead of id (dont need to relation, if wanna to filter, we can use aggregate $match to achieve it)
+5. For better performance, we can store latest category in cached, we read it from cached data in fruit form. Less time to call api to get data.
+**All Collection stand alone, we just simply read data**
+
+# Social Sharer
+1. Same Image for Sharing.
+2. In Category, Add "new" for latest product. (after one day it will be remove)

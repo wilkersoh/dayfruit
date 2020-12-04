@@ -46,6 +46,9 @@ const MobileNav = () => {
         color='gray.500'
         icon={Hamburger}
         onClick={onToggle}
+        border='1px solid transparent'
+        _active={{ bg: "teal" }}
+        _hover={{ bg: "transparent", border: "1px solid #ffffff29" }}
       />
       <Drawer size='xs' isOpen={isOpen} placement='left' onClose={onClose}>
         <DrawerOverlay />

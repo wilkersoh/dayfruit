@@ -18,7 +18,11 @@ const product = {
     },
   },
   Mutation: {
-    createFruit: async (parent, { name, benefit, country }, { db }) => {
+    createFruit: async (
+      parent,
+      { name, benefit, country, category },
+      { db }
+    ) => {
       let fruitsCursor;
       if (!name || name.trim() === "")
         throw new UserInputError("Name is required", {
@@ -41,6 +45,7 @@ const product = {
           name,
           benefit,
           country,
+          category,
           createdAt: new Date().toISOString(),
         });
       } catch (error) {

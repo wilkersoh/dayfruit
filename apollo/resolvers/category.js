@@ -4,7 +4,7 @@ const category = {
   Query: {
     getCategories: async (parent, args, { db }) => {
       try {
-        const categories = await db.collection("category").find().toArray();
+        const categories = await db.collection("categories").find().toArray();
 
         return categories;
       } catch (error) {
@@ -16,7 +16,7 @@ const category = {
     createCategory: async (parent, { name, vitamins }, { db }) => {
       let categoryCursor;
 
-      const hasName = await db.collection("category").findOne({ name });
+      const hasName = await db.collection("categories").findOne({ name });
       if (hasName)
         throw new UserInputError("Duplicate name value in database", {
           errors: {
@@ -24,7 +24,7 @@ const category = {
           },
         });
       try {
-        categoryCursor = await db.collection("category").insertOne({
+        categoryCursor = await db.collection("categories").insertOne({
           name,
           vitamins,
           createdAt: new Date().toISOString(),
