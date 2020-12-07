@@ -5,6 +5,17 @@ export const GET_FRUTIS_QUERY = gql`
     getFruits {
       _id
       name
+      category
+      createdAt
+    }
+  }
+`;
+
+export const GET_FRUIT_ITEMS_QUERY = gql`
+  query getFruitItems($category: String!) {
+    getFruitItems(category: $category) {
+      name
+      country
       createdAt
     }
   }
@@ -16,6 +27,7 @@ export const GET_CATEGORY_QUERY = gql`
       _id
       name
       benefit
+      vitamins
     }
   }
 `;

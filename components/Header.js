@@ -101,7 +101,7 @@ const Header = (props) => {
                 aria-label={`Switch to ${"dark"} mode`}
                 variant='ghost'
                 color='current'
-                ml='2'
+                mr={1}
                 fontSize='20px'
                 icon={"moon"}
               />
@@ -109,7 +109,7 @@ const Header = (props) => {
                 bg='red.500'
                 position='absolute'
                 top='-10px'
-                right='-10px'
+                right='-4px'
                 px={2}
                 py={1}
                 color='white'>

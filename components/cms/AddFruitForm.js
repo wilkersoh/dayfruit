@@ -1,6 +1,5 @@
-import NextLink from "next/link";
 import { useState } from "react";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { fruitValidate } from "@/utils/validator";
 import { GET_FRUTIS_QUERY, GET_CATEGORY_QUERY } from "@/apollo/queries";
 import { ADD_FRUIT_MUTATION } from "@/apollo/mutations";

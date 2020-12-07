@@ -22,15 +22,16 @@ import {
 import { GET_CATEGORY_QUERY } from "@/apollo/queries";
 import { CREATE_CATEGORY_MUTATION } from "@/apollo/mutations";
 import { categoryValidate } from "@/utils/validator";
+import { VITAMINS } from "@/utils/VITAMINS";
 
-const vitamins = {
-  Vitamin_A: "Vitamin A",
-  Vitamin_B1: "Vitamin B1",
-  Vitamin_B6: "Vitamin B6",
-  Vitamin_C: "Vitamin C",
-  Vitamin_E: "Vitamin E",
-  Vitamin_C2: "Vitamin C2",
-};
+// const vitamins = {
+//   Vitamin_A: "Vitamin A",
+//   Vitamin_B1: "Vitamin B1",
+//   Vitamin_B6: "Vitamin B6",
+//   Vitamin_C: "Vitamin C",
+//   Vitamin_E: "Vitamin E",
+//   Vitamin_C2: "Vitamin C2",
+// };
 
 function AddCategoryModal({ children }) {
   const [categoryVariable, setCategoryVariable] = useState({});
@@ -163,7 +164,7 @@ function AddCategoryModal({ children }) {
                   name='vitamins'
                   className='category-form-vitamin'
                   onChange={handleCheckBox}>
-                  {Object.entries(vitamins).map(([key, value]) => (
+                  {Object.entries(VITAMINS).map(([key, value]) => (
                     <Checkbox key={key} mr={1} value={key}>
                       {value}
                     </Checkbox>

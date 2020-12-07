@@ -3,6 +3,7 @@ import { AuthProvider } from "@/utils/auth";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { withApollo } from "@/apollo/client";
 import { ThemeProvider, CSSReset, ColorModeProvider } from "@chakra-ui/core";
+import { SearchProvider } from "@/utils/search";
 import { Global, css } from "@emotion/core";
 import theme from "../styles/theme";
 import "../styles/globals.css";
@@ -45,7 +46,9 @@ function MyApp({ Component, pageProps, apolloClient }) {
       <ApolloProvider client={apolloClient}>
         <AuthProvider>
           <GlobalStyle />
-          <Component {...pageProps} />
+          <SearchProvider>
+            <Component {...pageProps} />
+          </SearchProvider>
         </AuthProvider>
       </ApolloProvider>
     </ThemeProvider>

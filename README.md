@@ -181,6 +181,8 @@ Last. Auth0
 - createCategory:(name: String!): Category，多一個冒號
 8. POST http://localhost:3000/api/graphql 400 (Bad Request)
 - 这个是 说 收到的资料 和 update的不符合 直接娶不到 server，检查 typedefs和它return的对象也要有, and mutation 里面收的variable
+9. Cannot return null for non-nullable field Fruit.name. (in playground)
+- return回来的 data是 array 所以 出现这个error 要去 typeDef 那边 放【】
 
 # Flow Transition Animation SignInRegister Form
 1. SignIn Button Bg, moving right and overflow hidden
@@ -339,6 +341,19 @@ db.posts.aggregate([
 - All TYPE, value set to UPPPERCASE (vitamins, category)
 
 
+
+# Social Sharer
+1. Same Image for Sharing (Shop Image).
+2. In Category, Add "new" for latest product. (after one day it will be remove)
+
+
+# Todo List after Completed All
+- upload project to cloud
+- buy domain name
+- google Map ||  MapBox
+-  Testing sharer button in facebook with image meta
+
+
 # Mind PlayGround
 - How to get category and able select one of them in form fruit
 1. create category and store in database category collection
@@ -346,7 +361,28 @@ db.posts.aggregate([
 3. Craete Fruit form able to choose one of them and store the value of the category name instead of id (dont need to relation, if wanna to filter, we can use aggregate $match to achieve it)
 5. For better performance, we can store latest category in cached, we read it from cached data in fruit form. Less time to call api to get data.
 **All Collection stand alone, we just simply read data**
+- Filters (viamins and fruit type)
+1. fruit 的 selection比较优先 但 user select furit 的 filter， vitamin 会根据 被select fruit的 vitamin打勾 然后 会显示 selected fruit type 的水果 在 list
+2. 当user select fruit 上面的 vitamins 会 显示 furit当前的 vitamin 但是 它会 disabled 除非 user 点击 reset fruit type
+- graphql pagination
+1. return count to front end (to next data loaded)
+2. sorting part 放在 front end or backend 都行 它应该不能通过index来做
 
-# Social Sharer
-1. Same Image for Sharing.
-2. In Category, Add "new" for latest product. (after one day it will be remove)
+
+# Practice Skills
+
+<!-- map a filter if get a gorup a data of vitamins [Vitamin_C] value, check below list which is matched it -->
+
+```json
+{
+  a: {
+    "name": "apple",
+    "vitamins": ["Vitamin_A", "Vitamin_B"]
+  },
+  b: {
+    "name": "banana",
+    "vitamins": ["Vitamin_A", "Vitamin_C"]
+  }
+}
+
+```

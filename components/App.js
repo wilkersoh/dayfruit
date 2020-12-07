@@ -1,10 +1,10 @@
-import { useColorMode, Box } from "@chakra-ui/core";
-
+import { FacebookShareButton, FacebookIcon } from "react-share";
+import { useSearch } from "@/utils/search";
 import SideNav from "@/components/SideNav";
 import Header from "@/components/Header";
+import { Box } from "@chakra-ui/core";
 
 const App = ({ children, ...rest }) => {
-  const { colorMode } = useColorMode();
   // const { search, onSearch } = useSearch();
 
   return (
@@ -20,8 +20,7 @@ const App = ({ children, ...rest }) => {
           <Box
             as='section'
             backgroundColor={"gray.900"}
-            minHeight='calc(100vh - 4rem)'
-            style={{ border: "2px solid blue" }}>
+            minHeight='calc(100vh - 4rem)'>
             <Box {...rest}>{children}</Box>
           </Box>
         </Box>

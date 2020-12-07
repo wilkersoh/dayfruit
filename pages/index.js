@@ -75,7 +75,7 @@ const Index = () => {
                   down to exactly what you're searching for.
                 </Text>
               </Box>
-              <NextLink href='/home' passHref>
+              <NextLink href='/categories' passHref>
                 <Link>
                   <Button variantColor='teal' size='lg'>
                     Let's Get Started

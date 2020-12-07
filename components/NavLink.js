@@ -1,4 +1,4 @@
-import { Box, PseudoBox, useColorMode } from "@chakra-ui/core";
+import { Box, PseudoBox } from "@chakra-ui/core";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import React, { cloneElement, forwardRef } from "react";
@@ -30,8 +30,6 @@ export const SideNavLink = forwardRef(({ children, ...props }, ref) => {
     b. children coming from ComponentLink ...props （children 里面是 SideNav里的SideNavLink）
     console.log(props) return all SideNavLink props
   */
-  const { colorMode } = useColorMode();
-  // const color = { light: "gray.700", dark: "whiteAlpha.700" };
   return (
     <PseudoBox
       ref={ref}
@@ -70,10 +68,6 @@ export const TopNavLink = forwardRef(({ href, ...props }, ref) => {
 });
 
 export const ComponentLink = forwardRef(({ href, ...props }, ref) => {
-  const { colorMode } = useColorMode();
-  const hoverColor = { light: "gray.900", dark: "whiteAlpha.900" };
-  const activeColor = { light: "teal.800", dark: "teal.200" };
-  const activeBg = { light: "gray.100", dark: "gray.700" };
   // a. props = children: {...}, it passing into SideNavLink
   return (
     <NavLink href={href}>

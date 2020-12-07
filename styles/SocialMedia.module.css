@@ -1,0 +1,10 @@
+.socialMediaPopper {
+  top: "300px";
+  left: "unset";
+  right: "0px";
+  display: "grid";
+}
+.socialMediaButton:hover > svg {
+  height: "50px";
+  width: "50px";
+}

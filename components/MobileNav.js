@@ -44,6 +44,7 @@ const MobileNav = () => {
         variant='ghost'
         display={{ sm: "inline-flex", lg: "none" }}
         color='gray.500'
+        px={1}
         icon={Hamburger}
         onClick={onToggle}
         border='1px solid transparent'

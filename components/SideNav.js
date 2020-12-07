@@ -1,4 +1,4 @@
-import { useColorMode, Stack, Text, Box, Flex } from "@chakra-ui/core";
+import { Stack, Text, Box, Flex } from "@chakra-ui/core";
 import React from "react";
 
 import { ComponentLink } from "@/components/NavLink";
@@ -16,7 +16,7 @@ const SideNavLink = ({ href, children, icon }) => (
 );
 
 const PageLinks = () => (
-  <Stack spacing={0} mb={8} style={{ border: "4px solid blue" }}>
+  <Stack spacing={0} mb={8}>
     <SideNavLink href='/' icon={Home}>
       {"Home"}
     </SideNavLink>
@@ -24,7 +24,7 @@ const PageLinks = () => (
       {"Categories"}
     </SideNavLink>
     <SideNavLink href='/maps' icon={Maps}>
-      {"Map"}
+      {"Maps"}
     </SideNavLink>
   </Stack>
 );
@@ -53,10 +53,9 @@ const SideNav = (props) => {
             height='calc(100vh - 4rem)'
             fontSize='sm'
             p='6'
-            overflow='auto'
-            style={{ border: "4px solid red" }}>
+            overflow='auto'>
             <PageLinks />
-            <Box height={"250px"} flexShrink={0} className='blue'></Box>
+            <Box height={"250px"} flexShrink={0}></Box>
             <Filters />
           </Flex>
         </Box>

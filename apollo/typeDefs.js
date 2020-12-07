@@ -43,7 +43,8 @@ export const typeDefs = gql`
   type Query {
     me: User!
     getFruits: [Fruit]
-    getFruit(fruitId: ID!): Fruit
+    getFruit(fruitId: ID!): Fruit #hvt completed yet
+    getFruitItems(category: String!): [Fruit]!
     getCategories: [Category]!
   }
 

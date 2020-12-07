@@ -16,6 +16,19 @@ const product = {
         throw new Error("Something wrong to get data");
       }
     },
+    getFruitItems: async (_, { category }, { db }) => {
+      console.log("getFruitItems");
+      try {
+        const fruits = await db
+          .collection("fruits")
+          .aggregate([{ $match: { category: category.toUpperCase() } }])
+          .toArray();
+
+        return fruits;
+      } catch (error) {
+        throw new Error("Something wrong to get data", error);
+      }
+    },
   },
   Mutation: {
     createFruit: async (parent, { name, country, category }, { db }) => {
