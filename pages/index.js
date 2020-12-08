@@ -1,6 +1,5 @@
 import Head from "next/head";
 import NextLink from "next/link";
-import { CSSTransition } from "react-transition-group";
 import { Box, Text, Button, Link, PseudoBox } from "@chakra-ui/core";
 import AuthModal from "@/components/AuthModal";
 import Container from "@/components/Container";
@@ -19,15 +18,6 @@ const Header = (props) => {
         </Link>
       </NextLink>
       <Box d='flex'>
-        {/* <>
-            <PseudoBox
-              as='div'
-              p={2}
-              cursor='pointer'
-              _hover={{ color: "#c0c0c0" }}>
-              {"Logout"}
-            </PseudoBox>
-          </> */}
         <AuthModal>
           <PseudoBox p={2} cursor='pointer' _hover={{ color: "#c0c0c0" }}>
             {"Sign In"}

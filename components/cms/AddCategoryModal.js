@@ -42,6 +42,7 @@ function AddCategoryModal({ children }) {
   const { data: _ } = useQuery(GET_CATEGORY_QUERY);
 
   const [createCategory] = useMutation(CREATE_CATEGORY_MUTATION, {
+    // refetchQueries: [{ query: GET_CATEGORY_QUERY }],
     update(cache, result) {
       const cachedData = cache.readQuery({
         query: GET_CATEGORY_QUERY,

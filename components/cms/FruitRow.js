@@ -1,4 +1,6 @@
 import { Box, IconButton, Badge } from "@chakra-ui/core";
+import DeleteFruitModal from "./DeleteFruitModal";
+import EditFruitModal from "./EditFruitModal";
 import { Td } from "./Table";
 
 const labelColors = {
@@ -18,38 +20,40 @@ const VitaminLabel = ({ vitamin }) => {
   );
 };
 
-const FruitRow = ({ name, id, country, vitamins }) => {
+const FruitRow = ({ name, _id, country, category }) => {
   return (
-    <Box key={id} as='tr'>
+    <Box key={_id} as='tr'>
       <Td fontWeight='medium'>{name}</Td>
-      <Td>removeBenefit</Td>
-      <Td>
-        remove vitamins
-        {/* {vitamins.map((vitamin) => (
-          <VitaminLabel key={vitamin} vitamin={vitamin} />
-        ))} */}
-      </Td>
+      <Td>{category}</Td>
       <Td>{country}</Td>
       <Td d='flex'>
-        <IconButton
+        {/* <IconButton
           variantColor='teal'
           aria-label='view'
           size='md'
           icon='view'
-        />
-        <IconButton
-          variantColor='teal'
-          aria-label='edit'
-          size='md'
-          icon='edit'
-          mx={2}
-        />
-        <IconButton
-          variantColor='red'
-          aria-label='delete'
-          size='md'
-          icon='delete'
-        />
+        /> */}
+        <EditFruitModal
+          id={_id}
+          name={name}
+          category={category}
+          country={country}>
+          <IconButton
+            variantColor='teal'
+            aria-label='edit'
+            size='md'
+            icon='edit'
+            mx={2}
+          />
+        </EditFruitModal>
+        <DeleteFruitModal name={name} _id={_id}>
+          <IconButton
+            variantColor='red'
+            aria-label='delete'
+            size='md'
+            icon='delete'
+          />
+        </DeleteFruitModal>
       </Td>
     </Box>
   );

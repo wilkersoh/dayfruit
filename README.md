@@ -118,9 +118,29 @@ yarn install
 # Notes
 1. .sort({ createdAt: -1 }) desc 最新到舊
 2. aria-current=page 来描述navlink中当前显示的页面
-
 3. passing condition in component props
 - If isActive is truthy the object literal with bg and rounded properties is spread into the passed props to SideNavLink. isActive itself is not passed as a props
+
+4. apollo mutation update writeQuery
+
+```javascript
+const cachedData = cache.readQuery({
+  query: GET_FRUTIS_QUERY,
+});
+cachedData.getFruits = [
+  {
+    ...result.data.createFruit,
+    createdAt: new Date().toISOString(),
+    _id: result.data.createFruit.name, // this only temporary and must unique.
+  },
+  ...cachedData.getFruits,
+];
+
+cache.writeQuery({
+  query: GET_FRUTIS_QUERY,
+  data: { ...cachedData },
+});
+```
 
 ```react
 ...{bg: "teal.200", rounded: "sm",}
@@ -328,6 +348,38 @@ db.posts.remove({title: "Post One"})
 db.posts.aggregate([
   { $match: { "title": "Post One" } }
 ]) // return array of poststhat are title "Post One"
+
+```
+
+# Call graphql in nextjs feature
+
+```javascript
+import fetch from "isomorphic-unfetch";
+
+export const getServerSideProps = async ({ params }) => {
+  const res = await fetch("http://localhost:3000/api/graphql", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query: `
+        query {
+          getFruits {
+            _id
+            name
+            category
+            createdAt
+          }
+        }
+      `,
+    }),
+  });
+  const result = await res.json();
+  console.log(result.data.getFruits);
+
+  return {
+    props: {}, // will be passed to the page component as props
+  };
+};
 
 ```
 

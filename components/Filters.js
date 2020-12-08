@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 
 import { useSearch } from "@/utils/search";
@@ -15,19 +17,25 @@ import {
 } from "@chakra-ui/core";
 
 export default function Filters({ categories }) {
+  const [disableFilter, setDisableFilter] = useState(false);
   const { loading, error, data } = useQuery(GET_CATEGORY_QUERY);
   const {
     onFilterVitaminType,
     onFilterFruitType,
     vitaminType,
     fruitType,
-    setFruitType,
-    setVitaminType,
   } = useSearch();
+
+  const router = useRouter();
+  if (router.pathname === "/fruits/[name]" && !disableFilter) {
+    setDisableFilter(true);
+  }
 
   const resetFruitType = () => {
     onFilterFruitType("APPLE");
   };
+
+  if (error) return <Box>Error...</Box>;
 
   return (
     <Stack>
@@ -51,6 +59,7 @@ export default function Filters({ categories }) {
             {data.getCategories.map((category) => (
               <Radio
                 key={category._id}
+                isDisabled={disableFilter}
                 value={category.name}
                 textTransform='capitalize'>
                 {category.name}
@@ -69,7 +78,7 @@ export default function Filters({ categories }) {
           variantColor='teal'
           className='sidebar-type-checkbox'>
           {Object.entries(VITAMINS).map(([key, value]) => (
-            <Checkbox key={key} value={key}>
+            <Checkbox key={key} value={key} isDisabled={disableFilter}>
               {value}
             </Checkbox>
           ))}

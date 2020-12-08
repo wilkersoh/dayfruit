@@ -42,7 +42,7 @@ const MobileNav = () => {
         aria-label='Navigation Menu'
         fontSize='20px'
         variant='ghost'
-        display={{ sm: "inline-flex", lg: "none" }}
+        display={{ sm: "inline-flex", md: "none" }}
         color='gray.500'
         px={1}
         icon={Hamburger}

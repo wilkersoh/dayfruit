@@ -5,11 +5,11 @@ import Header from "@/components/Header";
 import { Box } from "@chakra-ui/core";
 
 const App = ({ children, ...rest }) => {
-  // const { search, onSearch } = useSearch();
+  const { search, onSearch } = useSearch();
 
   return (
     <>
-      <Header />
+      <Header onSearch={onSearch} search={search} />
       <Box>
         <SideNav
           display={["none", null, "block"]}

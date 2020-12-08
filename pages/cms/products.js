@@ -1,7 +1,6 @@
 import NextLink from "next/link";
 import Head from "next/head";
 import { useQuery } from "@apollo/react-hooks";
-
 import Container from "@/components/cms/Container";
 import ProductTableSkeleton from "@/components/cms/ProductTableSkeleton";
 import FruitTable from "@/components/cms/FruitTable";
@@ -18,19 +17,15 @@ const HeaderCreate = (props) => (
 );
 
 function Products() {
-  // const { loading, error, data, fetchMore } = useQuery(GET_FRUTIS_QUERY, {
-  //   variables: { after: null },
-  // });
   const { loading, error, data, fetchMore } = useQuery(GET_FRUTIS_QUERY, {
     fetchPolicy: "cache-and-network",
-    nextFetchPolicy: "cache-first",
   });
 
   if (error) return <Box>Error in query</Box>;
 
   if (loading || !data)
     return (
-      <Container>
+      <Container px={10}>
         <HeaderCreate />
         <ProductTableSkeleton w='full' mx='auto' />
       </Container>
@@ -44,31 +39,17 @@ function Products() {
       <Container px={10}>
         <HeaderCreate />
         <Box d='flex' flexDir='column'>
-          {/* <Box d='flex' justifyContent='space-between' my={3}>
-          <h1>Recent Product</h1>
-          <AddFruitModal>Add Fruit</AddFruitModal>
-        </Box> */}
           {data && <FruitTable w='full' mx='auto' fruits={data.getFruits} />}
-          <NextLink href='/cms'>
-            <Link>Back</Link>
-          </NextLink>
-          <Button
-            // onClick={() => {
-            //   const { endCursor } = data.getFruits.pageInfo;
-            //   fetchMore({
-            //     variables: { after: endCursor },
-            //     updateQuery: (prevResult, { fetchMoreResult }) => {
-            //       // https://www.youtube.com/watch?v=lNtQbn7qN-8
-            //       console.log(prevResult);
-            //       fetchMoreResult.getFruits = [...prevResult.getFruits, ...fetchMoreResult.getFruits];
-            //       return fetchMoreResult;
-            //     },
-            //   });
-            // }}
-            variantColor='teal'
-            variant='solid'>
-            More
-          </Button>
+          <Box d='flex'>
+            <Box ml='auto' mt={4}>
+              <NextLink href='/cms'>
+                <Link>Back</Link>
+              </NextLink>
+              <Button variantColor='teal' variant='solid' ml={4}>
+                More
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </Container>
     </>

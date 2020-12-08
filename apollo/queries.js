@@ -6,6 +6,7 @@ export const GET_FRUTIS_QUERY = gql`
       _id
       name
       category
+      country
       createdAt
     }
   }

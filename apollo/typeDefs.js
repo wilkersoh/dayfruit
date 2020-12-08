@@ -19,7 +19,6 @@ export const typeDefs = gql`
     # view: Int
     # image: String
     country: String
-    vitamins: [String]
     category: String
     createdAt: String!
   }
@@ -52,8 +51,13 @@ export const typeDefs = gql`
     registerUser(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
     createFruit(name: String!, country: String, category: String!): Fruit
-    updateFruit(name: String!, country: String): Fruit
-    deleteFruit(id: ID!): Fruit
+    updateFruit(
+      _id: ID!
+      name: String!
+      country: String
+      category: String!
+    ): Fruit
+    deleteFruit(_id: ID!): Boolean!
     createCategory(name: String!, benefit: String, vitamins: [String]): Category
   }
 `;

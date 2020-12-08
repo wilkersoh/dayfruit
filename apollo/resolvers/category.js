@@ -21,7 +21,6 @@ import { UserInputError, AuthenticationError } from "apollo-server-errors";
 const category = {
   Query: {
     getCategories: async (parent, args, { db }) => {
-      console.log("hit resolver categories");
       try {
         const categories = await db.collection("categories").find().toArray();
 
@@ -30,17 +29,6 @@ const category = {
         throw new Error("Something wrong to get data");
       }
     },
-    // allCategories: async (parent, { filter, skip, first }, { db }) => {
-    //   let query = filter ? { $or: buildFilters(filter) } : {};
-    //   const cursor = db.collection("categories").find(query);
-    //   if (first) {
-    //     cursor.limit(first);
-    //   }
-    //   if (skip) {
-    //     cursor.skip(skip);
-    //   }
-    //   return cursor.toArray();
-    // },
   },
   Mutation: {
     createCategory: async (parent, { name, benefit, vitamins }, { db }) => {

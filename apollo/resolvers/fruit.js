@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 const product = {
   Query: {
     getFruits: async (_, __, { db }) => {
+      console.log("refretch");
       try {
         const fruits = await db
           .collection("fruits")
@@ -71,18 +72,25 @@ const product = {
         ...rest,
       };
     },
-    updateFruit: async (_, { name, country, vitamins }, { db }) => {
+    updateFruit: async (_, { _id, name, country, category }, { db }) => {
       try {
         // updateOne return number 1 or 0; findOneAndUpdate can return updated docs
         await db.collection("fruits").updateOne(
           {
-            _id: new ObjectId("5fc52b2d69dda4254dc9ef51"),
+            _id: new ObjectId(_id),
           },
-          { $set: { name, country } }
+          { $set: { name, country, category } }
         );
       } catch (error) {
-        console.log(error);
         throw new Error("Fail to save data into database.", error);
+      }
+    },
+    deleteFruit: async (_, { _id }, { db }) => {
+      try {
+        await db.collection("fruits").deleteOne({ _id: new ObjectId(_id) });
+        return true;
+      } catch (error) {
+        throw new Error(error);
       }
     },
   },

@@ -4,7 +4,6 @@ import {
   Box,
   Flex,
   IconButton,
-  useColorMode,
   InputGroup,
   InputLeftElement,
   Input,
@@ -43,14 +42,14 @@ const useKeyPress = (targetKey) => {
 };
 
 const Header = (props) => {
-  const { onSearch, search, hideSearch, ...rest } = props;
+  const { onSearch, search, ...rest } = props;
   const inputRef = useRef();
   const slashPress = useKeyPress("/");
-  const bg = { light: "white", dark: "gray.800" };
 
   if (slashPress) {
     inputRef.current.focus();
   }
+
   return (
     <Box
       pos='fixed'
@@ -90,15 +89,18 @@ const Header = (props) => {
               value={search}
               ref={inputRef}
               autoFocus={slashPress}
-              placeholder={`Search for fruits or it's vitamins (Press "/" to focus)`}
+              placeholder={`Search for fruits or vitamins (Press "/" to focus)`}
               bg={"gray.700"}
+              borderColor='transparent'
+              color='#FFF'
+              _focus={{ borderColor: "gray.600" }}
             />
           </InputGroup>
 
           <Flex align='center' color='gray.500'>
             <Box position='relative'>
               <IconButton
-                aria-label={`Switch to ${"dark"} mode`}
+                aria-label={`Check latest fruits`}
                 variant='ghost'
                 color='current'
                 mr={1}

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { fruitValidate } from "@/utils/validator";
 import { GET_FRUTIS_QUERY, GET_CATEGORY_QUERY } from "@/apollo/queries";
-import { ADD_FRUIT_MUTATION } from "@/apollo/mutations";
+import { UPDATE_FRUIT_MUTATION } from "@/apollo/mutations";
 
 import {
   Box,
@@ -16,18 +16,47 @@ import {
   Radio,
 } from "@chakra-ui/core";
 
-export default function AddFruitForm({ onClose }) {
-  const [fruitVariable, setFruitVariable] = useState({});
+export default function EditFruitForm({
+  onClose,
+  id,
+  name,
+  country,
+  category,
+}) {
+  const [fruitVariable, setFruitVariable] = useState({
+    _id: id,
+    name: "",
+    country: "",
+    category: "",
+  });
+
   const [formError, setFormError] = useState({});
   const toast = useToast();
   const { loading, error, data: categoryLists } = useQuery(GET_CATEGORY_QUERY);
 
-  const [addFruit] = useMutation(ADD_FRUIT_MUTATION, {
+  const [updateFruit] = useMutation(UPDATE_FRUIT_MUTATION, {
+    variables: fruitVariable,
     refetchQueries: [{ query: GET_FRUTIS_QUERY }],
     update(cache, result) {
+      // const cachedData = cache.readQuery({
+      //   query: GET_FRUTIS_QUERY,
+      // });
+
+      // cachedData.getFruits = cachedData.getFruits.map((fruit) => {
+      //   if (fruit._id === fruitVariable._id) {
+      //     return { ...fruit, ...fruitVariable };
+      //   }
+      //   return fruit;
+      // });
+
+      // cache.writeQuery({
+      //   query: GET_FRUTIS_QUERY,
+      //   data: { ...cachedData },
+      // });
+
       toast({
-        title: "Fruit created",
-        description: `${result.data.createFruit.name} added into database`,
+        title: "Fruit Updated",
+        description: `${fruitVariable.name} updated into database`,
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -46,8 +75,11 @@ export default function AddFruitForm({ onClose }) {
       });
       setFormError(errors);
     },
-    variables: fruitVariable,
   });
+
+  useEffect(() => {
+    setFruitVariable({ _id: id, name, country, category });
+  }, []);
 
   const onChange = (e) => {
     e.preventDefault();
@@ -64,7 +96,7 @@ export default function AddFruitForm({ onClose }) {
 
     if (!valid) return setFormError(errors);
 
-    addFruit();
+    updateFruit();
   };
 
   return (
@@ -79,8 +111,8 @@ export default function AddFruitForm({ onClose }) {
           </FormLabel>
           <RadioGroup
             className='form-category-radio'
-            defaultValue='Apple'
             name='category'
+            value={fruitVariable.category}
             onChange={handleSelectOption}
             spacing={2}>
             {categoryLists &&
@@ -109,6 +141,7 @@ export default function AddFruitForm({ onClose }) {
             isInvalid={formError.name && true}
             errorBorderColor='red.300'
             placeholder={formError.name ? formError.name : "Fruit name"}
+            value={fruitVariable.name}
             onChange={onChange}
           />
         </FormControl>
@@ -119,6 +152,7 @@ export default function AddFruitForm({ onClose }) {
           <Select
             name='country'
             onChange={handleSelectOption}
+            value={fruitVariable.country}
             placeholder='Choose One Furits Country'>
             <option value='dummyCountry'>Dummy country</option>
           </Select>

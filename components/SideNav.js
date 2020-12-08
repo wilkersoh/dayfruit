@@ -55,7 +55,6 @@ const SideNav = (props) => {
             p='6'
             overflow='auto'>
             <PageLinks />
-            <Box height={"250px"} flexShrink={0}></Box>
             <Filters />
           </Flex>
         </Box>

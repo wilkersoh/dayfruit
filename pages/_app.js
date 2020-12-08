@@ -31,9 +31,9 @@ const GlobalStyle = () => {
             font-size: 1.8rem;
           }
 
-          input {
+          /* input {
             color: black !important;
-          }
+          } */
         `}
       />
     </>
