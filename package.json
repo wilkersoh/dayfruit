@@ -38,6 +38,7 @@
     "next": "10.0.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-google-maps": "^9.4.5",
     "react-hook-form": "^6.11.5",
     "react-share": "^4.3.1",
     "react-transition-group": "^4.4.1"
