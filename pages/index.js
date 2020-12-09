@@ -3,8 +3,27 @@ import NextLink from "next/link";
 import { Box, Text, Button, Link, PseudoBox } from "@chakra-ui/core";
 import AuthModal from "@/components/AuthModal";
 import Container from "@/components/Container";
+import { useAuth } from "@/utils/auth";
+import { LOGOUT_USER_MUTATION } from "@/apollo/mutations";
+import { useMutation } from "@apollo/react-hooks";
 
 const Header = (props) => {
+  const { user, setUser, signout } = useAuth();
+
+  const [logoutUser] = useMutation(LOGOUT_USER_MUTATION, {
+    update() {
+      setUser({ user: null });
+    },
+    onError() {
+      console.log("logout failed");
+    },
+  });
+
+  const onLogout = () => {
+    logoutUser();
+    signout();
+  };
+
   return (
     <Box
       as='header'
@@ -18,11 +37,21 @@ const Header = (props) => {
         </Link>
       </NextLink>
       <Box d='flex'>
-        <AuthModal>
-          <PseudoBox p={2} cursor='pointer' _hover={{ color: "#c0c0c0" }}>
-            {"Sign In"}
+        {user.user ? (
+          <PseudoBox
+            onClick={onLogout}
+            p={2}
+            cursor='pointer'
+            _hover={{ color: "#c0c0c0" }}>
+            {"Sign Out"}
           </PseudoBox>
-        </AuthModal>
+        ) : (
+          <AuthModal>
+            <PseudoBox p={2} cursor='pointer' _hover={{ color: "#c0c0c0" }}>
+              {"Sign In"}
+            </PseudoBox>
+          </AuthModal>
+        )}
         <NextLink href='/categories'>
           <Link>
             <PseudoBox

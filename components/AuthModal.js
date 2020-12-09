@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import styled from "@emotion/styled";
 
 import { LoginForm } from "@/components/LoginForm";
 import { RegisterForm } from "@/components/RegisterForm";
@@ -17,13 +16,6 @@ import {
   Box,
   PseudoBox,
 } from "@chakra-ui/core";
-
-const Test = styled.div`
-  border: 4px solid red;
-  @media (max-width: 768px) {
-    border: 4px solid blue;
-  }
-`;
 
 const AuthModal = ({ children }) => {
   const [isSignInForm, setSignInForm] = useState(true);

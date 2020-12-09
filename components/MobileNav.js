@@ -21,10 +21,8 @@ const useRouteChanged = (callback) => {
       callback();
       console.log("App is changing to: ", url);
     };
-
     // close side bar after finish dom load
     router.events.on("routeChangeComplete", handleRouteChange);
-
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };

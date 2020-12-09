@@ -391,6 +391,8 @@ export const getServerSideProps = async ({ params }) => {
 - /components/NavLink ComponentLink/SideNavLink ref （看需不需要）
 - cms/category name 可以考虑 transform 去 uppercase 避免user duplicated当是一样的内容
 - All TYPE, value set to UPPPERCASE (vitamins, category)
+> Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+- login hit inside LoginForm signupWithCustom - auth - setUser cause error
 
 
 

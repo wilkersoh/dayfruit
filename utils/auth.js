@@ -1,14 +1,8 @@
-import React, { useState, useContext, createContext } from "react";
+import React, { useState, useContext, createContext, useEffect } from "react";
 
-const initialState = { info: { username: null } };
+let initialState = { user: null };
 
 const authContext = createContext({});
-const isClient = () => typeof window !== "undefined";
-
-if (isClient()) {
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  initialState.info = userInfo;
-}
 
 export function AuthProvider({ children }) {
   const auth = useProvideAuth();
@@ -23,12 +17,14 @@ export const useAuth = () => {
 const useProvideAuth = () => {
   const [user, setUser] = useState(initialState);
 
-  const signinWithCustom = (rawUser) => {
-    const user = rawUser[Object.keys(rawUser)];
-    localStorage.setItem("user", JSON.stringify(user));
-    setUser(rawUser);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("user"));
+    setUser({ user: userInfo });
+  }, []);
 
-    return user;
+  const signinWithCustom = (rawUser) => {
+    setUser({ user: rawUser });
+    localStorage.setItem("user", JSON.stringify(rawUser));
   };
 
   const signinWithFacebook = () => {
@@ -40,10 +36,10 @@ const useProvideAuth = () => {
 
   const signout = () => {
     localStorage.removeItem("user");
-    // clear refreshToken and accessToken
   };
 
   return {
+    setUser,
     user,
     signinWithCustom,
     signout,

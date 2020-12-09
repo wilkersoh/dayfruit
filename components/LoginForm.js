@@ -52,11 +52,12 @@ export const LoginForm = ({ onClose, children }) => {
 
   const [loginUser] = useMutation(LOGIN, {
     update(cache, { data }) {
-      signinWithCustom(data);
+      signinWithCustom(data.login);
+
       toastModal(toast, "success", data);
       onClose();
       const currentPath = router.pathname;
-      if (currentPath === "/") router.push("home");
+      if (currentPath === "/") router.push("categories");
       else router.push(currentPath);
     },
     onError({ networkError, graphQLErrors }) {
@@ -96,6 +97,7 @@ export const LoginForm = ({ onClose, children }) => {
           autoFocus
           id='username'
           type='text'
+          color='black'
           name='username'
           isInvalid={
             (errors.username && true) || (validateError.username && true)
@@ -118,6 +120,7 @@ export const LoginForm = ({ onClose, children }) => {
           id='password'
           type='password'
           name='password'
+          color='black'
           isInvalid={
             (errors.password && true) || (validateError.password && true)
           }

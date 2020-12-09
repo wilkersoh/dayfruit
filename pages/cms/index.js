@@ -1,22 +1,22 @@
 import NextLink from "next/link";
 
+import App from "@/components/cms/App";
 import Container from "@/components/cms/Container";
 import AddCategoryModal from "@/components/cms/AddCategoryModal";
 import { Box, Link } from "@chakra-ui/core";
+import { useAuthCms } from "@/utils/authCms";
 
 export default function index() {
-  /**
-    點擊 item 像 ig 一樣 跳多一個出來
-  */
+  const { admin } = useAuthCms();
 
   return (
-    <Container>
+    <App>
       <AddCategoryModal>Create new category</AddCategoryModal>
       <Box>
         <NextLink href='/cms/products'>
           <Link>View Product</Link>
         </NextLink>
       </Box>
-    </Container>
+    </App>
   );
 }

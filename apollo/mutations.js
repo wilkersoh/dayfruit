@@ -1,5 +1,11 @@
 import gql from "graphql-tag";
 
+export const LOGOUT_USER_MUTATION = gql`
+  mutation logout {
+    logout
+  }
+`;
+
 export const CREATE_CATEGORY_MUTATION = gql`
   mutation createCategory(
     $name: String!
