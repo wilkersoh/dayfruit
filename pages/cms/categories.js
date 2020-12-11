@@ -3,21 +3,21 @@ import Head from "next/head";
 import { useQuery } from "@apollo/react-hooks";
 import Container from "@/components/cms/Container";
 import ProductTableSkeleton from "@/components/cms/ProductTableSkeleton";
-import FruitTable from "@/components/cms/FruitTable";
-import AddFruitModal from "@/components/cms/AddFruitModal";
+import CategoryTable from "@/components/cms/CategoryTable";
 
-import { GET_FRUTIS_QUERY } from "@/apollo/queries";
+import { GET_CATEGORY_QUERY } from "@/apollo/queries";
 import { Box, Button, Link } from "@chakra-ui/core";
+import AddCategoryModal from "@/components/cms/AddCategoryModal";
 
 const HeaderCreate = (props) => (
   <Box d='flex' justifyContent='space-between' my={3} {...props}>
-    <h1>Recent Product</h1>
-    <AddFruitModal>Add Fruit</AddFruitModal>
+    <h1>Recent Category</h1>
+    <AddCategoryModal>Create new category</AddCategoryModal>
   </Box>
 );
 
 function Products() {
-  const { loading, error, data, fetchMore } = useQuery(GET_FRUTIS_QUERY, {
+  const { loading, error, data, fetchMore } = useQuery(GET_CATEGORY_QUERY, {
     fetchPolicy: "cache-and-network",
   });
 
@@ -34,12 +34,14 @@ function Products() {
   return (
     <>
       <Head>
-        <title>Fruits</title>
+        <title>Category</title>
       </Head>
       <Container px={10}>
         <HeaderCreate />
         <Box d='flex' flexDir='column'>
-          {data && <FruitTable w='full' mx='auto' fruits={data.getFruits} />}
+          {data && (
+            <CategoryTable w='full' mx='auto' categories={data.getCategories} />
+          )}
           <Box d='flex'>
             <Box ml='auto' mt={4}>
               <NextLink href='/cms'>

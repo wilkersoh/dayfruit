@@ -438,5 +438,11 @@ export const getServerSideProps = async ({ params }) => {
     "vitamins": ["Vitamin_A", "Vitamin_C"]
   }
 }
-
 ```
+
+TODO List
+- 把dayfruit的 cms auth 做完
+- 設計cms 的 index
+- cms的category table
+- 學習
+

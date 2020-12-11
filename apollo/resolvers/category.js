@@ -1,4 +1,5 @@
 import { UserInputError, AuthenticationError } from "apollo-server-errors";
+import { ObjectId } from "mongodb";
 
 // function buildFilters({ OR = [], name, vitamins }) {
 
@@ -61,6 +62,32 @@ const category = {
         id: _id,
         ...rest,
       };
+    },
+    updateCategory: async (
+      parent,
+      { _id, name, benefit, vitamins },
+      { db }
+    ) => {
+      try {
+        await db.collection("categories").updateOne(
+          {
+            _id: new ObjectId(_id),
+          },
+          {
+            $set: { name, benefit, vitamins },
+          }
+        );
+      } catch (error) {
+        throw new Error("Failed to update in database");
+      }
+    },
+    deleteCategory: async (parent, { _id }, { db }) => {
+      try {
+        await db.collection("categories").deleteOne({ _id: new ObjectId(_id) });
+        return true;
+      } catch (error) {
+        throw new Error("Failed to delete this data");
+      }
     },
   },
 };

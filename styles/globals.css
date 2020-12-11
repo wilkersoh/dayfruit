@@ -28,6 +28,11 @@ a {
   grid-template-columns: repeat(4, 1fr);
 }
 
+.cms-category-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .red {
   border: 4px solid red;
 }

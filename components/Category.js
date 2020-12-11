@@ -26,7 +26,7 @@ export default function Category({ name, vitamins, benefit }) {
       <Box d='flex' alignItems='center'>
         <Box w='150px' h='150px' position='relative'>
           <Image
-            src='/images/01.jpg'
+            src={`/images/0${Math.ceil(Math.random() * 4)}.jpg`}
             alt='Picture of the fruit'
             layout='fill'
           />

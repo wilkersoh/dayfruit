@@ -4,7 +4,6 @@ import { ObjectId } from "mongodb";
 const product = {
   Query: {
     getFruits: async (_, __, { db }) => {
-      console.log("refretch");
       try {
         const fruits = await db
           .collection("fruits")

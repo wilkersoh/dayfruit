@@ -5,6 +5,7 @@ import { ComponentLink } from "@/components/NavLink";
 import Filters from "@/components/Filters";
 import Home from "@/icons/Hamburger";
 import Maps from "@/icons/Map";
+import Category from "@/icons/Category";
 
 const SideNavLink = ({ href, children, icon }) => (
   <ComponentLink href={href}>
@@ -20,7 +21,7 @@ const PageLinks = () => (
     <SideNavLink href='/' icon={Home}>
       {"Home"}
     </SideNavLink>
-    <SideNavLink href='/categories' icon={Home}>
+    <SideNavLink href='/categories' icon={Category}>
       {"Categories"}
     </SideNavLink>
     <SideNavLink href='/maps' icon={Maps}>

@@ -20,6 +20,7 @@ const App = ({ children, ...rest }) => {
           <Box
             as='section'
             backgroundColor={"gray.900"}
+            height='1px'
             minHeight='calc(100vh - 4rem)'>
             <Box {...rest}>{children}</Box>
           </Box>

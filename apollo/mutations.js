@@ -20,6 +20,26 @@ export const CREATE_CATEGORY_MUTATION = gql`
   }
 `;
 
+export const UPDATE_CATEGORY_MUTATION = gql`
+  mutation updateCategory(
+    $_id: ID!
+    $name: String!
+    $benefit: String
+    $vitamins: [String]
+  ) {
+    updateCategory(
+      _id: $_id
+      name: $name
+      benefit: $benefit
+      vitamins: $vitamins
+    ) {
+      name
+      benefit
+      vitamins
+    }
+  }
+`;
+
 export const ADD_FRUIT_MUTATION = gql`
   mutation createFruit($name: String!, $country: String, $category: String!) {
     createFruit(name: $name, country: $country, category: $category) {
@@ -53,5 +73,11 @@ export const UPDATE_FRUIT_MUTATION = gql`
 export const DELETE_FRUIT_MUTATION = gql`
   mutation deleteFruit($_id: ID!) {
     deleteFruit(_id: $_id)
+  }
+`;
+
+export const DELETE_CATEGORY_MUTATION = gql`
+  mutation deleteCategory($_id: ID!) {
+    deleteCategory(_id: $_id)
   }
 `;

@@ -60,5 +60,12 @@ export const typeDefs = gql`
     ): Fruit
     deleteFruit(_id: ID!): Boolean!
     createCategory(name: String!, benefit: String, vitamins: [String]): Category
+    updateCategory(
+      _id: ID!
+      name: String!
+      benefit: String
+      vitamins: [String]
+    ): Category
+    deleteCategory(_id: ID!): Boolean!
   }
 `;

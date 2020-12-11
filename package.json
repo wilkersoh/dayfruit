@@ -28,6 +28,7 @@
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",
     "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
     "emotion-theming": "^10.0.27",
     "graphql-tag": "^2.11.0",
     "graphql-tools": "^7.0.1",
