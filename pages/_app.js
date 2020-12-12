@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { AuthProvider } from "@/utils/auth";
-import { AuthCmsProvider } from "@/utils/authCms";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { withApollo } from "@/apollo/client";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
@@ -46,12 +45,10 @@ function MyApp({ Component, pageProps, apolloClient }) {
     <ThemeProvider theme={theme}>
       <ApolloProvider client={apolloClient}>
         <AuthProvider>
-          <AuthCmsProvider>
-            <GlobalStyle />
-            <SearchProvider>
-              <Component {...pageProps} />
-            </SearchProvider>
-          </AuthCmsProvider>
+          <GlobalStyle />
+          <SearchProvider>
+            <Component {...pageProps} />
+          </SearchProvider>
         </AuthProvider>
       </ApolloProvider>
     </ThemeProvider>

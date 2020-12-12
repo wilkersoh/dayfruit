@@ -7,8 +7,8 @@ export const typeDefs = gql`
     mobile: String
     address: String
     email: String
+    isAdmin: Boolean!
     createdAt: String!
-    # isAdmin: Boolean!
   }
 
   type Fruit {
@@ -40,7 +40,8 @@ export const typeDefs = gql`
   }
 
   type Query {
-    me: User!
+    me(username: String): User!
+    # me: User!
     getFruits: [Fruit]
     getFruit(fruitId: ID!): Fruit #hvt completed yet
     getFruitItems(category: String!): [Fruit]!
@@ -50,6 +51,7 @@ export const typeDefs = gql`
   type Mutation {
     registerUser(registerInput: RegisterInput): User
     login(username: String!, password: String!): User
+    cmsLogin(email: String!, password: String!): User
     logout: Boolean!
     createFruit(name: String!, country: String, category: String!): Fruit
     updateFruit(

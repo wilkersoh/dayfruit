@@ -3,7 +3,6 @@ import NextLink from "next/link";
 import App from "@/components/cms/App";
 import Container from "@/components/cms/Container";
 import { Box, Link, Text, Button } from "@chakra-ui/core";
-import { useAuthCms } from "@/utils/authCms";
 
 const Card = ({ children }) => (
   <Box
@@ -20,8 +19,6 @@ const Card = ({ children }) => (
 );
 
 export default function index() {
-  const { admin } = useAuthCms();
-
   return (
     <App d='flex' justifyContent='space-around' pt={10}>
       <Card>

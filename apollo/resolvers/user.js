@@ -2,28 +2,36 @@ import { UserInputError, AuthenticationError } from "apollo-server-errors";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookie from "cookie";
-import { createAccessToken } from "@/utils/createAccessToken";
+import { createAccessToken, logoutToken } from "@/utils/createAccessToken";
 
 const user = {
   Query: {
     me: async (_parent, _args, { db, req }) => {
-      const userCookie = cookie.parse(req.headers.cookie);
-      const decoded = jwt.verify(userCookie["auth_u"], process.env.JWT_SECRET);
-
-      const me = await db
+      let me = await db
         .collection("users")
-        .findOne({ _id: "5fbfacf9bb4a32a648cf8146" });
+        .findOne({ username: _args.username });
 
-      // console.log(me); cannot get the id.. check it later
-      return { username: "me" };
+      return {
+        username: me.username,
+      };
+
+      // const userCookie = cookie.parse(req.headers.cookie);
+      // const decoded = jwt.verify(userCookie["auth_u"], process.env.JWT_SECRET);
+
+      // const me = await db
+      //   .collection("users")
+      //   .findOne({ _id: "5fbfacf9bb4a32a648cf8146" });
+
+      // // console.log(me); cannot get the id.. check it later
+      // return { username: "me" };
     },
   },
   Mutation: {
     login: async (parent, args, { db, res }) => {
       const { username, password } = args;
-      let valid;
+      let me, valid;
       try {
-        const me = await db.collection("users").findOne({ username });
+        me = await db.collection("users").findOne({ username });
         valid = await bcrypt.compare(password, me.password);
       } catch (error) {
         throw new UserInputError("Credential failed", {
@@ -49,6 +57,35 @@ const user = {
         email: me.email,
       };
     },
+    cmsLogin: async (parent, args, { db, res }) => {
+      const { email, password } = args;
+      let me, valid;
+      try {
+        me = await db.collection("users").findOne({ email });
+        valid = await bcrypt.compare(password, me.password);
+      } catch (error) {
+        throw new UserInputError("Credential failed", {
+          errors: {
+            username: "Username dont match",
+            password: "Password dont match",
+          },
+        });
+      }
+
+      if (!valid)
+        throw new UserInputError("Password invalid", {
+          errors: {
+            password: "Password dont match.",
+          },
+        });
+
+      const token = { id: me._id, username: me.username };
+      const { accessToken } = createAccessToken(res, token);
+
+      return {
+        username: me.username,
+      };
+    },
     registerUser: async (
       parent,
       { registerInput: { username, password, mobile, address, email } },
@@ -59,7 +96,7 @@ const user = {
       const hasUser = await db.collection("users").findOne({ username });
       const hasEmail = await db.collection("users").findOne({ email });
 
-      if (hasUser && hasEmail.email?.length > 0)
+      if (hasUser && hasEmail?.email?.length > 0)
         throw new UserInputError("Username and Email is taken", {
           errors: {
             username: "This username is taken",
@@ -107,6 +144,11 @@ const user = {
         address,
         email,
       };
+    },
+    logout: async (parent, args, { res }) => {
+      // clear auth_u and refreshToken cookies
+      logoutToken(res);
+      return true;
     },
   },
 };
