@@ -1,7 +1,6 @@
 import NextLink from "next/link";
 
 import App from "@/components/cms/App";
-import Container from "@/components/cms/Container";
 import { Box, Link, Text, Button } from "@chakra-ui/core";
 
 const Card = ({ children }) => (

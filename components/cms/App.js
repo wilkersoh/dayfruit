@@ -1,13 +1,14 @@
-import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { Box, Spinner } from "@chakra-ui/core";
-import Header from "@/components/cms/Header";
 import gql from "graphql-tag";
 import { useAuth } from "@/utils/auth";
 import { useQuery } from "@apollo/react-hooks";
+import { Redirect } from "@/utils/redirect";
+import Header from "@/components/cms/Header";
 
 const ME = gql`
-  query me($username: String!) {
+  query me($username: String) {
     me(username: $username) {
       username
       isAdmin
@@ -16,23 +17,34 @@ const ME = gql`
 `;
 
 export default function App({ children, ...rest }) {
-  const router = useRouter();
   const { user } = useAuth();
-  console.log(user);
+  const [meVariable, setMeVariable] = useState(null);
+  const router = useRouter();
 
   const { error, loading, data } = useQuery(ME, {
-    variables: { username: "admin" },
-    onError(errors) {
-      console.log(errors);
-    },
+    variables: meVariable ? { username: meVariable } : "",
+    onError(errors) {},
   });
 
-  useEffect(() => {
-    if (!data?.me.isAdmin) router.push("/cms/login");
-  }, [data]);
+  // useEffect(() => {
+  //   if (user.user) setMeVariable(user.user.username);
+  //   else router.push("/cms/login");
+  // }, [user]);
 
-  if (loading) return <Spinner />;
-  if (error) return <Box>Error...</Box>;
+  // if (loading)
+  //   return (
+  //     <Box maxW='1280px'>
+  //       <Header />
+  //       <Spinner />
+  //     </Box>
+  //   );
+  // if (error)
+  //   return (
+  //     <Box maxW='1280px'>
+  //       <Header />
+  //       <Spinner />
+  //     </Box>
+  //   );
 
   return (
     <Box maxW='1280px'>

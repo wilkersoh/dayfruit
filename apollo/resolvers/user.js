@@ -4,13 +4,28 @@ import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import { createAccessToken, logoutToken } from "@/utils/createAccessToken";
 
+const ADMIN_USERNAME = ["admin"];
+
 const user = {
   Query: {
-    me: async (_parent, _args, { db, req }) => {
-      let me = await db
-        .collection("users")
-        .findOne({ username: _args.username });
+    me: async (_parent, _args, { db, res }) => {
+      let token, me;
+      try {
+        if (ADMIN_USERNAME.includes(_args.username))
+          token = { id: me._id, username: me.username };
 
+        me = await db.collection("users").findOne({ username: _args.username });
+
+        const { accessToken } = createAccessToken(res, token);
+      } catch (error) {
+        throw new AuthenticationError("Failed Authorization", {
+          errors: {
+            username: "Failed Autorization",
+          },
+        });
+      }
+
+      console.log(me);
       return {
         username: me.username,
       };

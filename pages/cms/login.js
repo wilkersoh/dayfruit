@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
-import {
-  Box,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  Input,
-  Button,
-} from "@chakra-ui/core";
+import { Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/core";
 import App from "@/components/cms/App";
-import { useState } from "react";
 import { gql, useMutation } from "@apollo/react-hooks";
+import { useAuth } from "@/utils/auth";
+import { Redirect } from "@/utils/redirect";
 
 const CMSLOGIN_MUTATION = gql`
   mutation cmsLogin($email: String!, $password: String!) {
@@ -21,8 +15,14 @@ const CMSLOGIN_MUTATION = gql`
 `;
 
 export default function login() {
-  const router = useRouter();
   const [values, setValues] = useState({});
+  const { user, signinWithCustom } = useAuth();
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, [user]);
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -33,8 +33,8 @@ export default function login() {
     onError(errors) {
       console.log(errors);
     },
-    update() {
-      router.push("/cms");
+    update(cache, { data }) {
+      signinWithCustom(data.cmsLogin);
     },
   });
 
@@ -42,6 +42,8 @@ export default function login() {
     e.preventDefault();
     loginCms();
   };
+
+  if (user.user) return <Redirect to='/cms' />;
 
   return (
     <App d='flex' pt={10}>
@@ -56,6 +58,7 @@ export default function login() {
               color='black'
               onChange={onChange}
               aria-describedby='email-helper-text'
+              ref={inputRef}
             />
           </FormControl>
           <FormControl as='fieldset'>

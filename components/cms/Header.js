@@ -1,51 +1,39 @@
-import { useEffect } from "react";
+import { useRouter } from "next/router";
 import NextLink from "next/link";
-import {
-  Box,
-  Link,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-} from "@chakra-ui/core";
+import { Box, Link } from "@chakra-ui/core";
+import { useAuth } from "@/utils/auth";
+import { useMutation } from "@apollo/react-hooks";
+import { LOGOUT_USER_MUTATION } from "@/apollo/mutations";
 
-const Login = () => {
-  return (
-    <>
-      <Button onClick={onOpen}>Open Modal</Button>
+const Logout = ({ onLogout }) => <Box onClick={onLogout}>{"Logout"}</Box>;
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Lorem count={2} />
-          </ModalBody>
-
-          <ModalFooter>
-            <Button variantColor='blue' mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant='ghost'>Secondary Action</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
-};
+const Login = () => (
+  <NextLink href='/cms/login'>
+    <Link>{"Login"}</Link>
+  </NextLink>
+);
 
 export default function Header(props) {
+  const { user, setUser, signout } = useAuth();
+  const router = useRouter();
+
+  const [onLogout] = useMutation(LOGOUT_USER_MUTATION, {
+    update() {
+      signout();
+      setUser({ user: null });
+      router.push("/cms/login");
+    },
+    onError() {
+      console.log("logout failed");
+    },
+  });
+
   return (
     <Box as='header' d='flex' justifyContent='space-between' p={4} {...props}>
       <NextLink href='/cms'>
         <Link>CMS DAYFRUIT</Link>
       </NextLink>
-      <Box>Login</Box>
+      <Box>{user.user ? <Logout onLogout={onLogout} /> : <Login />}</Box>
     </Box>
   );
 }

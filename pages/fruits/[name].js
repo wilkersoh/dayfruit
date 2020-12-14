@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { format, parseISO } from "date-fns";
 import Image from "next/image";
-import NextLink from "next/link";
 import App from "@/components/App";
 import { useQuery } from "@apollo/react-hooks";
-import { Box, Text, Badge } from "@chakra-ui/core";
+import { Box, Text } from "@chakra-ui/core";
 
 import { GET_FRUIT_ITEMS_QUERY } from "@/apollo/queries";
 import { useSearch } from "@/utils/search";
@@ -15,7 +14,11 @@ export default function Fruits() {
   const { loading, error, data } = useQuery(GET_FRUIT_ITEMS_QUERY, {
     variables: { category: query.name.toUpperCase() },
   });
-  const { fruitType, setFruitType, onFilterFruitType } = useSearch();
+  const { onFilterFruitType } = useSearch();
+
+  useEffect(() => {
+    onFilterFruitType(query.name.toUpperCase());
+  }, []);
 
   if (loading || error || data.getFruitItems.length < 1)
     return (
