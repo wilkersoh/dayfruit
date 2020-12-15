@@ -1,0 +1,11 @@
+{
+  "apps": [
+      {
+          "name": "dayfruit",
+          "script": "npm",
+          "args" : "start",
+          "instances": "max",
+          "exec_mode": "cluster"
+      }
+  ]
+}
