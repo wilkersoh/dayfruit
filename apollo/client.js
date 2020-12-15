@@ -184,7 +184,7 @@ function createApolloClient(initialState = {}, serverAccessToken) {
   const cache = new InMemoryCache().restore(initialState);
 
   const httpLink = new HttpLink({
-    uri: `${window.location.origin}/api/graphql`,
+    uri: `https://dayfruit.staging.selfpaths.com/api/graphql`,
     // uri: "http://localhost:3000/api/graphql",
     credentials: "include",
     fetch,
@@ -193,7 +193,6 @@ function createApolloClient(initialState = {}, serverAccessToken) {
   const refreshLink = new TokenRefreshLink({
     accessTokenField: "accessToken",
     isTokenValidOrUndefined: () => {
-      console.log("i am refresh link");
       const token = getAccessToken();
       if (!token) {
         return true;
