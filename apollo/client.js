@@ -77,10 +77,12 @@ export function withApollo(PageComponent, { ssr = true } = {}) {
               process.env.JWT_REFRESH_SECRET
             );
 
-            createAccessToken(res, { id, username });
+            const { accessToken, refreshToken } = createAccessToken(res, {
+              id,
+              username,
+            });
 
-            serverAccessToken = "dummy";
-            // serverAccessToken = data.accessToken;
+            serverAccessToken = accessToken;
           }
         } catch (error) {
           //
@@ -182,7 +184,8 @@ function createApolloClient(initialState = {}, serverAccessToken) {
   const cache = new InMemoryCache().restore(initialState);
 
   const httpLink = new HttpLink({
-    uri: "http://localhost:3000/api/graphql",
+    uri: `${window.location.origin}/api/graphql`,
+    // uri: "http://localhost:3000/api/graphql",
     credentials: "include",
     fetch,
   });
@@ -209,10 +212,10 @@ function createApolloClient(initialState = {}, serverAccessToken) {
     },
     fetchAccessToken: () => {
       console.log("inside fetchAccessToken");
-      return fetch("http://localhost:3000/api/refresh_token", {
-        method: "POST",
-        credentials: "include",
-      });
+      // return fetch("http://localhost:3000/api/refresh_token", {
+      //   method: "POST",
+      //   credentials: "include",
+      // });
     },
     handleFetch: (accessToken) => {
       setAccessToken(accessToken);
@@ -238,7 +241,8 @@ function createApolloClient(initialState = {}, serverAccessToken) {
   // Check out https://github.com/vercel/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
     ssrMode,
-    link: ApolloLink.from([refreshLink, authLink, httpLink]),
+    link: httpLink,
+    // link: ApolloLink.from([refreshLink, authLink, httpLink]),
     cache,
   });
 }
