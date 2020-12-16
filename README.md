@@ -383,6 +383,10 @@ export const getServerSideProps = async ({ params }) => {
 
 ```
 
+# Pm2 for nextjs
+[link](https://github.com/vercel/next.js/discussions/10675)
+
+
 # IMPROVEMENT
 > /pages/cms/products
 - 可以一次 request 拿 全部 需要的data (包括 create fruit 裡的 category, 过后用 readQuery拿)
