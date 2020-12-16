@@ -89,8 +89,6 @@ export default function EditCategoryForm({
   };
 
   const handleCheckBox = (data) => {
-    console.log(data);
-    console.log("check tp");
     setCategoryVariable({ ...categoryVariable, ["vitamins"]: data });
   };
 

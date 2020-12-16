@@ -12,7 +12,8 @@ function Categories() {
   const allCategories = data ? data.getCategories : [];
 
   const filteredCategory = allCategories.filter((vitamin) => {
-    return vitaminType.some((type) => vitamin.vitamins.includes(type));
+    console.log("inside Categories");
+    // return vitaminType.some((type) => vitamin.vitamins.includes(type));
   });
 
   if (loading)

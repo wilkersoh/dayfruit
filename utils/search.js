@@ -36,20 +36,30 @@ const useProvideSearch = () => {
       (category) => category.name === name
     );
 
-    const vitamins = category[0].vitamins;
+    // const vitamins = category[0].vitamins;
 
-    setVitaminType(vitamins);
+    // setVitaminType(vitamins);
   };
 
   const onFilterVitaminType = (newValues) => {
     setVitaminType(newValues);
   };
 
+  const onSearch = (e) => {
+    e.preventDefault();
+    //
+    const searchValue = e.target.value;
+    console.log(searchValue);
+    const searchWithoutSlash = searchValue.repalce("/", "");
+
+    setSearch(searchWithoutSlash);
+  };
+
   return {
     onFilterFruitType,
     onFilterVitaminType,
     search,
-    setSearch,
+    onSearch,
     vitaminType,
     fruitType,
     setFruitType,

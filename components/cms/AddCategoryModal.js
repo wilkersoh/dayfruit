@@ -24,15 +24,6 @@ import { CREATE_CATEGORY_MUTATION } from "@/apollo/mutations";
 import { categoryValidate } from "@/utils/validator";
 import { VITAMINS } from "@/utils/VITAMINS";
 
-// const vitamins = {
-//   Vitamin_A: "Vitamin A",
-//   Vitamin_B1: "Vitamin B1",
-//   Vitamin_B6: "Vitamin B6",
-//   Vitamin_C: "Vitamin C",
-//   Vitamin_E: "Vitamin E",
-//   Vitamin_C2: "Vitamin C2",
-// };
-
 function AddCategoryModal({ children }) {
   const [categoryVariable, setCategoryVariable] = useState({});
   const [categoryErrors, setCategoryErrors] = useState({});
