@@ -1,3 +1,4 @@
+import getConfig from "next/config";
 import React, { useState } from "react";
 import {
   GoogleMap,
@@ -12,6 +13,8 @@ import App from "@/components/App";
 const MAP_DETAILS = {
   name: "Fresh Fruits",
 };
+
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const Map = () => {
   const [showInfo, setShowInfo] = useState(null);
@@ -48,7 +51,7 @@ export default function maps() {
     <App h='full'>
       <Box h='full' p={8}>
         <WrappedMap
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${publicRuntimeConfig.REACT_APP_GOOGLE_KEY}`}
           loadingElement={<Box style={{ height: "100%" }}></Box>}
           containerElement={<Box style={{ height: "100%" }}></Box>}
           mapElement={<Box style={{ height: "100%" }}></Box>}
