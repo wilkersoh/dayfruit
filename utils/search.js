@@ -36,9 +36,9 @@ const useProvideSearch = () => {
       (category) => category.name === name
     );
 
-    // const vitamins = category[0].vitamins;
+    const vitamins = category[0].vitamins;
 
-    // setVitaminType(vitamins);
+    setVitaminType(vitamins);
   };
 
   const onFilterVitaminType = (newValues) => {
