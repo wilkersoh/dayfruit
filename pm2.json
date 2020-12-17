@@ -4,8 +4,8 @@
           "name": "dayfruit",
           "script": "npm",
           "args" : "start",
-          "instances": "1",
-          "exec_mode": "fork"
+          "instances": "max",
+          "exec_mode": "cluster"
       }
   ]
 }

@@ -182,7 +182,7 @@ function initApolloClient(initialState, serverAccessToken) {
 function createApolloClient(initialState = {}, serverAccessToken) {
   const ssrMode = typeof window === "undefined";
   const cache = new InMemoryCache().restore(initialState);
-
+  console.log(`process Status: ${process.env.NODE_ENV}`);
   const httpLink = new HttpLink({
     uri: `https://dayfruit.staging.selfpaths.com/api/graphql`,
     // uri:
