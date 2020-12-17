@@ -1,5 +1,5 @@
-import getConfig from "next/config";
 import React, { useState } from "react";
+// import { GoogleMap, LoadScript } from "react-google-maps/api";
 import {
   GoogleMap,
   withScriptjs,
@@ -13,8 +13,6 @@ import App from "@/components/App";
 const MAP_DETAILS = {
   name: "Fresh Fruits",
 };
-
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const Map = () => {
   const [showInfo, setShowInfo] = useState(null);
@@ -50,8 +48,17 @@ export default function maps() {
   return (
     <App h='full'>
       <Box h='full' p={8}>
+        {/* <GoogleMap
+          onLoad={(map) => {
+            const bounds = new window.google.maps.LatLngBounds();
+            map.fitBounds(bounds);
+          }}
+          onUnmount={(map) => {
+            // do your stuff before map is unmounted
+          }}
+        /> */}
         <WrappedMap
-          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${publicRuntimeConfig.REACT_APP_GOOGLE_KEY}`}
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.NEXT_PUBLIC_REACT_APP_GOOGLE_KEY}`}
           loadingElement={<Box style={{ height: "100%" }}></Box>}
           containerElement={<Box style={{ height: "100%" }}></Box>}
           mapElement={<Box style={{ height: "100%" }}></Box>}

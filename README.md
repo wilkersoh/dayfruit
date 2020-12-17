@@ -383,6 +383,74 @@ export const getServerSideProps = async ({ params }) => {
 
 ```
 
+graphql aliases
+
+```graphql
+query ProductTitle($id: ID!) {
+  product(id: $id) {
+    IamAliasesName: title
+    description
+  }
+}
+## output
+{
+  "data": {
+    "product": {
+      "IamAliasesName": "Still output title value but name key is changed"
+      "description": "this called aliases"
+    }
+  }
+}
+
+## KEY of Aliases Use Case (query same flied in one request)
+# this is in playground
+query {
+  product1: product(id: "123") {
+    title
+    description
+  }
+  product2: product(id: "45") {
+    title
+    description
+  }
+}
+```
+
+Graphql Fragment
+
+```graphql
+# Product come from the return type
+fragment TitleAndDescription on Product {
+  title
+  description
+}
+
+query {
+  product1: product(id: "123") {
+    ...TitleAndDescription
+  }
+  product2: product(id: "45") {
+    ...TitleAndDescription
+  }
+}
+```
+
+Graphql Inline fragment (Just show case, how the inline fragment look like.)
+
+```graphql
+mutation tagsAdd($id: ID!, $tags: [String]!) {
+  tagsAdd(id: $id, tags: $tags) {
+    node {
+      id
+      ... on Product {
+        title
+        description
+      }
+    }
+  }
+}
+```
+
 # Pm2 for nextjs
 [link](https://github.com/vercel/next.js/discussions/10675)
 
