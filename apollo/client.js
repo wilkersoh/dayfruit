@@ -184,8 +184,11 @@ function createApolloClient(initialState = {}, serverAccessToken) {
   const cache = new InMemoryCache().restore(initialState);
   // console.log(`process Status: ${process.env.NODE_ENV}`);
   const httpLink = new HttpLink({
-    uri: `https://dayfruit.staging.selfpaths.com/api/graphql`,
-    // url: "http://localhost:3000/api/graphql",
+    // uri: `https://dayfruit.staging.selfpaths.com/api/graphql`,
+    url:
+      process.env.NODE_ENV !== "production"
+        ? "http://localhost:3000/api/graphql"
+        : "https://dayfruit.staging.selfpaths.com/api/graphql",
     credentials: "include",
     fetch,
   });
