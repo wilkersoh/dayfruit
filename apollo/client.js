@@ -210,7 +210,7 @@ function createApolloClient(initialState = {}, serverAccessToken) {
       }
     },
     fetchAccessToken: () => {
-      console.log("inside fetchAccessToken");
+      console.log("inside fetchAccessToken 01");
       // return fetch("http://localhost:3000/api/refresh_token", {
       //   method: "POST",
       //   credentials: "include",
