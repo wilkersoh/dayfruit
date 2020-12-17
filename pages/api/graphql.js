@@ -6,6 +6,7 @@ let db;
 
 const apolloServer = new ApolloServer({
   schema,
+  playground: true,
   context: async ({ res, req }) => {
     if (!db) {
       try {
