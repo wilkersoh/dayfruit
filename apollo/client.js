@@ -185,7 +185,7 @@ function createApolloClient(initialState = {}, serverAccessToken) {
 
   const httpLink = new HttpLink({
     // uri: `http://localhost:3000/api/graphql`,
-    uri: `https://dayfruit.staging.selfpaths.com/api/graphql`,
+    uri: `https://dayfruit.staging.selfpaths.com`,
     credentials: "include",
     fetch,
   });
