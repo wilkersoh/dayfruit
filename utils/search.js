@@ -23,7 +23,7 @@ const useProvideSearch = () => {
 
   useEffect(() => {
     // default Selection
-    onFilterFruitType("APPLE");
+    // onFilterFruitType("APPLE");
   }, []);
 
   const { data } = useQuery(GET_CATEGORY_QUERY);
