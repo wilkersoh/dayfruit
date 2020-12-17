@@ -1,5 +1,1 @@
-// require("dotenv").config();
-
-module.exports = {
-  distDir: "build",
-};
+require("dotenv").config();

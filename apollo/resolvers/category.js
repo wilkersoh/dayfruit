@@ -22,9 +22,9 @@ import { ObjectId } from "mongodb";
 const category = {
   Query: {
     getCategories: async (parent, args, { db }) => {
+      console.log("hit getCategories resolover");
       try {
         const categories = await db.collection("categories").find().toArray();
-
         return categories;
       } catch (error) {
         throw new Error("Something wrong to get data");
