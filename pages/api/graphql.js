@@ -32,5 +32,5 @@ export const config = {
 };
 
 export default apolloServer.createHandler({
-  path: "http://dayfruit.staging.selfpaths.com/api/graphql",
+  path: "/api/graphql",
 });
