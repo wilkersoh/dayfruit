@@ -1,9 +1,9 @@
 import NextLink from "next/link";
 import Head from "next/head";
 import { useQuery } from "@apollo/react-hooks";
-import Container from "@/components/cms/Container";
 import ProductTableSkeleton from "@/components/cms/ProductTableSkeleton";
 import CategoryTable from "@/components/cms/CategoryTable";
+import App from "@/components/cms/App";
 
 import { GET_CATEGORY_QUERY } from "@/apollo/queries";
 import { Box, Button, Link } from "@chakra-ui/core";
@@ -25,10 +25,10 @@ function Products() {
 
   if (loading || !data)
     return (
-      <Container px={10}>
+      <App d='flex' flexDir='column' px={10}>
         <HeaderCreate />
         <ProductTableSkeleton w='full' mx='auto' />
-      </Container>
+      </App>
     );
 
   return (
@@ -36,7 +36,7 @@ function Products() {
       <Head>
         <title>Category</title>
       </Head>
-      <Container px={10}>
+      <App d='flex' flexDir='column' px={10}>
         <HeaderCreate />
         <Box d='flex' flexDir='column'>
           {data && (
@@ -53,7 +53,7 @@ function Products() {
             </Box>
           </Box>
         </Box>
-      </Container>
+      </App>
     </>
   );
 }

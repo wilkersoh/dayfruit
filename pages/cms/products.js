@@ -1,10 +1,10 @@
 import NextLink from "next/link";
 import Head from "next/head";
 import { useQuery } from "@apollo/react-hooks";
-import Container from "@/components/cms/Container";
 import ProductTableSkeleton from "@/components/cms/ProductTableSkeleton";
 import FruitTable from "@/components/cms/FruitTable";
 import AddFruitModal from "@/components/cms/AddFruitModal";
+import App from "@/components/cms/App";
 
 import { GET_FRUTIS_QUERY } from "@/apollo/queries";
 import { Box, Button, Link } from "@chakra-ui/core";
@@ -25,10 +25,10 @@ function Products() {
 
   if (loading || !data)
     return (
-      <Container px={10}>
+      <App d='flex' flexDir='column' px={10}>
         <HeaderCreate />
         <ProductTableSkeleton w='full' mx='auto' />
-      </Container>
+      </App>
     );
 
   return (
@@ -36,7 +36,7 @@ function Products() {
       <Head>
         <title>Fruits</title>
       </Head>
-      <Container px={10}>
+      <App d='flex' flexDir='column' px={10}>
         <HeaderCreate />
         <Box d='flex' flexDir='column'>
           {data && <FruitTable w='full' mx='auto' fruits={data.getFruits} />}
@@ -51,7 +51,7 @@ function Products() {
             </Box>
           </Box>
         </Box>
-      </Container>
+      </App>
     </>
   );
 }

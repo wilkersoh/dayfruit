@@ -21,33 +21,48 @@ export default function App({ children, ...rest }) {
   const [meVariable, setMeVariable] = useState(null);
   const router = useRouter();
 
-  const { error, loading, data } = useQuery(ME, {
-    variables: meVariable ? { username: meVariable } : "",
-    onError(errors) {},
-  });
+  useEffect(() => {
+    if (user.user) {
+      setMeVariable(user.user.username);
+    } else {
+      router.push("/cms/login");
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   if (user.user) setMeVariable(user.user.username);
-  //   else router.push("/cms/login");
-  // }, [user]);
+  if (!user.user)
+    return (
+      <Box width='full' maxW='1280px' mx='auto'>
+        <Header />
+        <Box m='auto' textAlign='center' mt={10}>
+          <Spinner />
+        </Box>
+      </Box>
+    );
+
+  // const { error, loading, data } = useQuery(ME, {
+  //   variables: meVariable ? { username: meVariable } : "",
+  //   onError(errors) {},
+  // });
 
   // if (loading)
   //   return (
-  //     <Box maxW='1280px'>
+  //     <Box width='full' maxW='1280px' mx='auto'>
   //       <Header />
-  //       <Spinner />
+  //       <Box m='auto' textAlign='center' mt={10}>
+  //         <Spinner />
+  //       </Box>
   //     </Box>
   //   );
   // if (error)
   //   return (
-  //     <Box maxW='1280px'>
+  //     <Box width='full' maxW='1280px' mx='auto'>
   //       <Header />
   //       <Spinner />
   //     </Box>
   //   );
 
   return (
-    <Box maxW='1280px'>
+    <Box width='full' maxW='1280px' mx='auto'>
       <Header />
       <Box px={4} {...rest}>
         {children}

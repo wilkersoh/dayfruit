@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/router";
 import { Box, FormControl, FormLabel, Input, Button } from "@chakra-ui/core";
-import App from "@/components/cms/App";
 import { gql, useMutation } from "@apollo/react-hooks";
 import { useAuth } from "@/utils/auth";
 import { Redirect } from "@/utils/redirect";
+
+import Header from "@/components/cms/Header";
 
 const CMSLOGIN_MUTATION = gql`
   mutation cmsLogin($email: String!, $password: String!) {
@@ -21,7 +21,7 @@ export default function login() {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, [user]);
 
   const onChange = (e) => {
@@ -46,10 +46,11 @@ export default function login() {
   if (user.user) return <Redirect to='/cms' />;
 
   return (
-    <App d='flex' pt={10}>
-      <Box m='auto'>
+    <Box d='flex' flexDir='column' width='full' maxW='1280px' mx='auto'>
+      <Header />
+      <Box m='auto' w='400px' pt={20}>
         <FormControl as='form' onSubmit={onSubmit}>
-          <FormControl as='fieldset'>
+          <FormControl as='fieldset' mt={4}>
             <FormLabel htmlFor='email'>Email address</FormLabel>
             <Input
               type='email'
@@ -61,7 +62,7 @@ export default function login() {
               ref={inputRef}
             />
           </FormControl>
-          <FormControl as='fieldset'>
+          <FormControl as='fieldset' mt={4}>
             <FormLabel htmlFor='password'>Password</FormLabel>
             <Input
               type='password'
@@ -72,11 +73,11 @@ export default function login() {
               aria-describedby='password'
             />
           </FormControl>
-          <Button type='submit' mt={4} variantColor='teal' w='full'>
+          <Button type='submit' mt={8} variantColor='teal' w='full'>
             Sign In
           </Button>
         </FormControl>
       </Box>
-    </App>
+    </Box>
   );
 }
