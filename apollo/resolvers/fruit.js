@@ -5,12 +5,14 @@ const product = {
   Query: {
     getFruits: async (_, __, { db }) => {
       try {
+        console.log("hit before getFruit");
         const fruits = await db
           .collection("fruits")
           .find()
           .sort({ createdAt: -1 })
           .toArray();
 
+        console.log("hit after getFruit");
         return fruits;
       } catch (error) {
         throw new Error("Something wrong to get data");
