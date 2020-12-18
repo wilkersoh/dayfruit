@@ -31,14 +31,14 @@ const useProvideSearch = () => {
   const onFilterFruitType = (e) => {
     const name = e.target?.value || e;
     setFruitType(name);
-    console.log(data);
-    // const category = data.getCategories.filter(
-    //   (category) => category.name === name
-    // );
 
-    // const vitamins = category[0].vitamins;
+    const category = data.getCategories.filter(
+      (category) => category.name === name
+    );
 
-    // setVitaminType(vitamins);
+    const vitamins = category[0].vitamins;
+
+    setVitaminType(vitamins);
   };
 
   const onFilterVitaminType = (newValues) => {
