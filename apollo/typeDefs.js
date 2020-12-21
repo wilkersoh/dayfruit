@@ -43,8 +43,8 @@ export const typeDefs = gql`
     me(username: String): User
     # me: User!
     getFruits: [Fruit]
-    getFruit(fruitId: ID!): Fruit #hvt completed yet
     getFruitItems(category: String!): [Fruit]!
+    getSearchFruits(searchText: String!): [Fruit]!
     getCategories: [Category]!
   }
 

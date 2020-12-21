@@ -30,6 +30,7 @@ const useProvideSearch = () => {
 
   const onFilterFruitType = (e) => {
     const name = e.target?.value || e;
+    setSearch("");
     setFruitType(name);
 
     const category = data.getCategories.filter(
@@ -42,15 +43,14 @@ const useProvideSearch = () => {
   };
 
   const onFilterVitaminType = (newValues) => {
+    setSearch("");
     setVitaminType(newValues);
   };
 
   const onSearch = (e) => {
     e.preventDefault();
-    //
     const searchValue = e.target.value;
-    console.log(searchValue);
-    const searchWithoutSlash = searchValue.repalce("/", "");
+    const searchWithoutSlash = searchValue.replace("/", " ");
 
     setSearch(searchWithoutSlash);
   };

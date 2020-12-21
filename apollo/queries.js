@@ -32,3 +32,13 @@ export const GET_CATEGORY_QUERY = gql`
     }
   }
 `;
+
+export const GET_SEARCH_FRUITS_QUERY = gql`
+  query getSearchFruits($searchText: String!) {
+    getSearchFruits(searchText: $searchText) {
+      name
+      country
+      createdAt
+    }
+  }
+`;

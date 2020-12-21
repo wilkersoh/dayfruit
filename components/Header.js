@@ -80,16 +80,14 @@ const Header = (props) => {
             width='100%'
             ml={16}
             mr={16}>
-            <InputLeftElement
-              children={<Icon name='search' color='gray.500' />}
-            />
+            <InputLeftElement children={<Icon name='ch' color='gray.500' />} />
             <Input
               type='text'
               onChange={onSearch}
               value={search}
               ref={inputRef}
               autoFocus={slashPress}
-              placeholder={`Search for fruits or vitamins (Press "/" to focus)`}
+              placeholder={`Press '/' to search for fruit name or fruit country`}
               bg={"gray.700"}
               borderColor='transparent'
               color='#FFF'

@@ -16,7 +16,7 @@ import {
   Radio,
 } from "@chakra-ui/core";
 
-export default function Filters({ categories }) {
+export default function Filters() {
   const [disableFilter, setDisableFilter] = useState(false);
   const { loading, error, data } = useQuery(GET_CATEGORY_QUERY);
   const {

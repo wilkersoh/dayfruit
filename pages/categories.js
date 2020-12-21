@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { useSearch } from "@/utils/search";
 import App from "@/components/App";
 import Category from "@/components/Category";
-import { GET_CATEGORY_QUERY } from "@/apollo/queries";
+import { GET_CATEGORY_QUERY, GET_SEARCH_FRUITS_QUERY } from "@/apollo/queries";
 import { Text, Box, Spinner } from "@chakra-ui/core";
 
 function Categories() {
@@ -15,6 +15,17 @@ function Categories() {
     return vitaminType.some((type) => vitamin.vitamins.includes(type));
   });
 
+  const sortedCategory = filteredCategory.sort((a, b) => {
+    return (
+      /**
+        用 ["x", "y" "z"] filter sortCompare的 a value and b value，和裡面的都matched的話 它filtered的length 就會是滿的
+        我要 最多的在第一個 所以是 b - a 大到小
+      */
+      vitaminType.filter((value) => b.vitamins.includes(value)).length -
+      vitaminType.filter((value) => a.vitamins.includes(value)).length
+    );
+  });
+
   if (loading)
     return (
       <App>
@@ -24,7 +35,7 @@ function Categories() {
 
   return (
     <App pt={4} px={4}>
-      {filteredCategory.map((category, i) => (
+      {sortedCategory.map((category, i) => (
         <React.Fragment key={category._id}>
           <Category
             name={category.name}

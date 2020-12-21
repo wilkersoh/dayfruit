@@ -28,6 +28,22 @@ const product = {
         throw new Error("Something wrong to get data", error);
       }
     },
+    getSearchFruits: async (_, { searchText }, { db }) => {
+      try {
+        const fruits = await db
+          .collection("fruits")
+          .find({
+            $or: [{ name: searchText }, { country: searchText }],
+          })
+          .toArray();
+
+        console.log(fruits);
+        return fruits;
+      } catch (error) {
+        console.log("getSearchfruit error");
+        throw new Error("No This result", error);
+      }
+    },
   },
   Mutation: {
     createFruit: async (parent, { name, country, category }, { db }) => {

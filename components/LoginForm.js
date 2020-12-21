@@ -134,7 +134,7 @@ export const LoginForm = ({ onClose, children }) => {
         />
       </Box>
       <Button
-        // onClick={(e) => auth.signinWithGithub()}
+        // onClick={(e) => auth.signinWithFacebook()}
         mb={4}
         leftIcon='facebook'
         backgroundColor='blue.800'

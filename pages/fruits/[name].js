@@ -35,7 +35,7 @@ export default function Fruits() {
 
   return (
     <App>
-      <Box pl={{ lg: 6 }} pt={{ lg: 2 }}>
+      <Box flex={1} mx={4} pl={{ lg: 6 }} pt={{ lg: 2 }}>
         {data.getFruitItems.map(({ name, country, createdAt }) => (
           <React.Fragment key={name}>
             <Box d='flex' my={{ lg: 4 }} flexDir={{ sm: "column", lg: "row" }}>
@@ -48,7 +48,7 @@ export default function Fruits() {
                   />
                 </Box>
               </Box>
-              <Box mt={{ sm: 2, lg: 0 }} mx={4} pb={4}>
+              <Box mt={{ sm: 2, lg: 0 }} ml={{ lg: 4 }} pb={4}>
                 <Box d='flex' justifyContent='space-between'>
                   <Text fontWeight='bold'>{name}</Text>
                   <Text>{format(parseISO(createdAt), "PP")}</Text>
