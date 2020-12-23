@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { GoogleMap, LoadScript } from "react-google-maps/api";
 import {
   GoogleMap,
   withScriptjs,
@@ -14,7 +13,7 @@ const MAP_DETAILS = {
   name: "Fresh Fruits",
 };
 
-const Map = () => {
+const GoogleMapComponent = () => {
   const [showInfo, setShowInfo] = useState(null);
 
   return (
@@ -42,21 +41,12 @@ const Map = () => {
   );
 };
 
-const WrappedMap = withScriptjs(withGoogleMap(Map));
+const WrappedMap = withScriptjs(withGoogleMap(GoogleMapComponent));
 
 export default function maps() {
   return (
     <App h='full'>
-      <Box h='full' p={8}>
-        {/* <GoogleMap
-          onLoad={(map) => {
-            const bounds = new window.google.maps.LatLngBounds();
-            map.fitBounds(bounds);
-          }}
-          onUnmount={(map) => {
-            // do your stuff before map is unmounted
-          }}
-        /> */}
+      <Box h='90vh' p={{ sm: 0, lg: 8 }}>
         <WrappedMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.NEXT_PUBLIC_REACT_APP_GOOGLE_KEY}`}
           loadingElement={<Box style={{ height: "100%" }}></Box>}

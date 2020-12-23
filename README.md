@@ -466,20 +466,6 @@ mutation tagsAdd($id: ID!, $tags: [String]!) {
 > Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
 - login hit inside LoginForm signupWithCustom - auth - setUser cause error
 
-
-
-# Social Sharer
-1. Same Image for Sharing (Shop Image).
-2. In Category, Add "new" for latest product. (after one day it will be remove)
-
-
-# Todo List after Completed All
-- upload project to cloud
-- buy domain name
-- google Map ||  MapBox
--  Testing sharer button in facebook with image meta
-
-
 # Mind PlayGround
 - How to get category and able select one of them in form fruit
 1. create category and store in database category collection

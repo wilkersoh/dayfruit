@@ -103,18 +103,8 @@ const Header = (props) => {
                 color='current'
                 mr={1}
                 fontSize='20px'
-                icon={"moon"}
+                icon={"arrow-back"}
               />
-              <PseudoBox
-                bg='red.500'
-                position='absolute'
-                top='-10px'
-                right='-4px'
-                px={2}
-                py={1}
-                color='white'>
-                New!
-              </PseudoBox>
             </Box>
             <MobileNav />
           </Flex>

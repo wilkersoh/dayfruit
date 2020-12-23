@@ -22,7 +22,11 @@ const App = ({ children, ...rest }) => {
           width='full'
         />
         <Box pl={[0, null, "18rem"]} mt='4rem'>
-          <Box as='section' backgroundColor={"gray.900"} height='100%'>
+          <Box
+            as='section'
+            height='100%'
+            // backgroundColor={"gray.900"}
+          >
             <Box {...rest}>
               {data?.getSearchFruits.length > 0 ? (
                 <GlobalSearch fruits={data.getSearchFruits} />
