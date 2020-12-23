@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import {
   Box,
   Flex,
@@ -8,7 +9,6 @@ import {
   InputLeftElement,
   Input,
   Icon,
-  PseudoBox,
 } from "@chakra-ui/core";
 
 import MobileNav from "./MobileNav";
@@ -45,10 +45,15 @@ const Header = (props) => {
   const { onSearch, search, ...rest } = props;
   const inputRef = useRef();
   const slashPress = useKeyPress("/");
+  const router = useRouter();
 
   if (slashPress) {
     inputRef.current.focus();
   }
+
+  const onPreviousPage = () => {
+    router.back();
+  };
 
   return (
     <Box
@@ -98,7 +103,8 @@ const Header = (props) => {
           <Flex align='center' color='gray.500'>
             <Box position='relative'>
               <IconButton
-                aria-label={`Check latest fruits`}
+                onClick={onPreviousPage}
+                aria-label={`Back to previous section`}
                 variant='ghost'
                 color='current'
                 mr={1}
