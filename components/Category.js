@@ -7,11 +7,28 @@ const badgeColors = {
   ORANGE: "orange",
   GRAPE: "purple",
 };
+const labelColors = {
+  A: "green",
+  B: "purple",
+  C: "red",
+  E: "blue",
+};
+
+const VitaminLabel = ({ vitamin }) => {
+  const [name, type] = vitamin.split("_");
+  const color = labelColors[type[0]];
+  return (
+    <Badge mx={1} mt={2} variantColor={color}>
+      {name} {type}
+    </Badge>
+  );
+};
 
 export default function Category({ name, vitamins, benefit }) {
   return (
     <Box
       d='flex'
+      flexDir={{ sm: "column", md: "row" }}
       w='full'
       minH='200px'
       rounded='20px'
@@ -21,18 +38,22 @@ export default function Category({ name, vitamins, benefit }) {
       borderRadius={8}
       p={2}
       mb={2}
-      borderColor='rgba(255, 255, 255, 0.16)'
+      borderColor='rgba(19, 10, 10, 0.16)'
       backgroundColor='gray.800'>
       <Box d='flex' alignItems='center'>
-        <Box w='150px' h='150px' position='relative'>
+        <Box
+          w={{ sm: "300px", md: "150px" }}
+          h={{ sm: "300px", md: "150px" }}
+          mx='auto'
+          position='relative'>
           <Image
-            src={`/images/0${Math.ceil(Math.random() * 4)}.jpg`}
+            src={`/images/${name.toLowerCase()}.jpeg`}
             alt='Picture of the fruit'
             layout='fill'
           />
         </Box>
       </Box>
-      <Box d='flex' flexDir='column' ml={2} w='full'>
+      <Box d='flex' flexDir='column' mt={{ sm: 3, md: 0 }} ml={2} w='full'>
         <Stack isInline align='baseline'>
           <Badge variant='solid' variantColor='teal' px={2}>
             New!
@@ -42,14 +63,10 @@ export default function Category({ name, vitamins, benefit }) {
           </Badge>
         </Stack>
         <Box my={2} d='flex' flexDir='column'>
-          <Text w='full' mb={1}>
-            Vitamin:
-          </Text>
+          <Text w='full'>Vitamin:</Text>
           <Stack isInline spacing={2} flexWrap='wrap'>
-            {vitamins.map((vitamin) => (
-              <Badge mb={1} key={vitamin}>
-                {vitamin}
-              </Badge>
+            {vitamins.map((vitamin, i) => (
+              <VitaminLabel key={i} vitamin={vitamin} />
             ))}
           </Stack>
           <Box my={2}>{benefit}</Box>

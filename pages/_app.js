@@ -5,6 +5,7 @@ import { withApollo } from "@/apollo/client";
 import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { SearchProvider } from "@/utils/search";
 import { Global, css } from "@emotion/core";
+import { Provider } from "next-auth/client";
 import theme from "../styles/theme";
 import "../styles/globals.css";
 

@@ -451,6 +451,28 @@ mutation tagsAdd($id: ID!, $tags: [String]!) {
 }
 ```
 
+args is an object code is more clean
+[article](https://www.apollographql.com/blog/designing-graphql-mutations-e09de826ed97/?fbclid=IwAR2Im4BmL_KnnzJlxCaB7PmhA4N7muDghQyMi9pFGAXQItziMemav7GfUT4)
+
+```gaphql
+updatePost(input: { id: 4, newText: "..." }) { ... }
+
+# Instead of:
+
+updatePost(id: 4, newText: "...") { ... }
+
+mutation MyMutation($input: UpdatePostInput!) {
+  updatePost(input: $input) { ... }
+}
+
+# vs.
+
+mutation MyMutation($id: ID!, $newText: String, ...) {
+  updatePost(id: $id, newText: $newText, ...) { ... }
+}
+
+```
+
 # Pm2 for nextjs
 [link](https://github.com/vercel/next.js/discussions/10675)
 

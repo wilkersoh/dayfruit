@@ -72,7 +72,7 @@ const AuthModal = ({ children }) => {
                   </Box>
                 </PseudoBox>
                 <ModalCloseButton />
-                <ModalBody height='540px'>
+                <ModalBody height={{ sm: "530px", md: "540px" }}>
                   {isSignInForm ? (
                     <LoginForm onClose={onClose}>
                       <Button

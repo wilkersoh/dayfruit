@@ -6,7 +6,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "npm run build && next export -o _static",
     "pm2": "pm2"
   },
   "resolutions": {
@@ -39,7 +38,7 @@
     "jwt-decode": "^3.1.2",
     "mongodb": "^3.6.3",
     "next": "10.0.1",
-    "pm2": "^4.5.0",
+    "next-auth": "^3.1.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-google-maps": "^9.4.5",
