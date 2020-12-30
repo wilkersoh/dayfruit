@@ -8,8 +8,8 @@ import { LOGOUT_USER_MUTATION } from "@/apollo/mutations";
 import { useMutation } from "@apollo/react-hooks";
 
 const Header = (props) => {
-  const { user, setUser, signout } = useAuth();
-
+  const { user, setUser, signout, session } = useAuth();
+  console.log(session);
   const [logoutUser] = useMutation(LOGOUT_USER_MUTATION, {
     update() {
       setUser({ user: null });
@@ -21,6 +21,7 @@ const Header = (props) => {
 
   const onLogout = () => {
     logoutUser();
+
     signout();
   };
 
@@ -37,7 +38,7 @@ const Header = (props) => {
         </Link>
       </NextLink>
       <Box d='flex'>
-        {user.user ? (
+        {user.user || session ? (
           <PseudoBox
             onClick={onLogout}
             p={2}

@@ -45,12 +45,14 @@ function MyApp({ Component, pageProps, apolloClient }) {
   return (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={apolloClient}>
-        <AuthProvider>
-          <GlobalStyle />
-          <SearchProvider>
-            <Component {...pageProps} />
-          </SearchProvider>
-        </AuthProvider>
+        <Provider session={pageProps?.session}>
+          <AuthProvider>
+            <GlobalStyle />
+            <SearchProvider>
+              <Component {...pageProps} />
+            </SearchProvider>
+          </AuthProvider>
+        </Provider>
       </ApolloProvider>
     </ThemeProvider>
   );

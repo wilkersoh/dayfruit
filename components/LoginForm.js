@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { gql, useMutation } from "@apollo/client";
 import { useAuth } from "@/utils/auth";
-import { signIn, signOut, useSession } from "next-auth/client";
 import {
   FormControl,
   FormLabel,
@@ -43,7 +42,7 @@ const toastModal = (toast, status, data) => {
 };
 
 export const LoginForm = ({ onClose, children }) => {
-  const { signinWithCustom } = useAuth();
+  const { signinWithCustom, signinWithFacebook, signinWithGithub } = useAuth();
   const router = useRouter();
   const toast = useToast();
 
@@ -134,9 +133,8 @@ export const LoginForm = ({ onClose, children }) => {
           }
         />
       </Box>
-      {/* <Button
-        onClick={(e) => auth.signinWithFacebook()}
-        onClick={signIn}
+      <Button
+        onClick={signinWithFacebook}
         mb={4}
         leftIcon='facebook'
         backgroundColor='blue.800'
@@ -147,17 +145,16 @@ export const LoginForm = ({ onClose, children }) => {
         Sign in with Facebook
       </Button>
       <Button
-        onClick={(e) => auth.signinWithGoogle()}
+        onClick={signinWithGithub}
         mb={16}
-        leftIcon='google'
-        backgroundColor='white'
-        color='gray.900'
-        variant='outline'
+        leftIcon='github'
+        backgroundColor='gray.900'
+        color='white'
         fontWeigh='medium'
-        _hover={{ bg: "gray.100" }}
-        _active={{ bg: "gray.100", transform: "scale(0.95" }}>
-        Sign in with Google
-      </Button> */}
+        _hover={{ bg: "gray.700" }}
+        _active={{ bg: "gray.800", transform: "scale(0.95" }}>
+        Sign in with Github
+      </Button>
       {children}
     </FormControl>
   );

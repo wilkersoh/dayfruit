@@ -1,4 +1,5 @@
 import React, { useState, useContext, createContext, useEffect } from "react";
+import { signIn, signOut, useSession } from "next-auth/client";
 
 let initialState = { user: null };
 
@@ -16,6 +17,7 @@ export const useAuth = () => {
 
 const useProvideAuth = () => {
   const [user, setUser] = useState(initialState);
+  const [session] = useSession();
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("user"));
@@ -29,19 +31,25 @@ const useProvideAuth = () => {
 
   const signinWithFacebook = () => {
     //
+    signIn();
   };
-  const signinWithGoogle = () => {
+  const signinWithGithub = () => {
     //
   };
 
   const signout = () => {
     localStorage.removeItem("user");
+    // next-auth
+    signOut();
   };
 
   return {
     setUser,
     user,
     signinWithCustom,
+    signinWithFacebook,
+    signinWithGithub,
+    session,
     signout,
   };
 };
