@@ -17,6 +17,7 @@ export const GET_FRUIT_ITEMS_QUERY = gql`
     getFruitItems(category: $category) {
       name
       country
+      category
       createdAt
     }
   }

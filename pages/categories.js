@@ -3,7 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { useSearch } from "@/utils/search";
 import App from "@/components/App";
 import Category from "@/components/Category";
-import { GET_CATEGORY_QUERY, GET_SEARCH_FRUITS_QUERY } from "@/apollo/queries";
+import { GET_CATEGORY_QUERY } from "@/apollo/queries";
 import { Text, Box, Spinner } from "@chakra-ui/core";
 
 function Categories() {
@@ -28,13 +28,13 @@ function Categories() {
 
   if (loading)
     return (
-      <App>
+      <App name='Categories' path='/categories'>
         <Spinner />
       </App>
     );
 
   return (
-    <App pt={4} px={4}>
+    <App name='Categories' path='/categories' pt={4} px={4}>
       {sortedCategory.map((category, i) => (
         <React.Fragment key={category._id}>
           <Category

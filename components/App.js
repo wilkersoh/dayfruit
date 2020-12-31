@@ -6,8 +6,12 @@ import Header from "@/components/Header";
 import { GET_SEARCH_FRUITS_QUERY } from "@/apollo/queries";
 import { Box } from "@chakra-ui/core";
 import GlobalSearch from "./GlobalSearch";
+import { NextSeo } from "next-seo";
 
-const App = ({ children, ...rest }) => {
+const App = ({ children, name, path, ...rest }) => {
+  const title = `DayFruit – ${name}`;
+  const url = `https://dayfruit.staging.selfpaths.com/${path}`;
+
   const { search, onSearch } = useSearch();
   const { loading, error, data } = useQuery(GET_SEARCH_FRUITS_QUERY, {
     variables: { searchText: search },
@@ -15,6 +19,14 @@ const App = ({ children, ...rest }) => {
   return (
     <>
       <Header onSearch={onSearch} search={search} />
+      <NextSeo
+        title={title}
+        canonical={url}
+        openGraph={{
+          url,
+          title,
+        }}
+      />
       <Box>
         <SideNav
           display={["none", null, "block"]}

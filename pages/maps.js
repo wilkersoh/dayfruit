@@ -10,7 +10,7 @@ import { Box, Text } from "@chakra-ui/core";
 import App from "@/components/App";
 
 const MAP_DETAILS = {
-  name: "Fresh Fruits",
+  name: "Great Fruits in Pontian",
 };
 
 const GoogleMapComponent = () => {
@@ -45,7 +45,7 @@ const WrappedMap = withScriptjs(withGoogleMap(GoogleMapComponent));
 
 export default function maps() {
   return (
-    <App h='full'>
+    <App h='full' name='Map' path='/maps'>
       <Box h='90vh' p={{ sm: 0, lg: 8 }}>
         <WrappedMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.NEXT_PUBLIC_REACT_APP_GOOGLE_KEY}`}

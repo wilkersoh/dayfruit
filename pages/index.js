@@ -7,9 +7,14 @@ import { useAuth } from "@/utils/auth";
 import { LOGOUT_USER_MUTATION } from "@/apollo/mutations";
 import { useMutation } from "@apollo/react-hooks";
 
+import { NextSeo } from "next-seo";
+
+const url = process.env.NEXTAUTH_URL || "http://localhost:3000/";
+const title = "Dayfruit | Home";
+
 const Header = (props) => {
   const { user, setUser, signout, session } = useAuth();
-  console.log(session);
+
   const [logoutUser] = useMutation(LOGOUT_USER_MUTATION, {
     update() {
       setUser({ user: null });
@@ -76,10 +81,7 @@ const Header = (props) => {
 const Index = () => {
   return (
     <>
-      <Head>
-        <title>Dayfruit | Pontian</title>
-        <link rel='icon' href='/favicon.ico' />
-      </Head>
+      <NextSeo title={title} canonical={url} openGraph={{ url, title }} />
       <Box minH='100vh' d='flex' flexDir='column'>
         <Header />
         <Container d='flex' m='auto'>

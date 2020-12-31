@@ -6,8 +6,10 @@ import { ThemeProvider, CSSReset } from "@chakra-ui/core";
 import { SearchProvider } from "@/utils/search";
 import { Global, css } from "@emotion/core";
 import { Provider } from "next-auth/client";
+import { DefaultSeo } from "next-seo";
 import theme from "../styles/theme";
 import "../styles/globals.css";
+import SEO from "next-seo.config";
 
 const GlobalStyle = () => {
   return (
@@ -47,6 +49,7 @@ function MyApp({ Component, pageProps, apolloClient }) {
       <ApolloProvider client={apolloClient}>
         <Provider session={pageProps?.session}>
           <AuthProvider>
+            <DefaultSeo {...SEO} />
             <GlobalStyle />
             <SearchProvider>
               <Component {...pageProps} />

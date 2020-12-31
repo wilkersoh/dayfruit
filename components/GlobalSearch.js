@@ -12,8 +12,8 @@ export default function GlobalSearch({ fruits }) {
             <Box width={{ sm: "300px" }} height={{ sm: "300px" }}>
               <Box w='full' h='full' position='relative'>
                 <Image
-                  src='/images/01.jpg'
-                  alt='Picture of the fruit'
+                  src={`/images/${name.toLowerCase()}.jpeg`}
+                  alt={`Image ${name}`}
                   layout='fill'
                 />
               </Box>

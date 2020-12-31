@@ -16,13 +16,15 @@ export default function Fruits() {
   });
   const { onFilterFruitType } = useSearch();
 
+  const category = data?.getFruitItems[0]?.category;
+
   useEffect(() => {
     onFilterFruitType(query.name.toUpperCase());
   }, []);
 
   if (loading || error || data.getFruitItems.length < 1)
     return (
-      <App>
+      <App name='Empty' path={`/fruits/empty`}>
         {loading ? (
           <Box>Loading...</Box>
         ) : error ? (
@@ -32,9 +34,10 @@ export default function Fruits() {
         )}
       </App>
     );
-
   return (
-    <App>
+    <App
+      name={category.charAt(0).toUpperCase() + category.slice(1)}
+      path={`/fruits/${category.toLowerCase()}`}>
       <Box flex={1} mx={4} pl={{ lg: 6 }} pt={{ lg: 2 }}>
         {data.getFruitItems.map(({ name, country, createdAt }) => (
           <React.Fragment key={name}>
@@ -42,8 +45,8 @@ export default function Fruits() {
               <Box width={{ sm: "300px" }} height={{ sm: "300px" }}>
                 <Box w='full' h='full' position='relative'>
                   <Image
-                    src='/images/01.jpg'
-                    alt='Picture of the fruit'
+                    src={`/images/${category.toLowerCase()}.jpeg`}
+                    alt={`Image ${name.toLowerCase()}`}
                     layout='fill'
                   />
                 </Box>

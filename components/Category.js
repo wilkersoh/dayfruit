@@ -47,8 +47,8 @@ export default function Category({ name, vitamins, benefit }) {
           mx='auto'
           position='relative'>
           <Image
-            src={`/images/${name.toLowerCase()}.jpeg`}
-            alt='Picture of the fruit'
+            src={`/images/${name}.jpeg`}
+            alt={`image of ${name}`}
             layout='fill'
           />
         </Box>

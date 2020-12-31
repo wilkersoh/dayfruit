@@ -347,7 +347,7 @@ db.posts.remove({title: "Post One"})
 
 db.posts.aggregate([
   { $match: { "title": "Post One" } }
-]) // return array of poststhat are title "Post One"
+]) // return array of posts that are title "Post One"
 
 ```
 

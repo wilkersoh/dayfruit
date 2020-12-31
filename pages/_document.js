@@ -10,7 +10,7 @@ class Document extends NextDocument {
     return (
       <Html>
         <Head>
-          <meta title='Dayfruit | Find the best drifruitnk deals and happy hours in your area.' />
+          <meta title='Dayfruit | Find the best fruits deals and happy hours in your area.' />
           <meta name='theme-color' content='#319795'></meta>
           <meta
             property='image'
