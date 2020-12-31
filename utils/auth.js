@@ -30,11 +30,10 @@ const useProvideAuth = () => {
   };
 
   const signinWithFacebook = () => {
-    //
     signIn();
   };
   const signinWithGithub = () => {
-    //
+    signIn();
   };
 
   const signout = () => {

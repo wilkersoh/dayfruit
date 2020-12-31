@@ -9,7 +9,7 @@ import { useMutation } from "@apollo/react-hooks";
 
 import { NextSeo } from "next-seo";
 
-const url = process.env.NEXTAUTH_URL || "http://localhost:3000/";
+const url = process.env.NEXTAUTH_URL;
 const title = "Dayfruit | Home";
 
 const Header = (props) => {
