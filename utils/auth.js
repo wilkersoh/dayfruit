@@ -33,6 +33,7 @@ const useProvideAuth = () => {
     signIn();
   };
   const signinWithGithub = () => {
+    // Github OAuth only can input one callback url, it already set to staging url.
     signIn();
   };
 
