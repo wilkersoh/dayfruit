@@ -7,6 +7,7 @@ const authContext = createContext({});
 
 export function AuthProvider({ children }) {
   const auth = useProvideAuth();
+
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 
@@ -30,11 +31,18 @@ const useProvideAuth = () => {
   };
 
   const signinWithFacebook = () => {
-    signIn();
+    signIn("facebook", {
+      callbackUrl:
+        process.env.NODE_ENV === "production"
+          ? "https://dayfruit.staging.selfpaths.com/"
+          : "http://localhost:3000/#_=_",
+    });
   };
   const signinWithGithub = () => {
-    // Github OAuth only can input one callback url, it already set to staging url.
-    signIn();
+    // Github OAuth only can input one callback url, it already set to staging url. IF need to work, need to changed the OAuth in github setting
+    signIn("github", {
+      callbackUrl: "https://dayfruit.staging.selfpaths.com/",
+    });
   };
 
   const signout = () => {
