@@ -18,6 +18,10 @@ export const useAuth = () => {
 
 const useProvideAuth = () => {
   const [user, setUser] = useState(initialState);
+  const [isLoading, setIsLoading] = useState({
+    facebook: false,
+    github: false,
+  });
   const [session] = useSession();
 
   useEffect(() => {
@@ -26,11 +30,13 @@ const useProvideAuth = () => {
   }, []);
 
   const signinWithCustom = (rawUser) => {
+    setIsLoading({ ...isLoading, custom: true });
     setUser({ user: rawUser });
     localStorage.setItem("user", JSON.stringify(rawUser));
   };
 
   const signinWithFacebook = () => {
+    setIsLoading({ ...isLoading, facebook: true });
     signIn("facebook", {
       callbackUrl:
         process.env.NODE_ENV === "production"
@@ -40,6 +46,7 @@ const useProvideAuth = () => {
   };
   const signinWithGithub = () => {
     // Github OAuth only can input one callback url, it already set to staging url. IF need to work, need to changed the OAuth in github setting
+    setIsLoading({ ...isLoading, github: true });
     signIn("github", {
       callbackUrl: "https://dayfruit.staging.selfpaths.com/",
     });
@@ -59,5 +66,6 @@ const useProvideAuth = () => {
     signinWithGithub,
     session,
     signout,
+    isLoading,
   };
 };

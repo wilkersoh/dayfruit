@@ -42,7 +42,12 @@ const toastModal = (toast, status, data) => {
 };
 
 export const LoginForm = ({ onClose, children }) => {
-  const { signinWithCustom, signinWithFacebook, signinWithGithub } = useAuth();
+  const {
+    signinWithCustom,
+    signinWithFacebook,
+    signinWithGithub,
+    isLoading,
+  } = useAuth();
   const router = useRouter();
   const toast = useToast();
 
@@ -134,6 +139,7 @@ export const LoginForm = ({ onClose, children }) => {
         />
       </Box>
       <Button
+        isLoading={isLoading.facebook}
         onClick={signinWithFacebook}
         mb={4}
         leftIcon='facebook'
@@ -145,6 +151,7 @@ export const LoginForm = ({ onClose, children }) => {
         Sign in with Facebook
       </Button>
       <Button
+        isLoading={isLoading.github}
         onClick={signinWithGithub}
         mb={16}
         leftIcon='github'
