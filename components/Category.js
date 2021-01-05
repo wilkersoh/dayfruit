@@ -46,12 +46,11 @@ export default function Category({ name, vitamins, benefit }) {
           h={{ sm: "300px", md: "150px" }}
           mx='auto'
           position='relative'>
-          <img src={`/images/${name}.jpeg`} alt='' />
-          {/* <Image
-            src={`/images/${name}.jpeg`}
-            alt={`image of ${name}`}
+          <Image
+            src={`/images/${name.toLowerCase()}.jpeg`}
+            alt={`image of ${name.toLowerCase()}`}
             layout='fill'
-          /> */}
+          />
         </Box>
       </Box>
       <Box d='flex' flexDir='column' mt={{ sm: 3, md: 0 }} ml={2} w='full'>
