@@ -47,12 +47,13 @@ export default function maps() {
   return (
     <App h='full' name='Map' path='/maps'>
       <Box h='90vh' p={{ sm: 0, lg: 8 }}>
-        <WrappedMap
+        <Box>Google Map is closed</Box>
+        {/* <WrappedMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.NEXT_PUBLIC_REACT_APP_GOOGLE_KEY}`}
           loadingElement={<Box style={{ height: "100%" }}></Box>}
           containerElement={<Box style={{ height: "100%" }}></Box>}
           mapElement={<Box style={{ height: "100%" }}></Box>}
-        />
+        /> */}
       </Box>
     </App>
   );
