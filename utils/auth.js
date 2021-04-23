@@ -41,7 +41,7 @@ const useProvideAuth = () => {
       callbackUrl:
         process.env.NODE_ENV === "production"
           ? "https://dayfruit.staging.selfpaths.com/"
-          : "http://localhost:3000/#_=_",
+          : "http://localhost:3004/#_=_",
     });
   };
   const signinWithGithub = () => {
