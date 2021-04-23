@@ -13,35 +13,35 @@ const MAP_DETAILS = {
   name: "Great Fruits in Pontian",
 };
 
-const GoogleMapComponent = () => {
-  const [showInfo, setShowInfo] = useState(null);
+// const GoogleMapComponent = () => {
+//   const [showInfo, setShowInfo] = useState(null);
 
-  return (
-    <GoogleMap
-      defaultZoom={15}
-      defaultCenter={{ lat: 1.486925, lng: 103.388962 }}>
-      <Marker
-        onClick={() => setShowInfo(MAP_DETAILS)}
-        position={{
-          lat: 1.4802729364769138,
-          lng: 103.38727170083912,
-        }}>
-        {showInfo && (
-          <InfoWindow
-            onCloseClick={() => setShowInfo(null)}
-            position={{
-              lat: 1.4802729364769138,
-              lng: 103.38727170083912,
-            }}>
-            <Text color='black'>{showInfo.name}</Text>
-          </InfoWindow>
-        )}
-      </Marker>
-    </GoogleMap>
-  );
-};
+//   return (
+//     <GoogleMap
+//       defaultZoom={15}
+//       defaultCenter={{ lat: 1.486925, lng: 103.388962 }}>
+//       <Marker
+//         onClick={() => setShowInfo(MAP_DETAILS)}
+//         position={{
+//           lat: 1.4802729364769138,
+//           lng: 103.38727170083912,
+//         }}>
+//         {showInfo && (
+//           <InfoWindow
+//             onCloseClick={() => setShowInfo(null)}
+//             position={{
+//               lat: 1.4802729364769138,
+//               lng: 103.38727170083912,
+//             }}>
+//             <Text color='black'>{showInfo.name}</Text>
+//           </InfoWindow>
+//         )}
+//       </Marker>
+//     </GoogleMap>
+//   );
+// };
 
-const WrappedMap = withScriptjs(withGoogleMap(GoogleMapComponent));
+// const WrappedMap = withScriptjs(withGoogleMap(GoogleMapComponent));
 
 export default function maps() {
   return (
